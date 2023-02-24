@@ -269,6 +269,9 @@ ServiceFabricBackup/
 *.ldf
 *.ndf
 
+# SQLite
+*.sqlite
+
 # Business Intelligence projects
 *.rdl.data
 *.bim.layout
@@ -475,3 +478,6 @@ $RECYCLE.BIN/
 
 # Windows shortcuts
 *.lnk
+
+# Visual Studio Code
+.vscode/
