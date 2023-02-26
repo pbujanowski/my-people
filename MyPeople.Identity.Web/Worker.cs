@@ -70,6 +70,42 @@ public class Worker : IHostedService
             }, cancellationToken);
         }
 
+        if (await applicationManager.FindByClientIdAsync("my-people-client", cancellationToken) is null)
+        {
+            await applicationManager.CreateAsync(new OpenIddictApplicationDescriptor
+            {
+                ClientId = "my-people-client",
+                ConsentType = ConsentTypes.Explicit,
+                DisplayName = "My People web application",
+                Type = ClientTypes.Public,
+                PostLogoutRedirectUris =
+                {
+                    new Uri("http://localhost:3000/authentication/logout-callback")
+                },
+                RedirectUris =
+                {
+                    new Uri("http://localhost:3000/authentication/login-callback")
+                },
+                Permissions =
+                {
+                    Permissions.Endpoints.Authorization,
+                    Permissions.Endpoints.Logout,
+                    Permissions.Endpoints.Token,
+                    Permissions.GrantTypes.AuthorizationCode,
+                    Permissions.GrantTypes.RefreshToken,
+                    Permissions.ResponseTypes.Code,
+                    Permissions.Scopes.Email,
+                    Permissions.Scopes.Profile,
+                    Permissions.Scopes.Roles,
+                    Permissions.Prefixes.Scope + AppScopes.Services.Posts
+                },
+                Requirements =
+                {
+                    Requirements.Features.ProofKeyForCodeExchange
+                },
+            }, cancellationToken);
+        }
+
         var scopeManager = scope.ServiceProvider.GetRequiredService<IOpenIddictScopeManager>();
 
         if (await scopeManager.FindByNameAsync(AppScopes.Services.Posts, cancellationToken) is null)

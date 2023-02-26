@@ -53,6 +53,19 @@ public static class ServiceCollectionExtensions
         return services;
     }
 
+    public static IServiceCollection ConfigureCors(this IServiceCollection services)
+    {
+        services.AddCors(options =>
+            options.AddDefaultPolicy(policy =>
+            {
+                policy.AllowAnyHeader()
+                    .AllowAnyMethod()
+                    .WithOrigins("http://localhost:3000");
+            }));
+
+        return services;
+    }
+
     public static IServiceCollection ConfigureQuartz(this IServiceCollection services)
     {
         services.AddQuartz(options =>

@@ -4,6 +4,19 @@ namespace MyPeople.Services.Posts.API.Extensions;
 
 public static class ServiceCollectionExtensions
 {
+    public static IServiceCollection ConfigureCors(this IServiceCollection services)
+    {
+        services.AddCors(options =>
+            options.AddDefaultPolicy(policy =>
+            {
+                policy.AllowAnyHeader()
+                    .AllowAnyMethod()
+                    .WithOrigins("http://localhost:3000");
+            }));
+
+        return services;
+    }
+
     public static IServiceCollection ConfigureOpenIddict(this IServiceCollection services)
     {
         services.AddOpenIddict()

@@ -4,6 +4,7 @@ using MyPeople.Identity.Web.Extensions;
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.ConfigureCookiePolicy();
+builder.Services.ConfigureCors();
 builder.Services.ConfigureDbContext(builder.Configuration);
 builder.Services.ConfigureApplicationCookie();
 builder.Services.ConfigureIdentity();
@@ -27,6 +28,8 @@ if (!app.Environment.IsDevelopment())
 
 app.UseStaticFiles();
 app.UseCookiePolicy();
+
+app.UseCors();
 
 app.UseRouting();
 

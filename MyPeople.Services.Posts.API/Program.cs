@@ -3,6 +3,7 @@ using MyPeople.Services.Posts.API.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Services.ConfigureCors();
 builder.Services.ConfigureOpenIddict();
 builder.Services.ConfigureAuthentication();
 builder.Services.AddAuthorization();
@@ -18,6 +19,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
     IdentityModelEventSource.ShowPII = true;
 }
+
+app.UseCors();
 
 app.UseAuthentication();
 app.UseAuthorization();
