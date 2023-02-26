@@ -78,6 +78,8 @@ public class AccountController : Controller
     [HttpGet]
     public IActionResult Register(string? returnUrl = null)
     {
+        returnUrl ??= Url.Content("~/");
+
         return View(new RegisterViewModel
         {
             ReturnUrl = returnUrl

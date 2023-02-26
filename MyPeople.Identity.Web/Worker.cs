@@ -1,3 +1,4 @@
+using MyPeople.Identity.Web.Constants;
 using MyPeople.Identity.Web.Data;
 using OpenIddict.Abstractions;
 using static OpenIddict.Abstractions.OpenIddictConstants;
@@ -18,11 +19,11 @@ public class Worker : IHostedService
         var context = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
         await context.Database.EnsureCreatedAsync(cancellationToken);
 
-        var manager = scope.ServiceProvider.GetRequiredService<IOpenIddictApplicationManager>();
+        var applicationManager = scope.ServiceProvider.GetRequiredService<IOpenIddictApplicationManager>();
 
-        if (await manager.FindByClientIdAsync("postman", cancellationToken) is null)
+        if (await applicationManager.FindByClientIdAsync("postman", cancellationToken) is null)
         {
-            await manager.CreateAsync(new OpenIddictApplicationDescriptor
+            await applicationManager.CreateAsync(new OpenIddictApplicationDescriptor
             {
                 ClientId = "postman",
                 ConsentType = ConsentTypes.Explicit,
@@ -46,11 +47,39 @@ public class Worker : IHostedService
                     Permissions.ResponseTypes.Code,
                     Permissions.Scopes.Email,
                     Permissions.Scopes.Profile,
-                    Permissions.Scopes.Roles
+                    Permissions.Scopes.Roles,
+                    Permissions.Prefixes.Scope + AppScopes.Services.Posts
                 },
                 Requirements =
                 {
                     Requirements.Features.ProofKeyForCodeExchange
+                },
+            }, cancellationToken);
+        }
+
+        if (await applicationManager.FindByClientIdAsync("my-people-services-posts", cancellationToken) is null)
+        {
+            await applicationManager.CreateAsync(new OpenIddictApplicationDescriptor
+            {
+                ClientId = "my-people-services-posts",
+                ClientSecret = "SjqTkBjo3CoVUQcunJZO",
+                Permissions =
+                {
+                    Permissions.Endpoints.Introspection
+                }
+            }, cancellationToken);
+        }
+
+        var scopeManager = scope.ServiceProvider.GetRequiredService<IOpenIddictScopeManager>();
+
+        if (await scopeManager.FindByNameAsync(AppScopes.Services.Posts, cancellationToken) is null)
+        {
+            await scopeManager.CreateAsync(new OpenIddictScopeDescriptor
+            {
+                Name = AppScopes.Services.Posts,
+                Resources =
+                {
+                    "my-people-services-posts"
                 }
             }, cancellationToken);
         }

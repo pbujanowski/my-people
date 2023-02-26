@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using MyPeople.Identity.Web.Constants;
 using MyPeople.Identity.Web.Data;
 using MyPeople.Identity.Web.Entities;
 using Quartz;
@@ -79,12 +80,13 @@ public static class ServiceCollectionExtensions
              })
             .AddServer(options =>
             {
-                options.SetAuthorizationEndpointUris("connect/authorize")
-                       .SetLogoutEndpointUris("connect/logout")
-                       .SetTokenEndpointUris("connect/token")
-                       .SetUserinfoEndpointUris("connect/userinfo");
+                options.SetAuthorizationEndpointUris("authorize")
+                       .SetLogoutEndpointUris("logout")
+                       .SetIntrospectionEndpointUris("introspection")
+                       .SetTokenEndpointUris("token")
+                       .SetUserinfoEndpointUris("userinfo");
 
-                options.RegisterScopes(Scopes.Email, Scopes.Profile, Scopes.Roles);
+                options.RegisterScopes(Scopes.Email, Scopes.Profile, Scopes.Roles, AppScopes.Services.Posts);
 
                 options.AllowAuthorizationCodeFlow()
                        .AllowRefreshTokenFlow();
@@ -96,7 +98,9 @@ public static class ServiceCollectionExtensions
                        .EnableAuthorizationEndpointPassthrough()
                        .EnableLogoutEndpointPassthrough()
                        .EnableStatusCodePagesIntegration()
-                       .EnableTokenEndpointPassthrough();
+                       .EnableTokenEndpointPassthrough()
+                       .EnableUserinfoEndpointPassthrough()
+                       .DisableTransportSecurityRequirement();
             })
             .AddValidation(options =>
             {

@@ -11,7 +11,7 @@
         <a class="nav-link text-dark" title="Manage">Hello @User.Identity?.Name!</a>
     </li>
     <li class="nav-item">
-        <form class="form-inline" asp-controller="Authorization" asp-action="Logout" asp-route-returnUrl="@Url.Action("Index", "Home")">
+        <form class="form-inline" asp-controller="Authorization" asp-action="Logout" asp-route-returnUrl="@ViewContext.HttpContext.Request.Query["ReturnUrl"]">
             <button type="submit" class="nav-link btn btn-link text-dark">Logout</button>
         </form>
     </li>
@@ -19,10 +19,10 @@
 else
 {
     <li class="nav-item">
-        <a class="nav-link text-dark" asp-controller="Account" asp-action="Register">Register</a>
+        <a class="nav-link text-dark" asp-controller="Account" asp-action="Register" asp-route-returnUrl="@ViewContext.HttpContext.Request.Query["ReturnUrl"]">Register</a>
     </li>
     <li class="nav-item">
-        <a class="nav-link text-dark" asp-controller="Account" asp-action="Login">Login</a>
+        <a class="nav-link text-dark" asp-controller="Account" asp-action="Login" asp-route-returnUrl="@ViewContext.HttpContext.Request.Query["ReturnUrl"]">Login</a>
     </li>
 }
 </ul>
