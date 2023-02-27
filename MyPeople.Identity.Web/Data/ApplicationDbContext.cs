@@ -4,7 +4,7 @@ using MyPeople.Identity.Web.Entities;
 
 namespace MyPeople.Identity.Web.Data;
 
-public class ApplicationDbContext : IdentityDbContext<ApplicationUser, ApplicationRole, string>
+public class ApplicationDbContext : IdentityDbContext<ApplicationUser, ApplicationRole, Guid>
 {
     public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
         : base(options)
@@ -14,6 +14,6 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser, Applicati
     protected override void OnModelCreating(ModelBuilder builder)
     {
         base.OnModelCreating(builder);
-        builder.UseOpenIddict<ApplicationClient, ApplicationAuthorization, ApplicationScope, ApplicationToken, string>();
+        builder.UseOpenIddict<ApplicationClient, ApplicationAuthorization, ApplicationScope, ApplicationToken, Guid>();
     }
 }

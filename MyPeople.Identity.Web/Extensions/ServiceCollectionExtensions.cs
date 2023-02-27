@@ -27,7 +27,7 @@ public static class ServiceCollectionExtensions
         services.AddDbContext<ApplicationDbContext>(options =>
         {
             options.UseSqlite(connectionString);
-            options.UseOpenIddict<ApplicationClient, ApplicationAuthorization, ApplicationScope, ApplicationToken, string>();
+            options.UseOpenIddict<ApplicationClient, ApplicationAuthorization, ApplicationScope, ApplicationToken, Guid>();
         });
 
         return services;
@@ -87,7 +87,7 @@ public static class ServiceCollectionExtensions
              {
                  options.UseEntityFrameworkCore()
                         .UseDbContext<ApplicationDbContext>()
-                        .ReplaceDefaultEntities<ApplicationClient, ApplicationAuthorization, ApplicationScope, ApplicationToken, string>();
+                        .ReplaceDefaultEntities<ApplicationClient, ApplicationAuthorization, ApplicationScope, ApplicationToken, Guid>();
 
                  options.UseQuartz();
              })

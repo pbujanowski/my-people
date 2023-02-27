@@ -1,9 +1,6 @@
-using System.Text;
-using System.Text.Encodings.Web;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.WebUtilities;
 using MyPeople.Identity.Web.Entities;
 using MyPeople.Identity.Web.Logging;
 using MyPeople.Identity.Web.Models;
@@ -95,6 +92,7 @@ public class AccountController : Controller
         {
             var user = new ApplicationUser
             {
+                Id = Guid.NewGuid(),
                 UserName = model.Input.Email,
                 Email = model.Input.Email
             };

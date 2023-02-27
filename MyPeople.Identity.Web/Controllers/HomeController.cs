@@ -1,6 +1,6 @@
-﻿using System.Diagnostics;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using MyPeople.Identity.Web.Models;
+using System.Diagnostics;
 
 namespace MyPeople.Identity.Web.Controllers;
 

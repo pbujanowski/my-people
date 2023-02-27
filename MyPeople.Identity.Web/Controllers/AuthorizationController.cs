@@ -1,5 +1,3 @@
-using System.Collections.Immutable;
-using System.Security.Claims;
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
@@ -13,6 +11,8 @@ using MyPeople.Identity.Web.Extensions;
 using MyPeople.Identity.Web.Models;
 using OpenIddict.Abstractions;
 using OpenIddict.Server.AspNetCore;
+using System.Collections.Immutable;
+using System.Security.Claims;
 using static OpenIddict.Abstractions.OpenIddictConstants;
 
 namespace MyPeople.Identity.Web.Controllers;
@@ -262,8 +262,6 @@ public class AuthorizationController : Controller
 
     [Authorize, FormValueRequired("submit.Deny")]
     [HttpPost("~/authorize"), ValidateAntiForgeryToken]
-    // Notify OpenIddict that the authorization grant has been denied by the resource owner
-    // to redirect the user agent to the client application using the appropriate response_mode.
     public IActionResult Deny() => Forbid(OpenIddictServerAspNetCoreDefaults.AuthenticationScheme);
 
     [HttpGet("~/logout")]

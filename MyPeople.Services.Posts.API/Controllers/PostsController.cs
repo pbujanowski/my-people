@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using MyPeople.Services.Posts.API.Dtos;
+using MyPeople.Services.Posts.Application.Dtos;
 
 namespace MyPeople.Services.Posts.API.Controllers;
 

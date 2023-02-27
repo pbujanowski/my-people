@@ -3,19 +3,18 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyPeople.Identity.Web", "MyPeople.Identity.Web\MyPeople.Identity.Web.csproj", "{7B86F71F-1059-4411-984E-B4335771B0A6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MyPeople.Identity.Web", "MyPeople.Identity.Web\MyPeople.Identity.Web.csproj", "{7B86F71F-1059-4411-984E-B4335771B0A6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyPeople.Services.Posts.API", "MyPeople.Services.Posts.API\MyPeople.Services.Posts.API.csproj", "{037297B9-447B-4D06-AC97-CBB16568FE1D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MyPeople.Services.Posts.API", "MyPeople.Services.Posts.API\MyPeople.Services.Posts.API.csproj", "{037297B9-447B-4D06-AC97-CBB16568FE1D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyPeople.Client", "MyPeople.Client\MyPeople.Client.csproj", "{789CB34D-4CFB-40AE-BF79-6BAC6066E8C6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MyPeople.Client", "MyPeople.Client\MyPeople.Client.csproj", "{789CB34D-4CFB-40AE-BF79-6BAC6066E8C6}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MyPeople.Services.Posts.Application", "MyPeople.Services.Posts.Application\MyPeople.Services.Posts.Application.csproj", "{02771656-E0DA-4417-AF5B-D3D4A10B2C80}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
-	EndGlobalSection
-	GlobalSection(SolutionProperties) = preSolution
-		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{7B86F71F-1059-4411-984E-B4335771B0A6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -30,5 +29,12 @@ Global
 		{789CB34D-4CFB-40AE-BF79-6BAC6066E8C6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{789CB34D-4CFB-40AE-BF79-6BAC6066E8C6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{789CB34D-4CFB-40AE-BF79-6BAC6066E8C6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{02771656-E0DA-4417-AF5B-D3D4A10B2C80}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{02771656-E0DA-4417-AF5B-D3D4A10B2C80}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{02771656-E0DA-4417-AF5B-D3D4A10B2C80}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{02771656-E0DA-4417-AF5B-D3D4A10B2C80}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
 	EndGlobalSection
 EndGlobal
