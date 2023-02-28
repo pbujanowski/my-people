@@ -1,0 +1,11 @@
+@using MyPeople.Services.Posts.Application.Dtos
+
+@foreach (var post in Posts)
+{
+    <PostItem Post="post" />
+}
+
+@code {
+    [Parameter]
+    public IEnumerable<PostDto> Posts { get; set; } = default!;
+}

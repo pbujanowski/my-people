@@ -270,7 +270,7 @@ ServiceFabricBackup/
 *.ndf
 
 # SQLite
-*.sqlite
+*.sqlite*
 
 # Business Intelligence projects
 *.rdl.data

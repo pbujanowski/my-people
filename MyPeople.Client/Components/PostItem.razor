@@ -1,0 +1,12 @@
+@using MyPeople.Services.Posts.Application.Dtos
+
+<MudCard>
+    <MudCardContent>
+        <MudText Typo="Typo.body1">@Post.Content</MudText>
+    </MudCardContent>
+</MudCard>
+
+@code {
+    [Parameter]
+    public PostDto Post { get; set; } = default!;
+}

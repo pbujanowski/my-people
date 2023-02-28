@@ -1,8 +1,24 @@
 ﻿@page "/"
+@using MyPeople.Services.Posts.Application.Dtos
+@using MyPeople.Services.Posts.Application.Services
+@inject IPostService PostService
 @attribute [Authorize]
 
 <PageTitle>My People - Home</PageTitle>
 
-<MudText Typo="Typo.h3" GutterBottom="true">Hello, world!</MudText>
-<MudText Class="mb-8">Welcome to your new app, powered by MudBlazor!</MudText>
-<MudAlert Severity="Severity.Normal">You can find documentation and examples on our website here: <MudLink Href="https://mudblazor.com" Typo="Typo.body2" Color="Color.Inherit"><b>www.mudblazor.com</b></MudLink></MudAlert>
+<PostList Posts="Posts" />
+
+@code {
+    public IEnumerable<PostDto> Posts { get; set; } = Enumerable.Empty<PostDto>();
+
+    protected override async Task OnInitializedAsync()
+    {
+        await base.OnInitializedAsync();
+        await GetPostsAsync();
+    }
+
+    private async Task GetPostsAsync()
+    {
+        Posts = await PostService.GetAllPostsAsync();
+    }
+}
