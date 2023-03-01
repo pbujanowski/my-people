@@ -2,7 +2,8 @@
 
 <MudCard>
     <MudCardContent>
-        <MudTextField T="string" Label="Outlined" Variant="Variant.Outlined" @bind-Text="@Post.Content" Lines="5" />
+        <MudTextField T="string" Label="Write something..." Variant="Variant.Outlined" @bind-Text="@Post.Content"
+            Lines="5" />
     </MudCardContent>
     <MudCardActions>
         <MudButton Color="Color.Primary" OnClick="() => OnPostCreate.InvokeAsync()">Send</MudButton>

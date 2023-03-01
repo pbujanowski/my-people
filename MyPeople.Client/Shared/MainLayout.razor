@@ -5,15 +5,15 @@
 <MudSnackbarProvider />
 
 <MudLayout>
-    <MudAppBar Elevation="0">
+    <MudAppBar Elevation="1">
         <MudText Typo="Typo.h6">My People</MudText>
         <MudSpacer />
-        <MudIconButton Icon="@Icons.Material.Filled.Home" Match="NavLinkMatch.All" Color="Color.Inherit" Href="/" />
-        <MudSpacer />
+        <MudIconButton Icon="@Icons.Material.Filled.Home" Title="Home" Match="NavLinkMatch.All" Color="Color.Inherit"
+            Href="/" />
         <LoginDisplay />
     </MudAppBar>
     <MudMainContent>
-        <MudContainer MaxWidth="MaxWidth.Large" Class="my-16 pt-16">
+        <MudContainer MaxWidth="MaxWidth.Large">
             @Body
         </MudContainer>
     </MudMainContent>

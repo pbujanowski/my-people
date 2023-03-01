@@ -3,11 +3,14 @@
 
 <AuthorizeView>
     <Authorized>
-        Hello, @context.User.Identity?.Name!
-        <MudIconButton Icon="@Icons.Material.Filled.Logout" Match="NavLinkMatch.All" Color="Color.Inherit" OnClick="BeginLogOut" />
+        <MudIconButton Icon="@Icons.Material.Filled.Person" Title="@context.User.Identity?.Name"
+            Color="Color.Inherit" />
+        <MudIconButton Icon="@Icons.Material.Filled.Logout" Title="Log out" Match="NavLinkMatch.All"
+            Color="Color.Inherit" OnClick="BeginLogOut" />
     </Authorized>
     <NotAuthorized>
-        <MudIconButton Icon="@Icons.Material.Filled.Login" Match="NavLinkMatch.All" Color="Color.Inherit" Href="/authentication/login" />
+        <MudIconButton Icon="@Icons.Material.Filled.Login" Title="Log in" Match="NavLinkMatch.All" Color="Color.Inherit"
+            Href="/authentication/login" />
     </NotAuthorized>
 </AuthorizeView>
 
