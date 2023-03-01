@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using MyPeople.Services.Posts.Application.Dtos;
 using MyPeople.Services.Posts.Application.Services;
 
 namespace MyPeople.Services.Posts.API.Controllers;
@@ -25,6 +26,22 @@ public class PostsController : ControllerBase
         {
             var posts = await _postService.GetAllPostsAsync();
             return Ok(posts);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, ex.Message);
+            return StatusCode(500);
+        }
+    }
+
+    [Authorize]
+    [HttpPost]
+    public async Task<IActionResult> CreatePost(PostDto postDto)
+    {
+        try
+        {
+            var post = await _postService.CreatePostAsync(postDto);
+            return Ok(post);
         }
         catch (Exception ex)
         {

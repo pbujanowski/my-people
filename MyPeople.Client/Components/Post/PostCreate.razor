@@ -1,0 +1,18 @@
+@using MyPeople.Services.Posts.Application.Dtos
+
+<MudCard>
+    <MudCardContent>
+        <MudTextField T="string" Label="Outlined" Variant="Variant.Outlined" @bind-Text="@Post.Content" Lines="5" />
+    </MudCardContent>
+    <MudCardActions>
+        <MudButton Color="Color.Primary" OnClick="() => OnPostCreate.InvokeAsync()">Send</MudButton>
+    </MudCardActions>
+</MudCard>
+
+@code {
+    [Parameter, EditorRequired]
+    public PostDto Post { get; set; } = default!;
+
+    [Parameter, EditorRequired]
+    public EventCallback OnPostCreate { get; set; }
+}

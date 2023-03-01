@@ -6,6 +6,6 @@
 }
 
 @code {
-    [Parameter]
+    [Parameter, EditorRequired]
     public IEnumerable<PostDto> Posts { get; set; } = default!;
 }

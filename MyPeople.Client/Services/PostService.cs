@@ -13,6 +13,14 @@ public class PostService : IPostService
         _httpClient = httpClient;
     }
 
+    public async Task<PostDto?> CreatePostAsync(PostDto postDto)
+    {
+        using var response = await _httpClient.PostAsJsonAsync("/posts", postDto);
+        return response.IsSuccessStatusCode
+            ? await response.Content.ReadFromJsonAsync<PostDto>()
+            : throw new Exception(response.ReasonPhrase);
+    }
+
     public async Task<IEnumerable<PostDto>> GetAllPostsAsync()
     {
         return await _httpClient.GetFromJsonAsync<IEnumerable<PostDto>>("/posts")
