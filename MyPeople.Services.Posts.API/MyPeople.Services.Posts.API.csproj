@@ -8,6 +8,10 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="7.0.3" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="7.0.3">
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
     <PackageReference Include="OpenIddict.Validation.AspNetCore" Version="4.0.0" />
     <PackageReference Include="OpenIddict.Validation.SystemNetHttp" Version="4.0.0" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
@@ -15,6 +19,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\MyPeople.Services.Posts.Application\MyPeople.Services.Posts.Application.csproj" />
+    <ProjectReference Include="..\MyPeople.Services.Posts.Infrastructure\MyPeople.Services.Posts.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>

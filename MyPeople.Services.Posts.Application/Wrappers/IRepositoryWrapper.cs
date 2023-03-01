@@ -1,0 +1,12 @@
+using MyPeople.Services.Posts.Application.Repositories;
+
+namespace MyPeople.Services.Posts.Application.Wrappers;
+
+public interface IRepositoryWrapper
+{
+    IPostRepository Posts { get; }
+
+    void SaveChanges();
+
+    Task SaveChangesAsync();
+}

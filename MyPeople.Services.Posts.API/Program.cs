@@ -1,8 +1,10 @@
 using Microsoft.IdentityModel.Logging;
 using MyPeople.Services.Posts.API.Extensions;
+using MyPeople.Services.Posts.Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Services.ConfigureInfrastructure(builder.Configuration);
 builder.Services.ConfigureCors();
 builder.Services.ConfigureOpenIddict();
 builder.Services.ConfigureAuthentication();
@@ -19,6 +21,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
     IdentityModelEventSource.ShowPII = true;
 }
+
+await app.UseInfrastructureAsync();
 
 app.UseCors();
 

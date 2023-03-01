@@ -11,6 +11,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MyPeople.Client", "MyPeople
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MyPeople.Services.Posts.Application", "MyPeople.Services.Posts.Application\MyPeople.Services.Posts.Application.csproj", "{02771656-E0DA-4417-AF5B-D3D4A10B2C80}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyPeople.Services.Posts.Domain", "MyPeople.Services.Posts.Domain\MyPeople.Services.Posts.Domain.csproj", "{6DAE2D2E-0AA4-4E32-89A3-2F3042723FAB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyPeople.Services.Posts.Infrastructure", "MyPeople.Services.Posts.Infrastructure\MyPeople.Services.Posts.Infrastructure.csproj", "{712C67D2-30A1-4C59-8778-BA97DA063179}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +37,14 @@ Global
 		{02771656-E0DA-4417-AF5B-D3D4A10B2C80}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{02771656-E0DA-4417-AF5B-D3D4A10B2C80}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{02771656-E0DA-4417-AF5B-D3D4A10B2C80}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6DAE2D2E-0AA4-4E32-89A3-2F3042723FAB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6DAE2D2E-0AA4-4E32-89A3-2F3042723FAB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6DAE2D2E-0AA4-4E32-89A3-2F3042723FAB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6DAE2D2E-0AA4-4E32-89A3-2F3042723FAB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{712C67D2-30A1-4C59-8778-BA97DA063179}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{712C67D2-30A1-4C59-8778-BA97DA063179}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{712C67D2-30A1-4C59-8778-BA97DA063179}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{712C67D2-30A1-4C59-8778-BA97DA063179}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
