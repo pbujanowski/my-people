@@ -1,4 +1,4 @@
-namespace MyPeople.Identity.Web.Constants;
+namespace MyPeople.Identity.Application.Constants;
 
 public static class AppScopes
 {

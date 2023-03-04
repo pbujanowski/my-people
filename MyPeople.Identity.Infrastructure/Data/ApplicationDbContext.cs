@@ -1,8 +1,8 @@
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using MyPeople.Identity.Web.Entities;
+using MyPeople.Identity.Domain.Entities;
 
-namespace MyPeople.Identity.Web.Data;
+namespace MyPeople.Identity.Infrastructure.Data;
 
 public class ApplicationDbContext : IdentityDbContext<ApplicationUser, ApplicationRole, Guid>
 {

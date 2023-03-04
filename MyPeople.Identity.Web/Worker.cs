@@ -1,5 +1,5 @@
-using MyPeople.Identity.Web.Constants;
-using MyPeople.Identity.Web.Data;
+using MyPeople.Identity.Application.Constants;
+using MyPeople.Identity.Infrastructure.Data;
 using OpenIddict.Abstractions;
 using static OpenIddict.Abstractions.OpenIddictConstants;
 

@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using MyPeople.Identity.Web.Entities;
+using MyPeople.Identity.Domain.Entities;
 using MyPeople.Identity.Web.Logging;
 using MyPeople.Identity.Web.Models;
 

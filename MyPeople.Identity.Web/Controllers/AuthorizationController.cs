@@ -5,8 +5,8 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Primitives;
 using Microsoft.IdentityModel.Tokens;
+using MyPeople.Identity.Domain.Entities;
 using MyPeople.Identity.Web.Attributes;
-using MyPeople.Identity.Web.Entities;
 using MyPeople.Identity.Web.Extensions;
 using MyPeople.Identity.Web.Models;
 using OpenIddict.Abstractions;
@@ -17,6 +17,7 @@ using static OpenIddict.Abstractions.OpenIddictConstants;
 
 namespace MyPeople.Identity.Web.Controllers;
 
+[ApiExplorerSettings(IgnoreApi = true)]
 public class AuthorizationController : Controller
 {
     private readonly IOpenIddictApplicationManager _applicationManager;
