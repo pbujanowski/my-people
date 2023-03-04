@@ -1,6 +1,11 @@
 @using MyPeople.Services.Posts.Application.Dtos
 
 <MudCard>
+    <MudCardHeader>
+        <CardHeaderContent>
+            <MudText Typo="Typo.h6">@Post.UserDisplayName</MudText>
+        </CardHeaderContent>
+    </MudCardHeader>
     <MudCardContent>
         <MudText Typo="Typo.body1">@Post.Content</MudText>
     </MudCardContent>

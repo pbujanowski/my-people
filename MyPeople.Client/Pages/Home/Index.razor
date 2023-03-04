@@ -30,7 +30,8 @@
     private async Task<PostDto> CreateNewPostAsync()
     {
         var state = await AuthenticationStateProvider.GetAuthenticationStateAsync();
-        return new PostDto { UserId = state?.User?.FindFirst("sub")?.Value };
+        var userId = state?.User?.FindFirst("sub")?.Value;
+        return new PostDto { UserId = userId is null ? null : new Guid(userId) };
     }
 
     private async Task GetPostsAsync()

@@ -17,7 +17,7 @@ public class UsersController : ControllerBase
     }
 
     [HttpGet("{userId}")]
-    public async Task<IActionResult> GetUserById(Guid userId)
+    public async Task<IActionResult> GetUserById(Guid userId, [FromQuery] bool displayName = false)
     {
         try
         {
@@ -26,7 +26,7 @@ public class UsersController : ControllerBase
             {
                 return NotFound();
             }
-            return Ok(user);
+            return Ok(displayName ? user.Email : user);
         }
         catch (Exception ex)
         {

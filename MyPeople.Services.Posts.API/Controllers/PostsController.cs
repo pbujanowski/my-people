@@ -10,11 +10,15 @@ namespace MyPeople.Services.Posts.API.Controllers;
 public class PostsController : ControllerBase
 {
     private readonly IPostService _postService;
+    private readonly IUserService _userService;
     private readonly ILogger<PostsController> _logger;
 
-    public PostsController(IPostService postService, ILogger<PostsController> logger)
+    public PostsController(IPostService postService,
+        IUserService userService,
+        ILogger<PostsController> logger)
     {
         _postService = postService;
+        _userService = userService;
         _logger = logger;
     }
 
@@ -25,6 +29,10 @@ public class PostsController : ControllerBase
         try
         {
             var posts = await _postService.GetAllPostsAsync();
+            foreach (var post in posts)
+            {
+                post.UserDisplayName = await _userService.GetUserDisplayNameById(post.UserId);
+            }
             return Ok(posts);
         }
         catch (Exception ex)

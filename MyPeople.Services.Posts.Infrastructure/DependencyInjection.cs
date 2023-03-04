@@ -54,6 +54,10 @@ public static class DependencyInjection
     {
         services.AddScoped<IPostService, PostService>();
 
+        services.AddHttpClient("identity", cl => cl.BaseAddress = new Uri("http://localhost:4000/"));
+        services.AddScoped<IUserService>(sp =>
+            new UserService(sp.GetRequiredService<IHttpClientFactory>().CreateClient("identity")));
+
         return services;
     }
 
