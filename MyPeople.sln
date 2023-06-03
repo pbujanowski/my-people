@@ -21,6 +21,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyPeople.Identity.Infrastru
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyPeople.Identity.Domain", "MyPeople.Identity.Domain\MyPeople.Identity.Domain.csproj", "{AB205E6B-E829-49BB-83F6-ED56CF971152}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyPeople.Gateways.Web", "MyPeople.Gateways.Web\MyPeople.Gateways.Web.csproj", "{1F4EDB95-D1B3-4E13-B0CA-8DF589137C53}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -63,6 +65,10 @@ Global
 		{AB205E6B-E829-49BB-83F6-ED56CF971152}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AB205E6B-E829-49BB-83F6-ED56CF971152}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AB205E6B-E829-49BB-83F6-ED56CF971152}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1F4EDB95-D1B3-4E13-B0CA-8DF589137C53}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1F4EDB95-D1B3-4E13-B0CA-8DF589137C53}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1F4EDB95-D1B3-4E13-B0CA-8DF589137C53}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1F4EDB95-D1B3-4E13-B0CA-8DF589137C53}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
