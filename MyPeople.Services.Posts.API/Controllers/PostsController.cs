@@ -1,3 +1,4 @@
+using System.Security.Claims;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using MyPeople.Services.Posts.Application.Dtos;
@@ -43,12 +44,69 @@ public class PostsController : ControllerBase
     }
 
     [Authorize]
+    [HttpGet("{id}")]
+    public async Task<IActionResult> GetPostById(Guid id)
+    {
+        try
+        {
+            var post = await _postService.GetPostByIdAsync(id);
+            if (post is null)
+            {
+                return NotFound();
+            }
+
+            post.UserDisplayName = await _userService.GetUserDisplayNameById(post.UserId);
+
+            return Ok(post);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, ex.Message);
+            return StatusCode(500);
+        }
+    }
+
+    [Authorize]
     [HttpPost]
     public async Task<IActionResult> CreatePost(PostDto postDto)
     {
         try
         {
             var post = await _postService.CreatePostAsync(postDto);
+            return Ok(post);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, ex.Message);
+            return StatusCode(500);
+        }
+    }
+
+    [Authorize]
+    [HttpPut("{id}")]
+    public async Task<IActionResult> UpdatePost(Guid id, PostDto postDto)
+    {
+        try
+        {
+            if (id != postDto.Id)
+            {
+                return BadRequest("Sent post IDs in request are not the same.");
+            }
+
+            var found = await _postService.GetPostByIdAsync(id);
+            if (found is null)
+            {
+                return NotFound($"Post with ID '{id}' not found.");
+            }
+
+            var userId = User.FindFirstValue("sub");
+
+            if (found.UserId.ToString() != userId)
+            {
+                return Forbid();
+            }
+
+            var post = await _postService.UpdatePostAsync(postDto);
             return Ok(post);
         }
         catch (Exception ex)

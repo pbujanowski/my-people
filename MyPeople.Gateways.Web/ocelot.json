@@ -11,6 +11,18 @@
       ],
       "UpstreamPathTemplate": "/posts",
       "UpstreamHttpMethod": ["GET", "POST"]
+    },
+    {
+      "DownstreamPathTemplate": "/posts/{id}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 5010
+        }
+      ],
+      "UpstreamPathTemplate": "/posts/{id}",
+      "UpstreamHttpMethod": ["GET", "PUT"]
     }
   ],
   "GlobalConfiguration": {

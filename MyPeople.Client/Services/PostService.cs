@@ -26,4 +26,17 @@ public class PostService : IPostService
         return await _httpClient.GetFromJsonAsync<IEnumerable<PostDto>>("/posts")
             ?? Enumerable.Empty<PostDto>();
     }
+
+    public async Task<PostDto?> GetPostByIdAsync(Guid id)
+    {
+        return await _httpClient.GetFromJsonAsync<PostDto?>($"/posts/{id}");;
+    }
+
+    public async Task<PostDto?> UpdatePostAsync(PostDto postDto)
+    {
+        using var response = await _httpClient.PutAsJsonAsync($"/posts/{postDto.Id}", postDto);
+        return response.IsSuccessStatusCode
+            ? await response.Content.ReadFromJsonAsync<PostDto>()
+            : throw new Exception(response.ReasonPhrase);
+    }
 }

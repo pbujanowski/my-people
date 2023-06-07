@@ -31,4 +31,20 @@ public class PostService : IPostService
         var entities = await _repositories.Posts.FindAll().ToListAsync();
         return _mapper.Map<IEnumerable<PostDto>>(entities);
     }
+
+    public async Task<PostDto?> GetPostByIdAsync(Guid id)
+    {
+        var entity = await _repositories.Posts.FindByCondition(p => p.Id == id).FirstOrDefaultAsync();
+        return entity is null
+            ? null
+            : _mapper.Map<PostDto>(entity);
+    }
+
+    public async Task<PostDto?> UpdatePostAsync(PostDto postDto)
+    {
+        var entity = _mapper.Map<Post>(postDto);
+        var updatedEntity = _repositories.Posts.Update(entity);
+        await _repositories.SaveChangesAsync();
+        return _mapper.Map<PostDto>(updatedEntity);
+    }
 }

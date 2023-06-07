@@ -1,10 +1,13 @@
 @using MyPeople.Services.Posts.Application.Dtos
+@using MyPeople.Services.Posts.Application.Services
+@inject IPostService PostService
+@inject AuthenticationStateProvider AuthenticationStateProvider
 
 <MudStack>
 
     @foreach (var post in Posts)
     {
-        <PostItem Post="post" />
+        <PostItem Post="post" CurrentUserId="@GetCurrentUserId()" OnPostEdit="() => GetAllPostsAsync()" />
     }
 
 </MudStack>
@@ -12,4 +15,13 @@
 @code {
     [Parameter, EditorRequired]
     public IEnumerable<PostDto> Posts { get; set; } = default!;
+
+    private Guid GetCurrentUserId() =>
+        Guid.Parse(AuthenticationStateProvider.GetAuthenticationStateAsync().Result.User.FindFirst("sub")?.Value
+            ?? Guid.Empty.ToString());
+
+    private async Task GetAllPostsAsync()
+    {
+        Posts = await PostService.GetAllPostsAsync();
+    }
 }
