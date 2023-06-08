@@ -1,19 +1,23 @@
 @using MyPeople.Services.Posts.Application.Dtos
 @using MyPeople.Services.Posts.Application.Services
 @inject IPostService PostService
+@inject IDialogService DialogService
 
 <MudCard>
     <MudCardHeader>
         <CardHeaderContent>
-            <MudText Typo="Typo.h6">@Post.UserDisplayName</MudText>
-            @if (CheckIfPostIsOwnedByCurrentUser())
-            {
-                <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="() => EnableEditMode()">Edit</MudButton>
-            }
+            <MudStack>
+                <MudText Typo="Typo.h6">@Post.UserDisplayName</MudText>
+                <MudText Typo="Typo.caption">Created: @Post.CreatedAt</MudText>
+                @if (Post.UpdatedAt != Post.CreatedAt)
+                {
+                    <MudText Typo="Typo.caption">Edited: @Post.UpdatedAt</MudText>
+                }
+            </MudStack>
         </CardHeaderContent>
     </MudCardHeader>
-        @if (IsEditMode)
-        {
+    @if (IsEditMode)
+    {
             <MudCardContent>
                 <MudTextField T="string" Label="Write something..." Variant="Variant.Outlined" @bind-Text="@Post.Content"
                     Lines="5" />
@@ -22,13 +26,20 @@
                 <MudButton Color="Color.Primary" OnClick="() => EditPostAsync()">Send</MudButton>
                 <MudButton Color="Color.Default" OnClick="() => DisableEditMode(true)">Cancel</MudButton>
             </MudCardActions>
-        }
-        else
-        {
-            <MudCardContent>
-                <MudText Typo="Typo.body1">@Post.Content</MudText>
-            </MudCardContent>
-        }
+    }
+    else
+    {
+        <MudCardContent>
+            <MudText Typo="Typo.body1">@Post.Content</MudText>
+        </MudCardContent>
+    }
+    @if (CheckIfPostIsOwnedByCurrentUser())
+    {
+        <MudCardActions>
+            <MudButton Variant="Variant.Text" Color="Color.Primary" OnClick="() => EnableEditMode()">Edit</MudButton>
+            <MudButton Variant="Variant.Text" Color="Color.Error" OnClick="() => OnRemovePostClick()">Remove</MudButton>
+        </MudCardActions>
+    }
 </MudCard>
 
 @code {
@@ -42,6 +53,9 @@
 
     [Parameter, EditorRequired]
     public EventCallback OnPostEdit { get; set; }
+
+    [Parameter, EditorRequired]
+    public EventCallback OnPostRemove { get; set; }
 
     public bool IsEditMode { get; set; }
 
@@ -77,6 +91,25 @@
             };
         }
         IsEditMode = false;
+    }
+
+    private async Task OnRemovePostClick()
+    {
+        var result = await DialogService.ShowMessageBox(
+            title: "Confirmation",
+            message: "Do you really want to remove this post?",
+            yesText: "Remove",
+            noText: "Cancel");
+        if (result == true)
+        {
+            await RemovePostAsync();
+        }
+    }
+
+    private async Task RemovePostAsync()
+    {
+        await PostService.DeletePostAsync(Post);
+        await OnPostRemove.InvokeAsync();
     }
 
     private async Task EditPostAsync()

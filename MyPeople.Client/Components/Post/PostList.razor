@@ -7,7 +7,8 @@
 
     @foreach (var post in Posts)
     {
-        <PostItem Post="post" CurrentUserId="@GetCurrentUserId()" OnPostEdit="() => GetAllPostsAsync()" />
+        <PostItem Post="post" CurrentUserId="@GetCurrentUserId()"
+            OnPostEdit="() => GetAllPostsAsync()" OnPostRemove="() => GetAllPostsAsync()" />
     }
 
 </MudStack>

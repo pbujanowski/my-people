@@ -21,6 +21,14 @@ public class PostService : IPostService
             : throw new Exception(response.ReasonPhrase);
     }
 
+    public async Task<PostDto?> DeletePostAsync(PostDto postDto)
+    {
+        using var response = await _httpClient.DeleteAsync($"/posts/{postDto.Id}");
+        return response.IsSuccessStatusCode
+            ? await response.Content.ReadFromJsonAsync<PostDto>()
+            : throw new Exception(response.ReasonPhrase);
+    }
+
     public async Task<IEnumerable<PostDto>> GetAllPostsAsync()
     {
         return await _httpClient.GetFromJsonAsync<IEnumerable<PostDto>>("/posts")
@@ -29,7 +37,7 @@ public class PostService : IPostService
 
     public async Task<PostDto?> GetPostByIdAsync(Guid id)
     {
-        return await _httpClient.GetFromJsonAsync<PostDto?>($"/posts/{id}");;
+        return await _httpClient.GetFromJsonAsync<PostDto?>($"/posts/{id}");
     }
 
     public async Task<PostDto?> UpdatePostAsync(PostDto postDto)

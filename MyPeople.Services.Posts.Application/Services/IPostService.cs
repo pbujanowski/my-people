@@ -6,6 +6,8 @@ public interface IPostService
 {
     Task<PostDto?> CreatePostAsync(PostDto postDto);
 
+    Task<PostDto?> DeletePostAsync(PostDto postDto);
+
     Task<IEnumerable<PostDto>> GetAllPostsAsync();
 
     Task<PostDto?> GetPostByIdAsync(Guid id);

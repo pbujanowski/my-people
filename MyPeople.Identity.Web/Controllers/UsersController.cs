@@ -30,7 +30,7 @@ public class UsersController : ControllerBase
         }
         catch (Exception ex)
         {
-            _logger.LogError(ex, ex.Message);
+            _logger.LogError(ex, "Error during getting user by id. User ID: '{UserId}'.", userId);
             return StatusCode(500);
         }
     }

@@ -38,7 +38,7 @@ public class PostsController : ControllerBase
         }
         catch (Exception ex)
         {
-            _logger.LogError(ex, ex.Message);
+            _logger.LogError(ex, "Error during getting posts.");
             return StatusCode(500);
         }
     }
@@ -61,7 +61,7 @@ public class PostsController : ControllerBase
         }
         catch (Exception ex)
         {
-            _logger.LogError(ex, ex.Message);
+            _logger.LogError(ex, "Error during getting post by ID. Post ID: '{PostId}'.", id);
             return StatusCode(500);
         }
     }
@@ -77,7 +77,7 @@ public class PostsController : ControllerBase
         }
         catch (Exception ex)
         {
-            _logger.LogError(ex, ex.Message);
+            _logger.LogError(ex, "Error during creating post. Post: '{Post}'.", postDto);
             return StatusCode(500);
         }
     }
@@ -111,7 +111,36 @@ public class PostsController : ControllerBase
         }
         catch (Exception ex)
         {
-            _logger.LogError(ex, ex.Message);
+            _logger.LogError(ex, "Error during updating post. Post: '{Post}'.", postDto);
+            return StatusCode(500);
+        }
+    }
+
+    [Authorize]
+    [HttpDelete("{id}")]
+    public async Task<IActionResult> DeletePost(Guid id)
+    {
+        try
+        {
+            var found = await _postService.GetPostByIdAsync(id);
+            if (found is null)
+            {
+                return NotFound($"Post with ID '{id}' not found.");
+            }
+
+            var userId = User.FindFirstValue("sub");
+
+            if (found.UserId.ToString() != userId)
+            {
+                return Forbid();
+            }
+
+            var post = await _postService.DeletePostAsync(found);
+            return Ok(post);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error during deleting post. Post ID: '{PostId}'.", id);
             return StatusCode(500);
         }
     }

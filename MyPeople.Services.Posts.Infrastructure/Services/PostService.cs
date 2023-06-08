@@ -26,6 +26,14 @@ public class PostService : IPostService
         return _mapper.Map<PostDto>(createdEntity);
     }
 
+    public async Task<PostDto?> DeletePostAsync(PostDto postDto)
+    {
+        var entity = _mapper.Map<Post>(postDto);
+        var deletedEntity = _repositories.Posts.Delete(entity);
+        await _repositories.SaveChangesAsync();
+        return _mapper.Map<PostDto>(deletedEntity);
+    }
+
     public async Task<IEnumerable<PostDto>> GetAllPostsAsync()
     {
         var entities = await _repositories.Posts.FindAll().ToListAsync();
@@ -34,7 +42,10 @@ public class PostService : IPostService
 
     public async Task<PostDto?> GetPostByIdAsync(Guid id)
     {
-        var entity = await _repositories.Posts.FindByCondition(p => p.Id == id).FirstOrDefaultAsync();
+        var entity = await _repositories.Posts.FindByCondition(p => p.Id == id)
+            .AsNoTracking()
+            .FirstOrDefaultAsync();
+
         return entity is null
             ? null
             : _mapper.Map<PostDto>(entity);
