@@ -70,6 +70,19 @@ public class Worker : IHostedService
             }, cancellationToken);
         }
 
+        if (await applicationManager.FindByClientIdAsync("my-people-services-images", cancellationToken) is null)
+        {
+            await applicationManager.CreateAsync(new OpenIddictApplicationDescriptor
+            {
+                ClientId = "my-people-services-images",
+                ClientSecret = "8Z9Owkb4RZuhI7icUzGV",
+                Permissions =
+                {
+                    Permissions.Endpoints.Introspection
+                }
+            }, cancellationToken);
+        }
+
         if (await applicationManager.FindByClientIdAsync("my-people-client", cancellationToken) is null)
         {
             await applicationManager.CreateAsync(new OpenIddictApplicationDescriptor

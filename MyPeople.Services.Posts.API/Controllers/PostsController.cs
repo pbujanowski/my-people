@@ -1,8 +1,8 @@
-using System.Security.Claims;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using MyPeople.Services.Posts.Application.Dtos;
 using MyPeople.Services.Posts.Application.Services;
+using System.Security.Claims;
 
 namespace MyPeople.Services.Posts.API.Controllers;
 

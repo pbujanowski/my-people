@@ -23,6 +23,14 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyPeople.Identity.Domain", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyPeople.Gateways.Web", "MyPeople.Gateways.Web\MyPeople.Gateways.Web.csproj", "{1F4EDB95-D1B3-4E13-B0CA-8DF589137C53}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyPeople.Services.Images.Domain", "MyPeople.Services.Images.Domain\MyPeople.Services.Images.Domain.csproj", "{ACD00D2E-26AC-4E9A-80DA-7BE99A590C2A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyPeople.Services.Images.Application", "MyPeople.Services.Images.Application\MyPeople.Services.Images.Application.csproj", "{4BF9C5C3-5F9A-485B-A99F-32C3B7979542}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyPeople.Services.Images.Infrastructure", "MyPeople.Services.Images.Infrastructure\MyPeople.Services.Images.Infrastructure.csproj", "{CF88AD3B-6441-4CBF-AFE1-A4396979B03B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyPeople.Services.Images.API", "MyPeople.Services.Images.API\MyPeople.Services.Images.API.csproj", "{82B5D0A0-005D-401A-A6A2-8B62077DA9A3}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -69,6 +77,22 @@ Global
 		{1F4EDB95-D1B3-4E13-B0CA-8DF589137C53}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1F4EDB95-D1B3-4E13-B0CA-8DF589137C53}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1F4EDB95-D1B3-4E13-B0CA-8DF589137C53}.Release|Any CPU.Build.0 = Release|Any CPU
+		{ACD00D2E-26AC-4E9A-80DA-7BE99A590C2A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ACD00D2E-26AC-4E9A-80DA-7BE99A590C2A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ACD00D2E-26AC-4E9A-80DA-7BE99A590C2A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ACD00D2E-26AC-4E9A-80DA-7BE99A590C2A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4BF9C5C3-5F9A-485B-A99F-32C3B7979542}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4BF9C5C3-5F9A-485B-A99F-32C3B7979542}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4BF9C5C3-5F9A-485B-A99F-32C3B7979542}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4BF9C5C3-5F9A-485B-A99F-32C3B7979542}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CF88AD3B-6441-4CBF-AFE1-A4396979B03B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CF88AD3B-6441-4CBF-AFE1-A4396979B03B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CF88AD3B-6441-4CBF-AFE1-A4396979B03B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CF88AD3B-6441-4CBF-AFE1-A4396979B03B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{82B5D0A0-005D-401A-A6A2-8B62077DA9A3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{82B5D0A0-005D-401A-A6A2-8B62077DA9A3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{82B5D0A0-005D-401A-A6A2-8B62077DA9A3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{82B5D0A0-005D-401A-A6A2-8B62077DA9A3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

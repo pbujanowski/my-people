@@ -1,5 +1,4 @@
 using MyPeople.Services.Posts.Application.Services;
-using System.Net.Http.Json;
 
 namespace MyPeople.Services.Posts.Infrastructure.Services;
 

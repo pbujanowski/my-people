@@ -1,4 +1,3 @@
-using System.Linq.Expressions;
 using MyPeople.Services.Posts.Application.Repositories;
 using MyPeople.Services.Posts.Domain.Entities;
 using MyPeople.Services.Posts.Infrastructure.Data;

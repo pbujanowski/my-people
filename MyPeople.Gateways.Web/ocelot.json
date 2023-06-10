@@ -1,31 +1,55 @@
 {
-  "Routes": [
-    {
-      "DownstreamPathTemplate": "/posts",
-      "DownstreamScheme": "http",
-      "DownstreamHostAndPorts": [
+    "Routes": [
         {
-          "Host": "localhost",
-          "Port": 5010
-        }
-      ],
-      "UpstreamPathTemplate": "/posts",
-      "UpstreamHttpMethod": ["GET", "POST"]
-    },
-    {
-      "DownstreamPathTemplate": "/posts/{id}",
-      "DownstreamScheme": "http",
-      "DownstreamHostAndPorts": [
+            "DownstreamPathTemplate": "/posts",
+            "DownstreamScheme": "http",
+            "DownstreamHostAndPorts": [
+                {
+                    "Host": "localhost",
+                    "Port": 5010
+                }
+            ],
+            "UpstreamPathTemplate": "/posts",
+            "UpstreamHttpMethod": [ "GET", "POST" ]
+        },
         {
-          "Host": "localhost",
-          "Port": 5010
+            "DownstreamPathTemplate": "/posts/{id}",
+            "DownstreamScheme": "http",
+            "DownstreamHostAndPorts": [
+                {
+                    "Host": "localhost",
+                    "Port": 5010
+                }
+            ],
+            "UpstreamPathTemplate": "/posts/{id}",
+            "UpstreamHttpMethod": [ "GET", "PUT", "DELETE" ]
+        },
+        {
+            "DownstreamPathTemplate": "/images",
+            "DownstreamScheme": "http",
+            "DownstreamHostAndPorts": [
+                {
+                    "Host": "localhost",
+                    "Port": 5020
+                }
+            ],
+            "UpstreamPathTemplate": "/images",
+            "UpstreamHttpMethod": [ "POST" ]
+        },
+        {
+            "DownstreamPathTemplate": "/images/{id}",
+            "DownstreamScheme": "http",
+            "DownstreamHostAndPorts": [
+                {
+                    "Host": "localhost",
+                    "Port": 5020
+                }
+            ],
+            "UpstreamPathTemplate": "/images/{id}",
+            "UpstreamHttpMethod": [ "GET" ]
         }
-      ],
-      "UpstreamPathTemplate": "/posts/{id}",
-      "UpstreamHttpMethod": ["GET", "PUT", "DELETE"]
+    ],
+    "GlobalConfiguration": {
+        "BaseUrl": "http://localhost:5000"
     }
-  ],
-  "GlobalConfiguration": {
-    "BaseUrl": "http://localhost:5000"
-  }
 }
