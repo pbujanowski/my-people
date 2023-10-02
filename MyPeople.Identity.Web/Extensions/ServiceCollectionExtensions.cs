@@ -26,13 +26,13 @@ public static class ServiceCollectionExtensions
 
     public static IServiceCollection ConfigureCors(this IServiceCollection services)
     {
-        services.AddCors(options =>
-            options.AddDefaultPolicy(policy =>
-            {
-                policy.AllowAnyHeader()
-                    .AllowAnyMethod()
-                    .WithOrigins("http://localhost:3000");
-            }));
+        services.AddCors(
+            options =>
+                options.AddDefaultPolicy(policy =>
+                {
+                    policy.AllowAnyHeader().AllowAnyMethod().WithOrigins("http://localhost:3000");
+                })
+        );
 
         return services;
     }

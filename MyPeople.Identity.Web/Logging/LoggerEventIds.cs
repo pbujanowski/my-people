@@ -13,7 +13,8 @@ public static class LoggerEventIds
     /// <summary>
     /// Event id when a user is logged in by an external provider.
     /// </summary>
-    public static EventId UserLoggedInByExternalProvider => new(2, "UserLoggedInByExternalProvider");
+    public static EventId UserLoggedInByExternalProvider =>
+        new(2, "UserLoggedInByExternalProvider");
 
     /// <summary>
     /// Event id when a user is logged in.

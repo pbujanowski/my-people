@@ -6,26 +6,28 @@ public static class ServiceCollectionExtensions
 {
     public static IServiceCollection ConfigureCors(this IServiceCollection services)
     {
-        services.AddCors(options =>
-            options.AddDefaultPolicy(policy =>
-            {
-                policy.AllowAnyHeader()
-                    .AllowAnyMethod()
-                    .WithOrigins("http://localhost:3000");
-            }));
+        services.AddCors(
+            options =>
+                options.AddDefaultPolicy(policy =>
+                {
+                    policy.AllowAnyHeader().AllowAnyMethod().WithOrigins("http://localhost:3000");
+                })
+        );
 
         return services;
     }
 
     public static IServiceCollection ConfigureOpenIddict(this IServiceCollection services)
     {
-        services.AddOpenIddict()
+        services
+            .AddOpenIddict()
             .AddValidation(options =>
             {
                 options.SetIssuer("http://localhost:4000/");
                 options.AddAudiences("my-people-services-images");
 
-                options.UseIntrospection()
+                options
+                    .UseIntrospection()
                     .SetClientId("my-people-services-images")
                     .SetClientSecret("8Z9Owkb4RZuhI7icUzGV");
 

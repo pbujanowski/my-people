@@ -19,8 +19,6 @@ public class UserService : IUserService
         }
 
         using var response = await _httpClient.GetAsync($"/users/{userId}?displayName=true");
-        return response.IsSuccessStatusCode
-            ? await response.Content.ReadAsStringAsync()
-            : null;
+        return response.IsSuccessStatusCode ? await response.Content.ReadAsStringAsync() : null;
     }
 }

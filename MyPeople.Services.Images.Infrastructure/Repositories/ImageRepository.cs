@@ -7,7 +7,5 @@ namespace MyPeople.Services.Images.Infrastructure.Repositories;
 public class ImageRepository : RepositoryBase<Image>, IImageRepository
 {
     public ImageRepository(ApplicationDbContext dbContext)
-        : base(dbContext)
-    {
-    }
+        : base(dbContext) { }
 }

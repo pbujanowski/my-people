@@ -9,13 +9,10 @@ public class ImageConfiguration : EntityConfiguration<Image>
     {
         base.Configure(builder);
 
-        builder.Property(e => e.Name)
-            .IsRequired();
+        builder.Property(e => e.Name).IsRequired();
 
-        builder.Property(e => e.Extension)
-            .IsRequired();
+        builder.Property(e => e.Extension).IsRequired();
 
-        builder.Property(e => e.Content)
-            .IsRequired();
+        builder.Property(e => e.Content).IsRequired();
     }
 }

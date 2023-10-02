@@ -14,7 +14,10 @@ namespace MyPeople.Identity.Infrastructure;
 
 public static class DependencyInjection
 {
-    public static IServiceCollection ConfigureInfrastructure(this IServiceCollection services, IConfiguration configuration)
+    public static IServiceCollection ConfigureInfrastructure(
+        this IServiceCollection services,
+        IConfiguration configuration
+    )
     {
         services.ConfigureDbContext(configuration);
         services.ConfigureIdentity();
@@ -25,13 +28,22 @@ public static class DependencyInjection
         return services;
     }
 
-    private static IServiceCollection ConfigureDbContext(this IServiceCollection services, IConfiguration configuration)
+    private static IServiceCollection ConfigureDbContext(
+        this IServiceCollection services,
+        IConfiguration configuration
+    )
     {
         var connectionString = configuration.GetConnectionString("Application");
         services.AddDbContext<ApplicationDbContext>(options =>
         {
             options.UseSqlite(connectionString);
-            options.UseOpenIddict<ApplicationClient, ApplicationAuthorization, ApplicationScope, ApplicationToken, Guid>();
+            options.UseOpenIddict<
+                ApplicationClient,
+                ApplicationAuthorization,
+                ApplicationScope,
+                ApplicationToken,
+                Guid
+            >();
         });
 
         return services;
@@ -39,7 +51,10 @@ public static class DependencyInjection
 
     private static IServiceCollection ConfigureIdentity(this IServiceCollection services)
     {
-        services.AddIdentity<ApplicationUser, ApplicationRole>(options => options.SignIn.RequireConfirmedEmail = false)
+        services
+            .AddIdentity<ApplicationUser, ApplicationRole>(
+                options => options.SignIn.RequireConfirmedEmail = false
+            )
             .AddEntityFrameworkStores<ApplicationDbContext>()
             .AddDefaultTokenProviders();
 
@@ -48,38 +63,51 @@ public static class DependencyInjection
 
     private static IServiceCollection ConfigureOpenIddict(this IServiceCollection services)
     {
-        services.AddOpenIddict()
+        services
+            .AddOpenIddict()
             .AddCore(options =>
-             {
-                 options.UseEntityFrameworkCore()
-                        .UseDbContext<ApplicationDbContext>()
-                        .ReplaceDefaultEntities<ApplicationClient, ApplicationAuthorization, ApplicationScope, ApplicationToken, Guid>();
+            {
+                options
+                    .UseEntityFrameworkCore()
+                    .UseDbContext<ApplicationDbContext>()
+                    .ReplaceDefaultEntities<
+                        ApplicationClient,
+                        ApplicationAuthorization,
+                        ApplicationScope,
+                        ApplicationToken,
+                        Guid
+                    >();
 
-                 options.UseQuartz();
-             })
+                options.UseQuartz();
+            })
             .AddServer(options =>
             {
-                options.SetAuthorizationEndpointUris("authorize")
-                       .SetLogoutEndpointUris("logout")
-                       .SetIntrospectionEndpointUris("introspection")
-                       .SetTokenEndpointUris("token")
-                       .SetUserinfoEndpointUris("userinfo");
+                options
+                    .SetAuthorizationEndpointUris("authorize")
+                    .SetLogoutEndpointUris("logout")
+                    .SetIntrospectionEndpointUris("introspection")
+                    .SetTokenEndpointUris("token")
+                    .SetUserinfoEndpointUris("userinfo");
 
-                options.RegisterScopes(Scopes.Email, Scopes.Profile, Scopes.Roles, AppScopes.Services.Posts);
+                options.RegisterScopes(
+                    Scopes.Email,
+                    Scopes.Profile,
+                    Scopes.Roles,
+                    AppScopes.Services.Posts
+                );
 
-                options.AllowAuthorizationCodeFlow()
-                       .AllowRefreshTokenFlow();
+                options.AllowAuthorizationCodeFlow().AllowRefreshTokenFlow();
 
-                options.AddDevelopmentEncryptionCertificate()
-                       .AddDevelopmentSigningCertificate();
+                options.AddDevelopmentEncryptionCertificate().AddDevelopmentSigningCertificate();
 
-                options.UseAspNetCore()
-                       .EnableAuthorizationEndpointPassthrough()
-                       .EnableLogoutEndpointPassthrough()
-                       .EnableStatusCodePagesIntegration()
-                       .EnableTokenEndpointPassthrough()
-                       .EnableUserinfoEndpointPassthrough()
-                       .DisableTransportSecurityRequirement();
+                options
+                    .UseAspNetCore()
+                    .EnableAuthorizationEndpointPassthrough()
+                    .EnableLogoutEndpointPassthrough()
+                    .EnableStatusCodePagesIntegration()
+                    .EnableTokenEndpointPassthrough()
+                    .EnableUserinfoEndpointPassthrough()
+                    .DisableTransportSecurityRequirement();
             })
             .AddValidation(options =>
             {

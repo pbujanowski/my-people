@@ -28,13 +28,12 @@ namespace MyPeople.Services.Images.Infrastructure.Services
 
         public async Task<ImageDto?> GetImageByIdAsync(Guid id)
         {
-            var entity = await _repositories.Images.FindByCondition(p => p.Id == id)
+            var entity = await _repositories.Images
+                .FindByCondition(p => p.Id == id)
                 .AsNoTracking()
                 .FirstOrDefaultAsync();
 
-            return entity is null
-                ? null
-                : _mapper.Map<ImageDto>(entity);
+            return entity is null ? null : _mapper.Map<ImageDto>(entity);
         }
     }
 }

@@ -9,10 +9,8 @@ public class PostConfiguration : EntityConfiguration<Post>
     {
         base.Configure(builder);
 
-        builder.Property(e => e.UserId)
-            .IsRequired();
+        builder.Property(e => e.UserId).IsRequired();
 
-        builder.Property(e => e.Content)
-            .IsRequired();
+        builder.Property(e => e.Content).IsRequired();
     }
 }

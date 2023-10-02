@@ -14,10 +14,28 @@ public sealed class FormValueRequiredAttribute : ActionMethodSelectorAttribute
 
     public override bool IsValidForRequest(RouteContext context, ActionDescriptor action)
     {
-        if (string.Equals(context.HttpContext.Request.Method, "GET", StringComparison.OrdinalIgnoreCase) ||
-            string.Equals(context.HttpContext.Request.Method, "HEAD", StringComparison.OrdinalIgnoreCase) ||
-            string.Equals(context.HttpContext.Request.Method, "DELETE", StringComparison.OrdinalIgnoreCase) ||
-            string.Equals(context.HttpContext.Request.Method, "TRACE", StringComparison.OrdinalIgnoreCase))
+        if (
+            string.Equals(
+                context.HttpContext.Request.Method,
+                "GET",
+                StringComparison.OrdinalIgnoreCase
+            )
+            || string.Equals(
+                context.HttpContext.Request.Method,
+                "HEAD",
+                StringComparison.OrdinalIgnoreCase
+            )
+            || string.Equals(
+                context.HttpContext.Request.Method,
+                "DELETE",
+                StringComparison.OrdinalIgnoreCase
+            )
+            || string.Equals(
+                context.HttpContext.Request.Method,
+                "TRACE",
+                StringComparison.OrdinalIgnoreCase
+            )
+        )
         {
             return false;
         }
@@ -27,7 +45,12 @@ public sealed class FormValueRequiredAttribute : ActionMethodSelectorAttribute
             return false;
         }
 
-        if (!context.HttpContext.Request.ContentType.StartsWith("application/x-www-form-urlencoded", StringComparison.OrdinalIgnoreCase))
+        if (
+            !context.HttpContext.Request.ContentType.StartsWith(
+                "application/x-www-form-urlencoded",
+                StringComparison.OrdinalIgnoreCase
+            )
+        )
         {
             return false;
         }

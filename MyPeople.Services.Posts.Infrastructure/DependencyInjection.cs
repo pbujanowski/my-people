@@ -15,7 +15,10 @@ namespace MyPeople.Services.Posts.Infrastructure;
 
 public static class DependencyInjection
 {
-    public static IServiceCollection ConfigureInfrastructure(this IServiceCollection services, IConfiguration configuration)
+    public static IServiceCollection ConfigureInfrastructure(
+        this IServiceCollection services,
+        IConfiguration configuration
+    )
     {
         services.ConfigureDbContext(configuration);
         services.ConfigureRepositories();
@@ -26,7 +29,9 @@ public static class DependencyInjection
         return services;
     }
 
-    public static async Task<IApplicationBuilder> UseInfrastructureAsync(this IApplicationBuilder app)
+    public static async Task<IApplicationBuilder> UseInfrastructureAsync(
+        this IApplicationBuilder app
+    )
     {
         using var scope = app.ApplicationServices.CreateScope();
         using var dbContext = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
@@ -35,10 +40,14 @@ public static class DependencyInjection
         return app;
     }
 
-    private static IServiceCollection ConfigureDbContext(this IServiceCollection services, IConfiguration configuration)
+    private static IServiceCollection ConfigureDbContext(
+        this IServiceCollection services,
+        IConfiguration configuration
+    )
     {
-        services.AddDbContext<ApplicationDbContext>(options =>
-            options.UseSqlite(configuration.GetConnectionString("Application")));
+        services.AddDbContext<ApplicationDbContext>(
+            options => options.UseSqlite(configuration.GetConnectionString("Application"))
+        );
 
         return services;
     }
@@ -54,9 +63,16 @@ public static class DependencyInjection
     {
         services.AddScoped<IPostService, PostService>();
 
-        services.AddHttpClient("identity", cl => cl.BaseAddress = new Uri("http://localhost:4000/"));
-        services.AddScoped<IUserService>(sp =>
-            new UserService(sp.GetRequiredService<IHttpClientFactory>().CreateClient("identity")));
+        services.AddHttpClient(
+            "identity",
+            cl => cl.BaseAddress = new Uri("http://localhost:4000/")
+        );
+        services.AddScoped<IUserService>(
+            sp =>
+                new UserService(
+                    sp.GetRequiredService<IHttpClientFactory>().CreateClient("identity")
+                )
+        );
 
         return services;
     }

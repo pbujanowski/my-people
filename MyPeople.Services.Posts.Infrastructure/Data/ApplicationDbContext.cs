@@ -9,9 +9,7 @@ public class ApplicationDbContext : DbContext
     public DbSet<Post> Posts => Set<Post>();
 
     public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
-        : base(options)
-    {
-    }
+        : base(options) { }
 
     public override int SaveChanges()
     {
@@ -27,7 +25,10 @@ public class ApplicationDbContext : DbContext
         return base.SaveChanges(acceptAllChangesOnSuccess);
     }
 
-    public override Task<int> SaveChangesAsync(bool acceptAllChangesOnSuccess, CancellationToken cancellationToken = default)
+    public override Task<int> SaveChangesAsync(
+        bool acceptAllChangesOnSuccess,
+        CancellationToken cancellationToken = default
+    )
     {
         SetProperties();
 
@@ -50,10 +51,13 @@ public class ApplicationDbContext : DbContext
 
     private void SetProperties()
     {
-        var entries = ChangeTracker.Entries()
-            .Where(e => e.Entity is Entity
-                && (e.State == EntityState.Added
-                    || e.State == EntityState.Modified));
+        var entries = ChangeTracker
+            .Entries()
+            .Where(
+                e =>
+                    e.Entity is Entity
+                    && (e.State == EntityState.Added || e.State == EntityState.Modified)
+            );
 
         var now = DateTime.Now;
 

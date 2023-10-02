@@ -11,10 +11,8 @@ public class EntityConfiguration<TEntity> : IEntityTypeConfiguration<TEntity>
     {
         builder.HasKey(e => e.Id);
 
-        builder.Property(e => e.CreatedAt)
-            .IsRequired();
+        builder.Property(e => e.CreatedAt).IsRequired();
 
-        builder.Property(e => e.UpdatedAt)
-            .IsRequired();
+        builder.Property(e => e.UpdatedAt).IsRequired();
     }
 }

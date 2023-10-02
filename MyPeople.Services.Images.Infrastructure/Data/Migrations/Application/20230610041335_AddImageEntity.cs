@@ -12,26 +12,27 @@ namespace MyPeople.Services.Images.Infrastructure.Data.Migrations.Application
         {
             migrationBuilder.CreateTable(
                 name: "Images",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(type: "TEXT", nullable: false),
-                    Name = table.Column<string>(type: "TEXT", nullable: false),
-                    Extension = table.Column<string>(type: "TEXT", nullable: false),
-                    Content = table.Column<string>(type: "TEXT", nullable: false),
-                    CreatedAt = table.Column<DateTime>(type: "TEXT", nullable: false),
-                    UpdatedAt = table.Column<DateTime>(type: "TEXT", nullable: false)
-                },
+                columns: table =>
+                    new
+                    {
+                        Id = table.Column<Guid>(type: "TEXT", nullable: false),
+                        Name = table.Column<string>(type: "TEXT", nullable: false),
+                        Extension = table.Column<string>(type: "TEXT", nullable: false),
+                        Content = table.Column<string>(type: "TEXT", nullable: false),
+                        CreatedAt = table.Column<DateTime>(type: "TEXT", nullable: false),
+                        UpdatedAt = table.Column<DateTime>(type: "TEXT", nullable: false)
+                    },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Images", x => x.Id);
-                });
+                }
+            );
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropTable(
-                name: "Images");
+            migrationBuilder.DropTable(name: "Images");
         }
     }
 }

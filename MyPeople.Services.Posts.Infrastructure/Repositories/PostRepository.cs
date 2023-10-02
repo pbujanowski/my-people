@@ -7,7 +7,5 @@ namespace MyPeople.Services.Posts.Infrastructure.Repositories;
 public class PostRepository : RepositoryBase<Post>, IPostRepository
 {
     public PostRepository(ApplicationDbContext dbContext)
-        : base(dbContext)
-    {
-    }
+        : base(dbContext) { }
 }

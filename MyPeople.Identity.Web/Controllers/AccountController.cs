@@ -13,9 +13,11 @@ public class AccountController : Controller
     private readonly UserManager<ApplicationUser> _userManager;
     private readonly ILogger<AccountController> _logger;
 
-    public AccountController(SignInManager<ApplicationUser> signInManager,
+    public AccountController(
+        SignInManager<ApplicationUser> signInManager,
         UserManager<ApplicationUser> userManager,
-        ILogger<AccountController> logger)
+        ILogger<AccountController> logger
+    )
     {
         _signInManager = signInManager;
         _userManager = userManager;
@@ -29,11 +31,7 @@ public class AccountController : Controller
 
         await HttpContext.SignOutAsync(IdentityConstants.ExternalScheme);
 
-        return View(new LoginViewModel
-        {
-            Input = new LoginInputModel(),
-            ReturnUrl = returnUrl
-        });
+        return View(new LoginViewModel { Input = new LoginInputModel(), ReturnUrl = returnUrl });
     }
 
     [HttpPost]
@@ -43,10 +41,12 @@ public class AccountController : Controller
 
         if (ModelState.IsValid)
         {
-            var result = await _signInManager.PasswordSignInAsync(model.Input.Email,
+            var result = await _signInManager.PasswordSignInAsync(
+                model.Input.Email,
                 model.Input.Password,
                 model.Input.RememberMe,
-                lockoutOnFailure: false);
+                lockoutOnFailure: false
+            );
 
             if (result.Succeeded)
             {
@@ -55,7 +55,10 @@ public class AccountController : Controller
             }
             if (result.RequiresTwoFactor)
             {
-                return RedirectToAction("LoginWith2fa", new { ReturnUrl = returnUrl, model.Input.RememberMe });
+                return RedirectToAction(
+                    "LoginWith2fa",
+                    new { ReturnUrl = returnUrl, model.Input.RememberMe }
+                );
             }
             if (result.IsLockedOut)
             {
@@ -77,10 +80,7 @@ public class AccountController : Controller
     {
         returnUrl ??= Url.Content("~/");
 
-        return View(new RegisterViewModel
-        {
-            ReturnUrl = returnUrl
-        });
+        return View(new RegisterViewModel { ReturnUrl = returnUrl });
     }
 
     [HttpPost]
@@ -101,7 +101,10 @@ public class AccountController : Controller
 
             if (result.Succeeded)
             {
-                _logger.LogInformation(LoggerEventIds.UserCreated, "User created a new account with password.");
+                _logger.LogInformation(
+                    LoggerEventIds.UserCreated,
+                    "User created a new account with password."
+                );
 
                 // var userId = await _userManager.GetUserIdAsync(user);
                 // var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
@@ -117,7 +120,10 @@ public class AccountController : Controller
 
                 if (_userManager.Options.SignIn.RequireConfirmedAccount)
                 {
-                    return RedirectToAction("RegisterConfirmation", new { email = model.Input.Email, returnUrl });
+                    return RedirectToAction(
+                        "RegisterConfirmation",
+                        new { email = model.Input.Email, returnUrl }
+                    );
                 }
                 else
                 {

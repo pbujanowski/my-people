@@ -42,13 +42,12 @@ public class PostService : IPostService
 
     public async Task<PostDto?> GetPostByIdAsync(Guid id)
     {
-        var entity = await _repositories.Posts.FindByCondition(p => p.Id == id)
+        var entity = await _repositories.Posts
+            .FindByCondition(p => p.Id == id)
             .AsNoTracking()
             .FirstOrDefaultAsync();
 
-        return entity is null
-            ? null
-            : _mapper.Map<PostDto>(entity);
+        return entity is null ? null : _mapper.Map<PostDto>(entity);
     }
 
     public async Task<PostDto?> UpdatePostAsync(PostDto postDto)

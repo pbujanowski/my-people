@@ -14,9 +14,11 @@ public class PostsController : ControllerBase
     private readonly IUserService _userService;
     private readonly ILogger<PostsController> _logger;
 
-    public PostsController(IPostService postService,
+    public PostsController(
+        IPostService postService,
         IUserService userService,
-        ILogger<PostsController> logger)
+        ILogger<PostsController> logger
+    )
     {
         _postService = postService;
         _userService = userService;

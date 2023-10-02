@@ -10,7 +10,10 @@ public class UsersController : ControllerBase
     private readonly IApplicationUserService _applicationUserService;
     private readonly ILogger<UsersController> _logger;
 
-    public UsersController(IApplicationUserService applicationUserService, ILogger<UsersController> logger)
+    public UsersController(
+        IApplicationUserService applicationUserService,
+        ILogger<UsersController> logger
+    )
     {
         _applicationUserService = applicationUserService;
         _logger = logger;
