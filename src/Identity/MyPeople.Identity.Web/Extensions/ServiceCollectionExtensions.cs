@@ -1,3 +1,6 @@
+using MyPeople.Common.Configuration.Configurations;
+using MyPeople.Common.Configuration.Exceptions;
+
 namespace MyPeople.Identity.Web.Extensions;
 
 public static class ServiceCollectionExtensions
@@ -24,14 +27,29 @@ public static class ServiceCollectionExtensions
         return services;
     }
 
-    public static IServiceCollection ConfigureCors(this IServiceCollection services)
+    public static IServiceCollection ConfigureCors(
+        this IServiceCollection services,
+        IConfiguration configuration
+    )
     {
+        var corsConfiguration =
+            configuration.GetSection("Cors").Get<CorsConfiguration>()
+            ?? throw new ConfigurationException("Cors");
+
         services.AddCors(
             options =>
-                options.AddDefaultPolicy(policy =>
-                {
-                    policy.AllowAnyHeader().AllowAnyMethod().WithOrigins("http://localhost:3000");
-                })
+                options.AddDefaultPolicy(
+                    policy =>
+                        policy
+                            .AllowAnyHeader()
+                            .AllowAnyMethod()
+                            .WithOrigins(
+                                corsConfiguration.Origins
+                                    ?? throw new ConfigurationException(
+                                        nameof(corsConfiguration.Origins)
+                                    )
+                            )
+                )
         );
 
         return services;

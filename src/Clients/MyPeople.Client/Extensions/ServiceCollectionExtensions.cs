@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Components.WebAssembly.Authentication;
 using MyPeople.Client.Services;
+using MyPeople.Common.Configuration.Exceptions;
 using MyPeople.Services.Posts.Application.Services;
 
 namespace MyPeople.Client.Extensions;
@@ -18,18 +19,22 @@ public static class ServiceCollectionExtensions
         return services;
     }
 
-    public static IServiceCollection ConfigureHttpClients(this IServiceCollection services)
+    public static IServiceCollection ConfigureHttpClients(
+        this IServiceCollection services,
+        IConfiguration configuration
+    )
     {
+        var gatewayWebUrl =
+            configuration.GetValue<string>("Gateways:Web:Url")
+            ?? throw new ConfigurationException("Gateways:Web:Url");
+
         services
-            .AddHttpClient(
-                "services.posts",
-                cl => cl.BaseAddress = new Uri("http://localhost:5000")
-            )
+            .AddHttpClient("services.posts", cl => cl.BaseAddress = new Uri(gatewayWebUrl))
             .AddHttpMessageHandler(
                 sp =>
                     sp.GetRequiredService<AuthorizationMessageHandler>()
                         .ConfigureHandler(
-                            authorizedUrls: new[] { "http://localhost:5000" },
+                            authorizedUrls: new[] { gatewayWebUrl },
                             scopes: new[] { "services.posts" }
                         )
             );

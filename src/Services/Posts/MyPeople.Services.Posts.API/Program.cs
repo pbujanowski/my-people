@@ -1,12 +1,12 @@
 using Microsoft.IdentityModel.Logging;
-using MyPeople.Services.Posts.API.Extensions;
+using MyPeople.Services.Common.Extensions;
 using MyPeople.Services.Posts.Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.ConfigureInfrastructure(builder.Configuration);
-builder.Services.ConfigureCors();
-builder.Services.ConfigureOpenIddict();
+builder.Services.ConfigureCors(builder.Configuration);
+builder.Services.ConfigureOpenIddict(builder.Configuration);
 builder.Services.ConfigureAuthentication();
 builder.Services.AddAuthorization();
 builder.Services.AddControllers();

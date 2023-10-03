@@ -22,10 +22,7 @@ namespace MyPeople.Services.Images.Infrastructure.Data.Migrations.Application
                         CreatedAt = table.Column<DateTime>(type: "TEXT", nullable: false),
                         UpdatedAt = table.Column<DateTime>(type: "TEXT", nullable: false)
                     },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Images", x => x.Id);
-                }
+                constraints: table => table.PrimaryKey("PK_Images", x => x.Id)
             );
         }
 

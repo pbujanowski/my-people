@@ -6,7 +6,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.ConfigureInfrastructure(builder.Configuration);
 builder.Services.ConfigureCookiePolicy();
-builder.Services.ConfigureCors();
+builder.Services.ConfigureCors(builder.Configuration);
 builder.Services.ConfigureApplicationCookie();
 
 builder.Services.AddControllersWithViews();

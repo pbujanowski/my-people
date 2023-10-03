@@ -7,7 +7,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Ocelot" Version="19.0.2" />
+    <PackageReference Include="Ocelot" Version="19.0.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Common\MyPeople.Common.Configuration\MyPeople.Common.Configuration.csproj" />
   </ItemGroup>
 
 </Project>
