@@ -3,7 +3,7 @@ using MyPeople.Client.Services;
 using MyPeople.Common.Configuration.Exceptions;
 using MyPeople.Services.Posts.Application.Services;
 
-namespace MyPeople.Client.Extensions;
+namespace MyPeople.Client.Web.Extensions;
 
 public static class ServiceCollectionExtensions
 {

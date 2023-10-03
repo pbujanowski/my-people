@@ -7,7 +7,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{E75479D9-4DF
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Clients", "Clients", "{15C403AD-BF02-4462-85F3-7F567A233EDB}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MyPeople.Client", "src\Clients\MyPeople.Client\MyPeople.Client.csproj", "{00B58DAA-92F6-435D-9D0B-8543AA9A827D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MyPeople.Client.Web", "src\Clients\MyPeople.Client.Web\MyPeople.Client.Web.csproj", "{00B58DAA-92F6-435D-9D0B-8543AA9A827D}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Gateways", "Gateways", "{5A8D5906-D58A-4F09-ACB0-E61725FE8292}"
 EndProject
