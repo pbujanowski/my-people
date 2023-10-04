@@ -2,7 +2,7 @@ using MyPeople.Services.Posts.Application.Dtos;
 using MyPeople.Services.Posts.Application.Services;
 using System.Net.Http.Json;
 
-namespace MyPeople.Client.Web.Services;
+namespace MyPeople.Client.Infrastructure.Services;
 
 public class PostService : IPostService
 {

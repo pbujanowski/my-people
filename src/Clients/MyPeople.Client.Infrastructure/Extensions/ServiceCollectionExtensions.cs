@@ -1,9 +1,12 @@
-using Microsoft.AspNetCore.Components.WebAssembly.Authentication;
-using MyPeople.Client.Services;
+﻿using Microsoft.AspNetCore.Components.WebAssembly.Authentication;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using MyPeople.Client.Infrastructure.Services;
 using MyPeople.Common.Configuration.Exceptions;
+using MyPeople.Services.Images.Application.Services;
 using MyPeople.Services.Posts.Application.Services;
 
-namespace MyPeople.Client.Web.Extensions;
+namespace MyPeople.Client.Infrastructure.Extensions;
 
 public static class ServiceCollectionExtensions
 {
@@ -29,6 +32,17 @@ public static class ServiceCollectionExtensions
             ?? throw new ConfigurationException("Gateways:Web:Url");
 
         services
+            .AddHttpClient("services.images", cl => cl.BaseAddress = new Uri(gatewayWebUrl))
+            .AddHttpMessageHandler(
+                sp =>
+                    sp.GetRequiredService<AuthorizationMessageHandler>()
+                        .ConfigureHandler(
+                            authorizedUrls: new[] { gatewayWebUrl },
+                            scopes: new[] { "services.images" }
+                        )
+            );
+
+        services
             .AddHttpClient("services.posts", cl => cl.BaseAddress = new Uri(gatewayWebUrl))
             .AddHttpMessageHandler(
                 sp =>
@@ -44,6 +58,13 @@ public static class ServiceCollectionExtensions
 
     public static IServiceCollection ConfigureScoped(this IServiceCollection services)
     {
+        services.AddScoped<IImageService>(
+            sp =>
+                new ImageService(
+                    sp.GetRequiredService<IHttpClientFactory>().CreateClient("services.images")
+                )
+        );
+
         services.AddScoped<IPostService>(
             sp =>
                 new PostService(
