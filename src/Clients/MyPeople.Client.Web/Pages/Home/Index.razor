@@ -1,7 +1,7 @@
 ﻿@page "/"
 @using MyPeople.Client.Web.Components.Post
-@using MyPeople.Services.Posts.Application.Dtos
-@using MyPeople.Services.Posts.Application.Services
+@using MyPeople.Common.Abstractions.Services;
+@using MyPeople.Common.Models.Dtos;
 @inject IPostService PostService
 @inject AuthenticationStateProvider AuthenticationStateProvider
 @attribute [Authorize]
@@ -16,7 +16,7 @@
 @code {
     public IEnumerable<PostDto> Posts { get; set; } = Enumerable.Empty<PostDto>();
 
-    public PostDto NewPost { get; set; } = new();
+    public CreatePostDto NewPost { get; set; } = new();
 
     protected override async Task OnInitializedAsync()
     {
@@ -27,11 +27,11 @@
         NewPost = await CreateNewPostAsync();
     }
 
-    private async Task<PostDto> CreateNewPostAsync()
+    private async Task<CreatePostDto> CreateNewPostAsync()
     {
         var state = await AuthenticationStateProvider.GetAuthenticationStateAsync();
         var userId = state?.User?.FindFirst("sub")?.Value;
-        return new PostDto { UserId = userId is null ? null : new Guid(userId) };
+        return new CreatePostDto { UserId = userId is null ? null : new Guid(userId) };
     }
 
     private async Task GetPostsAsync()

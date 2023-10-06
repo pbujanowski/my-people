@@ -2,7 +2,7 @@ using AutoMapper;
 using MyPeople.Common.Models.Dtos;
 using MyPeople.Services.Posts.Domain.Entities;
 
-namespace MyPeople.Services.Posts.Infrastructure.Mappings;
+namespace MyPeople.Services.Posts.Application.Mappings;
 
 public class MappingProfile : Profile
 {

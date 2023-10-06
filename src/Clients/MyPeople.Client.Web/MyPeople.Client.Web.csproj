@@ -14,7 +14,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\Common\MyPeople.Common.Configuration\MyPeople.Common.Configuration.csproj" />
-    <ProjectReference Include="..\..\Services\Posts\MyPeople.Services.Posts.Application\MyPeople.Services.Posts.Application.csproj" />
     <ProjectReference Include="..\MyPeople.Client.Infrastructure\MyPeople.Client.Infrastructure.csproj" />
   </ItemGroup>
 

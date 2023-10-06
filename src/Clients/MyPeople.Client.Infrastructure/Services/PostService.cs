@@ -1,5 +1,5 @@
-using MyPeople.Services.Posts.Application.Dtos;
-using MyPeople.Services.Posts.Application.Services;
+using MyPeople.Common.Abstractions.Services;
+using MyPeople.Common.Models.Dtos;
 using System.Net.Http.Json;
 
 namespace MyPeople.Client.Infrastructure.Services;
@@ -13,7 +13,7 @@ public class PostService : IPostService
         _httpClient = httpClient;
     }
 
-    public async Task<PostDto?> CreatePostAsync(PostDto postDto)
+    public async Task<PostDto?> CreatePostAsync(CreatePostDto postDto)
     {
         using var response = await _httpClient.PostAsJsonAsync("/posts", postDto);
         return response.IsSuccessStatusCode
@@ -21,7 +21,7 @@ public class PostService : IPostService
             : throw new Exception(response.ReasonPhrase);
     }
 
-    public async Task<PostDto?> DeletePostAsync(PostDto postDto)
+    public async Task<PostDto?> DeletePostAsync(DeletePostDto postDto)
     {
         using var response = await _httpClient.DeleteAsync($"/posts/{postDto.Id}");
         return response.IsSuccessStatusCode
@@ -40,7 +40,7 @@ public class PostService : IPostService
         return await _httpClient.GetFromJsonAsync<PostDto?>($"/posts/{id}");
     }
 
-    public async Task<PostDto?> UpdatePostAsync(PostDto postDto)
+    public async Task<PostDto?> UpdatePostAsync(UpdatePostDto postDto)
     {
         using var response = await _httpClient.PutAsJsonAsync($"/posts/{postDto.Id}", postDto);
         return response.IsSuccessStatusCode

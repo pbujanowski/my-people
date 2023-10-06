@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using MyPeople.Services.Posts.Application.Dtos;
+using MyPeople.Common.Abstractions.Services;
+using MyPeople.Common.Models.Dtos;
 using MyPeople.Services.Posts.Application.Services;
 using System.Security.Claims;
 
@@ -70,7 +71,7 @@ public class PostsController : ControllerBase
 
     [Authorize]
     [HttpPost]
-    public async Task<IActionResult> CreatePost(PostDto postDto)
+    public async Task<IActionResult> CreatePost(CreatePostDto postDto)
     {
         try
         {
@@ -86,7 +87,7 @@ public class PostsController : ControllerBase
 
     [Authorize]
     [HttpPut("{id}")]
-    public async Task<IActionResult> UpdatePost(Guid id, PostDto postDto)
+    public async Task<IActionResult> UpdatePost(Guid id, UpdatePostDto postDto)
     {
         try
         {
@@ -137,7 +138,9 @@ public class PostsController : ControllerBase
                 return Forbid();
             }
 
-            var post = await _postService.DeletePostAsync(found);
+            var deletePostDto = new DeletePostDto { Id = found.Id, UserId = found.UserId };
+
+            var post = await _postService.DeletePostAsync(deletePostDto);
             return Ok(post);
         }
         catch (Exception ex)

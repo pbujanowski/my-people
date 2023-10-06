@@ -1,5 +1,6 @@
-@using MyPeople.Services.Posts.Application.Dtos
-@using MyPeople.Services.Posts.Application.Services
+@using MyPeople.Common.Abstractions.Services;
+@using MyPeople.Common.Models.Dtos;
+
 @inject IPostService PostService
 @inject IDialogService DialogService
 
@@ -108,13 +109,30 @@
 
     private async Task RemovePostAsync()
     {
-        await PostService.DeletePostAsync(Post);
+        var deletePostDto = new DeletePostDto
+        {
+            Id = Post.Id,
+            UserId =
+            Post.UserId
+        };
+
+        await PostService.DeletePostAsync(deletePostDto);
         await OnPostRemove.InvokeAsync();
     }
 
     private async Task EditPostAsync()
     {
-        await PostService.UpdatePostAsync(Post);
+        var updatePostDto = new UpdatePostDto
+        {
+            Id = Post.Id,
+            CreatedAt = Post.CreatedAt,
+            UpdatedAt = Post.UpdatedAt,
+            UserId = Post.UserId,
+            UserDisplayName = Post.UserDisplayName,
+            Content = Post.Content
+        };
+
+        await PostService.UpdatePostAsync(updatePostDto);
         await OnPostEdit.InvokeAsync();
         DisableEditMode(false);
     }

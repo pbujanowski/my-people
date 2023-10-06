@@ -1,7 +1,7 @@
 using AutoMapper;
 using Microsoft.EntityFrameworkCore;
-using MyPeople.Services.Posts.Application.Dtos;
-using MyPeople.Services.Posts.Application.Services;
+using MyPeople.Common.Abstractions.Services;
+using MyPeople.Common.Models.Dtos;
 using MyPeople.Services.Posts.Application.Wrappers;
 using MyPeople.Services.Posts.Domain.Entities;
 
@@ -18,7 +18,7 @@ public class PostService : IPostService
         _mapper = mapper;
     }
 
-    public async Task<PostDto?> CreatePostAsync(PostDto postDto)
+    public async Task<PostDto?> CreatePostAsync(CreatePostDto postDto)
     {
         var entity = _mapper.Map<Post>(postDto);
         var createdEntity = _repositories.Posts.Create(entity);
@@ -26,7 +26,7 @@ public class PostService : IPostService
         return _mapper.Map<PostDto>(createdEntity);
     }
 
-    public async Task<PostDto?> DeletePostAsync(PostDto postDto)
+    public async Task<PostDto?> DeletePostAsync(DeletePostDto postDto)
     {
         var entity = _mapper.Map<Post>(postDto);
         var deletedEntity = _repositories.Posts.Delete(entity);
@@ -50,7 +50,7 @@ public class PostService : IPostService
         return entity is null ? null : _mapper.Map<PostDto>(entity);
     }
 
-    public async Task<PostDto?> UpdatePostAsync(PostDto postDto)
+    public async Task<PostDto?> UpdatePostAsync(UpdatePostDto postDto)
     {
         var entity = _mapper.Map<Post>(postDto);
         var updatedEntity = _repositories.Posts.Update(entity);

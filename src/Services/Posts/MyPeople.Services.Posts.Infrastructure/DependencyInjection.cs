@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using MyPeople.Common.Abstractions.Services;
 using MyPeople.Services.Posts.Application.Repositories;
 using MyPeople.Services.Posts.Application.Services;
 using MyPeople.Services.Posts.Application.Wrappers;
@@ -9,7 +10,6 @@ using MyPeople.Services.Posts.Infrastructure.Data;
 using MyPeople.Services.Posts.Infrastructure.Repositories;
 using MyPeople.Services.Posts.Infrastructure.Services;
 using MyPeople.Services.Posts.Infrastructure.Wrappers;
-using System.Reflection;
 
 namespace MyPeople.Services.Posts.Infrastructure;
 
@@ -24,7 +24,6 @@ public static class DependencyInjection
         services.ConfigureRepositories();
         services.ConfigureServices();
         services.ConfigureWrappers();
-        services.ConfigureAutoMapper();
 
         return services;
     }
@@ -80,14 +79,6 @@ public static class DependencyInjection
     private static IServiceCollection ConfigureWrappers(this IServiceCollection services)
     {
         services.AddScoped<IRepositoryWrapper, RepositoryWrapper>();
-
-        return services;
-    }
-
-    private static IServiceCollection ConfigureAutoMapper(this IServiceCollection services)
-    {
-        var assembly = Assembly.GetExecutingAssembly();
-        services.AddAutoMapper(assembly);
 
         return services;
     }

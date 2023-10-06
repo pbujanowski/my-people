@@ -13,8 +13,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\Common\MyPeople.Common.Abstractions\MyPeople.Common.Abstractions.csproj" />
     <ProjectReference Include="..\..\Common\MyPeople.Common.Configuration\MyPeople.Common.Configuration.csproj" />
-    <ProjectReference Include="..\..\Services\Posts\MyPeople.Services.Posts.Application\MyPeople.Services.Posts.Application.csproj" />
+    <ProjectReference Include="..\..\Common\MyPeople.Common.Models\MyPeople.Common.Models.csproj" />
   </ItemGroup>
 
 </Project>

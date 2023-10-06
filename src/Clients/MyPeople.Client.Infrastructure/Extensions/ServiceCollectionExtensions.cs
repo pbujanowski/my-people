@@ -2,8 +2,8 @@
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using MyPeople.Client.Infrastructure.Services;
+using MyPeople.Common.Abstractions.Services;
 using MyPeople.Common.Configuration.Exceptions;
-using MyPeople.Services.Posts.Application.Services;
 
 namespace MyPeople.Client.Infrastructure.Extensions;
 

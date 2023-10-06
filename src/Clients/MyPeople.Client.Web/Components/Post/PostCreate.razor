@@ -1,4 +1,4 @@
-@using MyPeople.Services.Posts.Application.Dtos
+@using MyPeople.Common.Models.Dtos;
 
 <MudCard>
     <MudCardContent>
@@ -12,7 +12,7 @@
 
 @code {
     [Parameter, EditorRequired]
-    public PostDto Post { get; set; } = default!;
+    public CreatePostDto Post { get; set; } = default!;
 
     [Parameter, EditorRequired]
     public EventCallback OnPostCreate { get; set; }
