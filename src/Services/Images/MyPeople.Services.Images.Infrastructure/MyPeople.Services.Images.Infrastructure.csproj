@@ -1,5 +1,11 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
+  <PropertyGroup>
+    <TargetFramework>net7.0</TargetFramework>
+	<ImplicitUsings>enable</ImplicitUsings>
+	<Nullable>enable</Nullable>
+  </PropertyGroup>
+
   <ItemGroup>
     <ProjectReference Include="..\MyPeople.Services.Images.Domain\MyPeople.Services.Images.Domain.csproj" />
     <ProjectReference Include="..\MyPeople.Services.Images.Application\MyPeople.Services.Images.Application.csproj" />
@@ -11,11 +17,5 @@
     <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="7.0.11" />
     <PackageReference Include="Microsoft.Extensions.Http" Version="7.0.0" />
   </ItemGroup>
-
-  <PropertyGroup>
-    <TargetFramework>net7.0</TargetFramework>
-    <ImplicitUsings>enable</ImplicitUsings>
-    <Nullable>enable</Nullable>
-  </PropertyGroup>
 
 </Project>

@@ -17,7 +17,7 @@ namespace MyPeople.Services.Images.Infrastructure.Data.Migrations.Application
                     {
                         Id = table.Column<Guid>(type: "TEXT", nullable: false),
                         Name = table.Column<string>(type: "TEXT", nullable: false),
-                        Extension = table.Column<string>(type: "TEXT", nullable: false),
+                        ContentType = table.Column<string>(type: "TEXT", nullable: false),
                         Content = table.Column<string>(type: "TEXT", nullable: false),
                         CreatedAt = table.Column<DateTime>(type: "TEXT", nullable: false),
                         UpdatedAt = table.Column<DateTime>(type: "TEXT", nullable: false)

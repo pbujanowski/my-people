@@ -1,14 +1,8 @@
 namespace MyPeople.Services.Posts.Application.Dtos;
 
-public class PostDto
+public class PostDto : Dto
 {
-    public Guid? Id { get; set; }
-
     public Guid? UserId { get; set; }
-
-    public DateTime? CreatedAt { get; set; }
-
-    public DateTime? UpdatedAt { get; set; }
 
     public string? UserDisplayName { get; set; }
 

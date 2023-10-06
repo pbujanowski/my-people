@@ -11,7 +11,7 @@ public class ImageConfiguration : EntityConfiguration<Image>
 
         builder.Property(e => e.Name).IsRequired();
 
-        builder.Property(e => e.Extension).IsRequired();
+        builder.Property(e => e.ContentType).IsRequired();
 
         builder.Property(e => e.Content).IsRequired();
     }
