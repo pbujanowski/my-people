@@ -1,9 +1,5 @@
 ﻿@page "/"
 @using MyPeople.Client.Web.Components.Post
-@using MyPeople.Common.Abstractions.Services;
-@using MyPeople.Common.Models.Dtos;
-@inject IPostService PostService
-@inject AuthenticationStateProvider AuthenticationStateProvider
 @attribute [Authorize]
 
 <PageTitle>My People - Home</PageTitle>
@@ -12,43 +8,3 @@
     <PostCreate Post="NewPost" OnPostCreate="CreatePostAsync" />
     <PostList Posts="Posts" />
 </MudStack>
-
-@code {
-    public IEnumerable<PostDto> Posts { get; set; } = Enumerable.Empty<PostDto>();
-
-    public CreatePostDto NewPost { get; set; } = new();
-
-    protected override async Task OnInitializedAsync()
-    {
-        await base.OnInitializedAsync();
-
-        await GetPostsAsync();
-
-        NewPost = await CreateNewPostAsync();
-    }
-
-    private async Task<CreatePostDto> CreateNewPostAsync()
-    {
-        var state = await AuthenticationStateProvider.GetAuthenticationStateAsync();
-        var userId = state?.User?.FindFirst("sub")?.Value;
-        return new CreatePostDto { UserId = userId is null ? null : new Guid(userId) };
-    }
-
-    private async Task GetPostsAsync()
-    {
-        Posts = await PostService.GetAllPostsAsync();
-    }
-
-    private async Task CreatePostAsync()
-    {
-        try
-        {
-            await PostService.CreatePostAsync(NewPost);
-            await GetPostsAsync();
-        }
-        finally
-        {
-            NewPost = await CreateNewPostAsync();
-        }
-    }
-}
