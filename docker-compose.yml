@@ -1,0 +1,30 @@
+version: '3.4'
+
+services:
+  my-people-gateways-web:
+    container_name: my-people-gateways-web
+    image: ${DOCKER_REGISTRY-}my-people-gateways-web
+    build:
+      context: .
+      dockerfile: src/Gateways/MyPeople.Gateways.Web/Dockerfile
+
+  my-people-identity-web:
+    container_name: my-people-identity-web
+    image: ${DOCKER_REGISTRY-}my-people-identity-web
+    build:
+      context: .
+      dockerfile: src/Identity/MyPeople.Identity.Web/Dockerfile
+
+  my-people-services-images-api:
+    container_name: my-people-services-images-api
+    image: ${DOCKER_REGISTRY-}my-people-services-images-api
+    build:
+      context: .
+      dockerfile: src/Services/Images/MyPeople.Services.Images.API/Dockerfile
+
+  my-people-services-posts-api:
+    container_name: my-people-services-posts-api
+    image: ${DOCKER_REGISTRY-}my-people-services-posts-api
+    build:
+      context: .
+      dockerfile: src/Services/Posts/MyPeople.Services.Posts.API/Dockerfile

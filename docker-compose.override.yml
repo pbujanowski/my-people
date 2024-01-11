@@ -1,0 +1,30 @@
+version: '3.4'
+
+services:
+  my-people-gateways-web:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_HTTP_PORTS=5000
+    ports:
+      - "5000:5000"
+
+  my-people-identity-web:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_HTTP_PORTS=4000
+    ports:
+      - "4000:4000"
+
+  my-people-services-images-api:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_HTTP_PORTS=5020
+    ports:
+      - "5020:5020"
+
+  my-people-services-posts-api:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_HTTP_PORTS=5010
+    ports:
+      - "5010:5010"

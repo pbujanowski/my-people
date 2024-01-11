@@ -1,0 +1,14 @@
+{
+  "profiles": {
+    "Docker Compose": {
+      "commandName": "DockerCompose",
+      "commandVersion": "1.0",
+      "serviceActions": {
+        "my-people-gateways-web": "StartDebugging",
+        "my-people-identity-web": "StartDebugging",
+        "my-people-services-images-api": "StartDebugging",
+        "my-people-services-posts-api": "StartDebugging"
+      }
+    }
+  }
+}
