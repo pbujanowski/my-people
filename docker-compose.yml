@@ -1,6 +1,13 @@
-version: '3.4'
+version: '3.8'
 
 services:
+  my-people-client-web:
+    container_name: my-people-client-web
+    image: ${DOCKER_REGISTRY-}my-people-client-web
+    build:
+      context: .
+      dockerfile: src/Clients/MyPeople.Client.Web/Dockerfile
+
   my-people-gateways-web:
     container_name: my-people-gateways-web
     image: ${DOCKER_REGISTRY-}my-people-gateways-web

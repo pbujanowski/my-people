@@ -4,6 +4,7 @@
       "commandName": "DockerCompose",
       "commandVersion": "1.0",
       "serviceActions": {
+        "my-people-client-web": "DoNotStart",
         "my-people-gateways-web": "StartDebugging",
         "my-people-identity-web": "StartDebugging",
         "my-people-services-images-api": "StartDebugging",
