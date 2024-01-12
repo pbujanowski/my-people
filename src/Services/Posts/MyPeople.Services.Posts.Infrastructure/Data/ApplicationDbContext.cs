@@ -4,12 +4,10 @@ using MyPeople.Services.Posts.Infrastructure.Data.Configurations;
 
 namespace MyPeople.Services.Posts.Infrastructure.Data;
 
-public class ApplicationDbContext : DbContext
+public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
+    : DbContext(options)
 {
     public DbSet<Post> Posts => Set<Post>();
-
-    public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
-        : base(options) { }
 
     public override int SaveChanges()
     {

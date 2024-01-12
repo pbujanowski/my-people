@@ -1,30 +1,23 @@
+using System.Security.Claims;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using MyPeople.Common.Abstractions.Services;
 using MyPeople.Common.Models.Dtos;
 using MyPeople.Services.Posts.Application.Services;
-using System.Security.Claims;
 
 namespace MyPeople.Services.Posts.API.Controllers;
 
 [ApiController]
 [Route("[controller]")]
-public class PostsController : ControllerBase
+public class PostsController(
+    IPostService postService,
+    IUserService userService,
+    ILogger<PostsController> logger
+) : ControllerBase
 {
-    private readonly IPostService _postService;
-    private readonly IUserService _userService;
-    private readonly ILogger<PostsController> _logger;
-
-    public PostsController(
-        IPostService postService,
-        IUserService userService,
-        ILogger<PostsController> logger
-    )
-    {
-        _postService = postService;
-        _userService = userService;
-        _logger = logger;
-    }
+    private readonly IPostService _postService = postService;
+    private readonly IUserService _userService = userService;
+    private readonly ILogger<PostsController> _logger = logger;
 
     [Authorize]
     [HttpGet]

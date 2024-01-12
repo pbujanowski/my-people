@@ -4,8 +4,6 @@ using MyPeople.Services.Images.Infrastructure.Data;
 
 namespace MyPeople.Services.Images.Infrastructure.Repositories;
 
-public class ImageRepository : RepositoryBase<Image>, IImageRepository
-{
-    public ImageRepository(ApplicationDbContext dbContext)
-        : base(dbContext) { }
-}
+public class ImageRepository(ApplicationDbContext dbContext)
+    : RepositoryBase<Image>(dbContext),
+        IImageRepository { }

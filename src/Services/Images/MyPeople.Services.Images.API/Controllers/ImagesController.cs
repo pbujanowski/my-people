@@ -7,16 +7,11 @@ namespace MyPeople.Services.Images.API.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
-public class ImagesController : ControllerBase
+public class ImagesController(IImageService imageService, ILogger<ImagesController> logger)
+    : ControllerBase
 {
-    private readonly IImageService _imageService;
-    private readonly ILogger<ImagesController> _logger;
-
-    public ImagesController(IImageService imageService, ILogger<ImagesController> logger)
-    {
-        _imageService = imageService;
-        _logger = logger;
-    }
+    private readonly IImageService _imageService = imageService;
+    private readonly ILogger<ImagesController> _logger = logger;
 
     [Authorize]
     [HttpGet("{id}")]

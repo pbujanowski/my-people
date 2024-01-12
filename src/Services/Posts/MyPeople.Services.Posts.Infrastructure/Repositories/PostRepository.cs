@@ -4,8 +4,6 @@ using MyPeople.Services.Posts.Infrastructure.Data;
 
 namespace MyPeople.Services.Posts.Infrastructure.Repositories;
 
-public class PostRepository : RepositoryBase<Post>, IPostRepository
-{
-    public PostRepository(ApplicationDbContext dbContext)
-        : base(dbContext) { }
-}
+public class PostRepository(ApplicationDbContext dbContext)
+    : RepositoryBase<Post>(dbContext),
+        IPostRepository { }

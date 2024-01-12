@@ -1,3 +1,4 @@
+using System.Security.Claims;
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
@@ -11,35 +12,24 @@ using MyPeople.Identity.Web.Extensions;
 using MyPeople.Identity.Web.Models;
 using OpenIddict.Abstractions;
 using OpenIddict.Server.AspNetCore;
-using System.Collections.Immutable;
-using System.Security.Claims;
 using static OpenIddict.Abstractions.OpenIddictConstants;
 
 namespace MyPeople.Identity.Web.Controllers;
 
 [ApiExplorerSettings(IgnoreApi = true)]
-public class AuthorizationController : Controller
+public class AuthorizationController(
+    IOpenIddictApplicationManager applicationManager,
+    IOpenIddictAuthorizationManager authorizationManager,
+    IOpenIddictScopeManager scopeManager,
+    SignInManager<ApplicationUser> signInManager,
+    UserManager<ApplicationUser> userManager
+) : Controller
 {
-    private readonly IOpenIddictApplicationManager _applicationManager;
-    private readonly IOpenIddictAuthorizationManager _authorizationManager;
-    private readonly IOpenIddictScopeManager _scopeManager;
-    private readonly SignInManager<ApplicationUser> _signInManager;
-    private readonly UserManager<ApplicationUser> _userManager;
-
-    public AuthorizationController(
-        IOpenIddictApplicationManager applicationManager,
-        IOpenIddictAuthorizationManager authorizationManager,
-        IOpenIddictScopeManager scopeManager,
-        SignInManager<ApplicationUser> signInManager,
-        UserManager<ApplicationUser> userManager
-    )
-    {
-        _applicationManager = applicationManager;
-        _authorizationManager = authorizationManager;
-        _scopeManager = scopeManager;
-        _signInManager = signInManager;
-        _userManager = userManager;
-    }
+    private readonly IOpenIddictApplicationManager _applicationManager = applicationManager;
+    private readonly IOpenIddictAuthorizationManager _authorizationManager = authorizationManager;
+    private readonly IOpenIddictScopeManager _scopeManager = scopeManager;
+    private readonly SignInManager<ApplicationUser> _signInManager = signInManager;
+    private readonly UserManager<ApplicationUser> _userManager = userManager;
 
     [HttpGet("~/authorize")]
     [HttpPost("~/authorize")]
@@ -142,7 +132,7 @@ public class AuthorizationController : Controller
         {
             // If the consent is external (e.g when authorizations are granted by a sysadmin),
             // immediately return an error if no authorization can be found in the database.
-            case ConsentTypes.External when !authorizations.Any():
+            case ConsentTypes.External when authorizations.Count == 0:
                 return Forbid(
                     properties: new AuthenticationProperties(
                         new Dictionary<string, string?>
@@ -159,9 +149,9 @@ public class AuthorizationController : Controller
             // If the consent is implicit or if an authorization was found,
             // return an authorization response without displaying the consent form.
             case ConsentTypes.Implicit:
-            case ConsentTypes.External when authorizations.Any():
+            case ConsentTypes.External when authorizations.Count != 0:
             case ConsentTypes.Explicit
-                when authorizations.Any() && !request.HasPrompt(Prompts.Consent):
+                when authorizations.Count != 0 && !request.HasPrompt(Prompts.Consent):
                 // Create the claims-based identity that will be used by OpenIddict to generate tokens.
                 var identity = new ClaimsIdentity(
                     authenticationType: TokenValidationParameters.DefaultAuthenticationType,
@@ -174,10 +164,7 @@ public class AuthorizationController : Controller
                     .SetClaim(Claims.Subject, await _userManager.GetUserIdAsync(user))
                     .SetClaim(Claims.Email, await _userManager.GetEmailAsync(user))
                     .SetClaim(Claims.Name, await _userManager.GetUserNameAsync(user))
-                    .SetClaims(
-                        Claims.Role,
-                        (await _userManager.GetRolesAsync(user)).ToImmutableArray()
-                    );
+                    .SetClaims(Claims.Role, [.. (await _userManager.GetRolesAsync(user))]);
 
                 // Note: in this sample, the granted scopes match the requested scope
                 // but you may want to allow the user to uncheck specific scopes.
@@ -283,7 +270,7 @@ public class AuthorizationController : Controller
         // here to ensure a malicious user can't abuse this POST-only endpoint and
         // force it to return a valid response without the external authorization.
         if (
-            !authorizations.Any()
+            authorizations.Count == 0
             && await _applicationManager.HasConsentTypeAsync(application, ConsentTypes.External)
         )
         {
@@ -313,7 +300,7 @@ public class AuthorizationController : Controller
             .SetClaim(Claims.Subject, await _userManager.GetUserIdAsync(user))
             .SetClaim(Claims.Email, await _userManager.GetEmailAsync(user))
             .SetClaim(Claims.Name, await _userManager.GetUserNameAsync(user))
-            .SetClaims(Claims.Role, (await _userManager.GetRolesAsync(user)).ToImmutableArray());
+            .SetClaims(Claims.Role, [.. (await _userManager.GetRolesAsync(user))]);
 
         // Note: in this sample, the granted scopes match the requested scope
         // but you may want to allow the user to uncheck specific scopes.
@@ -438,10 +425,7 @@ public class AuthorizationController : Controller
                 .SetClaim(Claims.Subject, await _userManager.GetUserIdAsync(user))
                 .SetClaim(Claims.Email, await _userManager.GetEmailAsync(user))
                 .SetClaim(Claims.Name, await _userManager.GetUserNameAsync(user))
-                .SetClaims(
-                    Claims.Role,
-                    (await _userManager.GetRolesAsync(user)).ToImmutableArray()
-                );
+                .SetClaims(Claims.Role, [.. (await _userManager.GetRolesAsync(user))]);
 
             identity.SetDestinations(GetDestinations);
 

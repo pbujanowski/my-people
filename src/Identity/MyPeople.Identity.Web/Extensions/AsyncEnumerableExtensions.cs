@@ -4,10 +4,7 @@ public static class AsyncEnumerableExtensions
 {
     public static Task<List<T>> ToListAsync<T>(this IAsyncEnumerable<T> source)
     {
-        if (source == null)
-        {
-            throw new ArgumentNullException(nameof(source));
-        }
+        ArgumentNullException.ThrowIfNull(source);
 
         return ExecuteAsync();
 

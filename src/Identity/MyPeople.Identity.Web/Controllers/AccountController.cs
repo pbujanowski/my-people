@@ -7,22 +7,15 @@ using MyPeople.Identity.Web.Models;
 
 namespace MyPeople.Identity.Web.Controllers;
 
-public class AccountController : Controller
+public class AccountController(
+    SignInManager<ApplicationUser> signInManager,
+    UserManager<ApplicationUser> userManager,
+    ILogger<AccountController> logger
+) : Controller
 {
-    private readonly SignInManager<ApplicationUser> _signInManager;
-    private readonly UserManager<ApplicationUser> _userManager;
-    private readonly ILogger<AccountController> _logger;
-
-    public AccountController(
-        SignInManager<ApplicationUser> signInManager,
-        UserManager<ApplicationUser> userManager,
-        ILogger<AccountController> logger
-    )
-    {
-        _signInManager = signInManager;
-        _userManager = userManager;
-        _logger = logger;
-    }
+    private readonly SignInManager<ApplicationUser> _signInManager = signInManager;
+    private readonly UserManager<ApplicationUser> _userManager = userManager;
+    private readonly ILogger<AccountController> _logger = logger;
 
     [HttpGet]
     public async Task<IActionResult> Login(string? returnUrl = null)

@@ -4,17 +4,12 @@ using MyPeople.Services.Posts.Infrastructure.Data;
 
 namespace MyPeople.Services.Posts.Infrastructure.Wrappers;
 
-public class RepositoryWrapper : IRepositoryWrapper
+public class RepositoryWrapper(ApplicationDbContext dbContext, IPostRepository posts)
+    : IRepositoryWrapper
 {
-    private readonly ApplicationDbContext _dbContext;
+    private readonly ApplicationDbContext _dbContext = dbContext;
 
-    public IPostRepository Posts { get; }
-
-    public RepositoryWrapper(ApplicationDbContext dbContext, IPostRepository posts)
-    {
-        _dbContext = dbContext;
-        Posts = posts;
-    }
+    public IPostRepository Posts { get; } = posts;
 
     public void SaveChanges()
     {

@@ -1,3 +1,4 @@
+using System.Reflection;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -9,7 +10,6 @@ using MyPeople.Services.Images.Infrastructure.Data;
 using MyPeople.Services.Images.Infrastructure.Repositories;
 using MyPeople.Services.Images.Infrastructure.Services;
 using MyPeople.Services.Images.Infrastructure.Wrappers;
-using System.Reflection;
 
 namespace MyPeople.Services.Images.Infrastructure;
 

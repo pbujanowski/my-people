@@ -3,14 +3,9 @@ using Microsoft.AspNetCore.Mvc.ActionConstraints;
 
 namespace MyPeople.Identity.Web.Attributes;
 
-public sealed class FormValueRequiredAttribute : ActionMethodSelectorAttribute
+public sealed class FormValueRequiredAttribute(string name) : ActionMethodSelectorAttribute
 {
-    private readonly string _name;
-
-    public FormValueRequiredAttribute(string name)
-    {
-        _name = name;
-    }
+    private readonly string _name = name;
 
     public override bool IsValidForRequest(RouteContext context, ActionDescriptor action)
     {

@@ -4,14 +4,9 @@ using MyPeople.Identity.Infrastructure.Data;
 
 namespace MyPeople.Identity.Infrastructure.Services;
 
-public class ApplicationUserService : IApplicationUserService
+public class ApplicationUserService(ApplicationDbContext dbContext) : IApplicationUserService
 {
-    private readonly ApplicationDbContext _dbContext;
-
-    public ApplicationUserService(ApplicationDbContext dbContext)
-    {
-        _dbContext = dbContext;
-    }
+    private readonly ApplicationDbContext _dbContext = dbContext;
 
     public async Task<ApplicationUserDto?> GetUserByIdAsync(Guid id)
     {

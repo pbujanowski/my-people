@@ -5,11 +5,9 @@ using static OpenIddict.Abstractions.OpenIddictConstants;
 
 namespace MyPeople.Identity.Web;
 
-public class Worker : IHostedService
+public class Worker(IServiceProvider serviceProvider) : IHostedService
 {
-    private readonly IServiceProvider _serviceProvider;
-
-    public Worker(IServiceProvider serviceProvider) => _serviceProvider = serviceProvider;
+    private readonly IServiceProvider _serviceProvider = serviceProvider;
 
     public async Task StartAsync(CancellationToken cancellationToken)
     {

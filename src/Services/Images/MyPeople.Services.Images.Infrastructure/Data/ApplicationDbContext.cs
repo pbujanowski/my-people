@@ -4,12 +4,10 @@ using MyPeople.Services.Images.Infrastructure.Data.Configurations;
 
 namespace MyPeople.Services.Images.Infrastructure.Data;
 
-public class ApplicationDbContext : DbContext
+public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
+    : DbContext(options)
 {
     public DbSet<Image> Images => Set<Image>();
-
-    public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
-        : base(options) { }
 
     public override int SaveChanges()
     {

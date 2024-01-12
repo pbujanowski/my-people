@@ -1,7 +1,7 @@
+using System.Linq.Expressions;
 using Microsoft.EntityFrameworkCore;
 using MyPeople.Services.Posts.Application.Repositories;
 using MyPeople.Services.Posts.Infrastructure.Data;
-using System.Linq.Expressions;
 
 namespace MyPeople.Services.Posts.Infrastructure.Repositories;
 

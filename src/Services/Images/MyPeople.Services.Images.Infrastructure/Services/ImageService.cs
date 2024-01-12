@@ -7,16 +7,10 @@ using MyPeople.Services.Images.Domain.Entities;
 
 namespace MyPeople.Services.Images.Infrastructure.Services
 {
-    public class ImageService : IImageService
+    public class ImageService(IRepositoryWrapper repositories, IMapper mapper) : IImageService
     {
-        private readonly IRepositoryWrapper _repositories;
-        private readonly IMapper _mapper;
-
-        public ImageService(IRepositoryWrapper repositories, IMapper mapper)
-        {
-            _repositories = repositories;
-            _mapper = mapper;
-        }
+        private readonly IRepositoryWrapper _repositories = repositories;
+        private readonly IMapper _mapper = mapper;
 
         public async Task<ImageDto?> CreateImageAsync(ImageDto imageDto)
         {
@@ -28,8 +22,8 @@ namespace MyPeople.Services.Images.Infrastructure.Services
 
         public async Task<ImageDto?> GetImageByIdAsync(Guid id)
         {
-            var entity = await _repositories.Images
-                .FindByCondition(p => p.Id == id)
+            var entity = await _repositories
+                .Images.FindByCondition(p => p.Id == id)
                 .AsNoTracking()
                 .FirstOrDefaultAsync();
 

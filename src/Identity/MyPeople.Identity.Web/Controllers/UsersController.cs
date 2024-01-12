@@ -5,19 +5,13 @@ namespace MyPeople.Identity.Web.Controllers;
 
 [ApiController]
 [Route("[controller]")]
-public class UsersController : ControllerBase
+public class UsersController(
+    IApplicationUserService applicationUserService,
+    ILogger<UsersController> logger
+) : ControllerBase
 {
-    private readonly IApplicationUserService _applicationUserService;
-    private readonly ILogger<UsersController> _logger;
-
-    public UsersController(
-        IApplicationUserService applicationUserService,
-        ILogger<UsersController> logger
-    )
-    {
-        _applicationUserService = applicationUserService;
-        _logger = logger;
-    }
+    private readonly IApplicationUserService _applicationUserService = applicationUserService;
+    private readonly ILogger<UsersController> _logger = logger;
 
     [HttpGet("{userId}")]
     public async Task<IActionResult> GetUserById(Guid userId, [FromQuery] bool displayName = false)

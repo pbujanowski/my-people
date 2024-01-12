@@ -1,17 +1,12 @@
+using System.Net.Http.Json;
 using MyPeople.Common.Abstractions.Services;
 using MyPeople.Common.Models.Dtos;
-using System.Net.Http.Json;
 
 namespace MyPeople.Client.Infrastructure.Services;
 
-public class PostService : IPostService
+public class PostService(HttpClient httpClient) : IPostService
 {
-    private readonly HttpClient _httpClient;
-
-    public PostService(HttpClient httpClient)
-    {
-        _httpClient = httpClient;
-    }
+    private readonly HttpClient _httpClient = httpClient;
 
     public async Task<PostDto?> CreatePostAsync(CreatePostDto postDto)
     {

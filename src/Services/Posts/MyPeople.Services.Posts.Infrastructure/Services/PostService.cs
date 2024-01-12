@@ -7,16 +7,10 @@ using MyPeople.Services.Posts.Domain.Entities;
 
 namespace MyPeople.Services.Posts.Infrastructure.Services;
 
-public class PostService : IPostService
+public class PostService(IRepositoryWrapper repositories, IMapper mapper) : IPostService
 {
-    private readonly IRepositoryWrapper _repositories;
-    private readonly IMapper _mapper;
-
-    public PostService(IRepositoryWrapper repositories, IMapper mapper)
-    {
-        _repositories = repositories;
-        _mapper = mapper;
-    }
+    private readonly IRepositoryWrapper _repositories = repositories;
+    private readonly IMapper _mapper = mapper;
 
     public async Task<PostDto?> CreatePostAsync(CreatePostDto postDto)
     {
@@ -42,8 +36,8 @@ public class PostService : IPostService
 
     public async Task<PostDto?> GetPostByIdAsync(Guid id)
     {
-        var entity = await _repositories.Posts
-            .FindByCondition(p => p.Id == id)
+        var entity = await _repositories
+            .Posts.FindByCondition(p => p.Id == id)
             .AsNoTracking()
             .FirstOrDefaultAsync();
 

@@ -2,14 +2,9 @@ using MyPeople.Services.Posts.Application.Services;
 
 namespace MyPeople.Services.Posts.Infrastructure.Services;
 
-public class UserService : IUserService
+public class UserService(HttpClient httpClient) : IUserService
 {
-    private readonly HttpClient _httpClient;
-
-    public UserService(HttpClient httpClient)
-    {
-        _httpClient = httpClient;
-    }
+    private readonly HttpClient _httpClient = httpClient;
 
     public async Task<string?> GetUserDisplayNameById(Guid? userId)
     {

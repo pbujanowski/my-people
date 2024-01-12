@@ -4,17 +4,12 @@ using MyPeople.Services.Images.Infrastructure.Data;
 
 namespace MyPeople.Services.Images.Infrastructure.Wrappers
 {
-    public class RepositoryWrapper : IRepositoryWrapper
+    public class RepositoryWrapper(ApplicationDbContext dbContext, IImageRepository images)
+        : IRepositoryWrapper
     {
-        private readonly ApplicationDbContext _dbContext;
+        private readonly ApplicationDbContext _dbContext = dbContext;
 
-        public IImageRepository Images { get; }
-
-        public RepositoryWrapper(ApplicationDbContext dbContext, IImageRepository images)
-        {
-            _dbContext = dbContext;
-            Images = images;
-        }
+        public IImageRepository Images { get; } = images;
 
         public void SaveChanges()
         {

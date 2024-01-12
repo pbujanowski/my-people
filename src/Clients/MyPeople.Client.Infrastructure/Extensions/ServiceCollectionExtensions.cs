@@ -30,6 +30,8 @@ public static class ServiceCollectionExtensions
             configuration.GetValue<string>("Gateways:Web:Url")
             ?? throw new ConfigurationException("Gateways:Web:Url");
 
+        var servicesPostsScopes = new string[] { "services.posts" };
+
         services
             .AddHttpClient("services.posts", cl => cl.BaseAddress = new Uri(gatewayWebUrl))
             .AddHttpMessageHandler(
@@ -37,7 +39,7 @@ public static class ServiceCollectionExtensions
                     sp.GetRequiredService<AuthorizationMessageHandler>()
                         .ConfigureHandler(
                             authorizedUrls: new[] { gatewayWebUrl },
-                            scopes: new[] { "services.posts" }
+                            scopes: servicesPostsScopes
                         )
             );
 
