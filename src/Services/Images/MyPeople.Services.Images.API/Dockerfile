@@ -14,6 +14,8 @@ COPY ["src/Common/MyPeople.Common.Configuration/MyPeople.Common.Configuration.cs
 COPY ["src/Services/Images/MyPeople.Services.Images.Application/MyPeople.Services.Images.Application.csproj", "src/Services/Images/MyPeople.Services.Images.Application/"]
 COPY ["src/Services/Images/MyPeople.Services.Images.Domain/MyPeople.Services.Images.Domain.csproj", "src/Services/Images/MyPeople.Services.Images.Domain/"]
 COPY ["src/Services/Images/MyPeople.Services.Images.Infrastructure/MyPeople.Services.Images.Infrastructure.csproj", "src/Services/Images/MyPeople.Services.Images.Infrastructure/"]
+COPY ["src/Services/Images/MyPeople.Services.Images.Infrastructure.Migrations.Sqlite/MyPeople.Services.Images.Infrastructure.Migrations.Sqlite.csproj", "src/Services/Images/MyPeople.Services.Images.Infrastructure.Migrations.Sqlite/"]
+COPY ["src/Services/Images/MyPeople.Services.Images.Infrastructure.Migrations.SqlServer/MyPeople.Services.Images.Infrastructure.Migrations.SqlServer.csproj", "src/Services/Images/MyPeople.Services.Images.Infrastructure.Migrations.SqlServer/"]
 RUN dotnet restore "./src/Services/Images/MyPeople.Services.Images.API/./MyPeople.Services.Images.API.csproj"
 COPY . .
 WORKDIR "/src/src/Services/Images/MyPeople.Services.Images.API"

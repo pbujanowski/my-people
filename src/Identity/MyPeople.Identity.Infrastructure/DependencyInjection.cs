@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using MyPeople.Common.Configuration.Exceptions;
 using MyPeople.Identity.Application.Constants;
 using MyPeople.Identity.Application.Services;
 using MyPeople.Identity.Domain.Entities;
@@ -33,10 +34,27 @@ public static class DependencyInjection
         IConfiguration configuration
     )
     {
-        var connectionString = configuration.GetConnectionString("Application");
+        var databaseProvider =
+            configuration.GetValue<string>("DatabaseProvider")
+            ?? throw new ConfigurationException("DatabaseProvider");
+        var connectionString =
+            configuration.GetConnectionString("Application")
+            ?? throw new ConfigurationException("ConnectionStrings:Application");
+
         services.AddDbContext<ApplicationDbContext>(options =>
         {
-            options.UseSqlite(connectionString);
+            switch (databaseProvider)
+            {
+                case "Sqlite":
+                    options.UseSqlite(connectionString);
+                    break;
+                case "SqlServer":
+                    options.UseSqlServer(connectionString);
+                    break;
+                default:
+                    throw new Exception($"Unsupported provider: {databaseProvider}.");
+            }
+
             options.UseOpenIddict<
                 ApplicationClient,
                 ApplicationAuthorization,

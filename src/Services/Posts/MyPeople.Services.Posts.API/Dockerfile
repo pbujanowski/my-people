@@ -15,6 +15,8 @@ COPY ["src/Services/Posts/MyPeople.Services.Posts.Application/MyPeople.Services.
 COPY ["src/Common/MyPeople.Common.Models/MyPeople.Common.Models.csproj", "src/Common/MyPeople.Common.Models/"]
 COPY ["src/Services/Posts/MyPeople.Services.Posts.Domain/MyPeople.Services.Posts.Domain.csproj", "src/Services/Posts/MyPeople.Services.Posts.Domain/"]
 COPY ["src/Services/Posts/MyPeople.Services.Posts.Infrastructure/MyPeople.Services.Posts.Infrastructure.csproj", "src/Services/Posts/MyPeople.Services.Posts.Infrastructure/"]
+COPY ["src/Services/Posts/MyPeople.Services.Posts.Infrastructure.Migrations.Sqlite/MyPeople.Services.Posts.Infrastructure.Migrations.Sqlite.csproj", "src/Services/Posts/MyPeople.Services.Posts.Infrastructure.Migrations.Sqlite/"]
+COPY ["src/Services/Posts/MyPeople.Services.Posts.Infrastructure.Migrations.SqlServer/MyPeople.Services.Posts.Infrastructure.Migrations.SqlServer.csproj", "src/Services/Posts/MyPeople.Services.Posts.Infrastructure.Migrations.SqlServer/"]
 COPY ["src/Common/MyPeople.Common.Abstractions/MyPeople.Common.Abstractions.csproj", "src/Common/MyPeople.Common.Abstractions/"]
 RUN dotnet restore "./src/Services/Posts/MyPeople.Services.Posts.API/./MyPeople.Services.Posts.API.csproj"
 COPY . .

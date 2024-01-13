@@ -8,6 +8,15 @@ services:
       context: .
       dockerfile: src/Clients/MyPeople.Client.Web/Dockerfile
 
+  my-people-database:
+    container_name: my-people-database
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    ports:
+      - "1433:1433"
+    environment:
+      - SA_PASSWORD=VerySecretPassword!123
+      - ACCEPT_EULA=Y
+
   my-people-gateways-web:
     container_name: my-people-gateways-web
     image: ${DOCKER_REGISTRY-}my-people-gateways-web
@@ -21,6 +30,8 @@ services:
     build:
       context: .
       dockerfile: src/Identity/MyPeople.Identity.Web/Dockerfile
+    depends_on:
+      - my-people-database
 
   my-people-services-images-api:
     container_name: my-people-services-images-api
@@ -28,6 +39,8 @@ services:
     build:
       context: .
       dockerfile: src/Services/Images/MyPeople.Services.Images.API/Dockerfile
+    depends_on:
+      - my-people-database
 
   my-people-services-posts-api:
     container_name: my-people-services-posts-api
@@ -35,3 +48,5 @@ services:
     build:
       context: .
       dockerfile: src/Services/Posts/MyPeople.Services.Posts.API/Dockerfile
+    depends_on:
+      - my-people-database

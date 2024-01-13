@@ -61,6 +61,14 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MyPeople.Services.Posts.Inf
 EndProject
 Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{9E42B3DF-9C4F-4D3F-9ED2-677BD96E5F61}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyPeople.Services.Posts.Infrastructure.Migrations.Sqlite", "src\Services\Posts\MyPeople.Services.Posts.Infrastructure.Migrations.Sqlite\MyPeople.Services.Posts.Infrastructure.Migrations.Sqlite.csproj", "{45E1AD48-9356-473A-80FD-5BEF52339F6D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyPeople.Services.Posts.Infrastructure.Migrations.SqlServer", "src\Services\Posts\MyPeople.Services.Posts.Infrastructure.Migrations.SqlServer\MyPeople.Services.Posts.Infrastructure.Migrations.SqlServer.csproj", "{9FFAF5E7-A8EB-4B36-9426-409006EA49A4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyPeople.Services.Images.Infrastructure.Migrations.Sqlite", "src\Services\Images\MyPeople.Services.Images.Infrastructure.Migrations.Sqlite\MyPeople.Services.Images.Infrastructure.Migrations.Sqlite.csproj", "{81415D56-CDFD-4CBC-A909-9B8135361D59}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyPeople.Services.Images.Infrastructure.Migrations.SqlServer", "src\Services\Images\MyPeople.Services.Images.Infrastructure.Migrations.SqlServer\MyPeople.Services.Images.Infrastructure.Migrations.SqlServer.csproj", "{A5CDBD96-5627-421B-BE54-78FCE398431F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -147,6 +155,22 @@ Global
 		{9E42B3DF-9C4F-4D3F-9ED2-677BD96E5F61}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9E42B3DF-9C4F-4D3F-9ED2-677BD96E5F61}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9E42B3DF-9C4F-4D3F-9ED2-677BD96E5F61}.Release|Any CPU.Build.0 = Release|Any CPU
+		{45E1AD48-9356-473A-80FD-5BEF52339F6D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{45E1AD48-9356-473A-80FD-5BEF52339F6D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{45E1AD48-9356-473A-80FD-5BEF52339F6D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{45E1AD48-9356-473A-80FD-5BEF52339F6D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9FFAF5E7-A8EB-4B36-9426-409006EA49A4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9FFAF5E7-A8EB-4B36-9426-409006EA49A4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9FFAF5E7-A8EB-4B36-9426-409006EA49A4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9FFAF5E7-A8EB-4B36-9426-409006EA49A4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{81415D56-CDFD-4CBC-A909-9B8135361D59}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{81415D56-CDFD-4CBC-A909-9B8135361D59}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{81415D56-CDFD-4CBC-A909-9B8135361D59}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{81415D56-CDFD-4CBC-A909-9B8135361D59}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A5CDBD96-5627-421B-BE54-78FCE398431F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A5CDBD96-5627-421B-BE54-78FCE398431F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A5CDBD96-5627-421B-BE54-78FCE398431F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A5CDBD96-5627-421B-BE54-78FCE398431F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -179,6 +203,10 @@ Global
 		{50A21597-79B3-4191-B177-5D4855A777BD} = {CAA05575-C87F-4ABC-938E-2115B76178E1}
 		{631DFABF-921F-4FE6-8AAA-898247775E10} = {CAA05575-C87F-4ABC-938E-2115B76178E1}
 		{CC6A4BA1-D597-4A1C-835B-7387EA1C6CBC} = {CAA05575-C87F-4ABC-938E-2115B76178E1}
+		{45E1AD48-9356-473A-80FD-5BEF52339F6D} = {CAA05575-C87F-4ABC-938E-2115B76178E1}
+		{9FFAF5E7-A8EB-4B36-9426-409006EA49A4} = {CAA05575-C87F-4ABC-938E-2115B76178E1}
+		{81415D56-CDFD-4CBC-A909-9B8135361D59} = {0FD65D23-B83B-4112-8DCF-8801D5CC02BC}
+		{A5CDBD96-5627-421B-BE54-78FCE398431F} = {0FD65D23-B83B-4112-8DCF-8801D5CC02BC}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {BE68B62E-A3E9-419B-84BC-B6A7AA17BFA5}

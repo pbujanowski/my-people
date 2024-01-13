@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using MyPeople.Common.Configuration.Exceptions;
 using MyPeople.Services.Images.Application.Repositories;
 using MyPeople.Services.Images.Application.Services;
 using MyPeople.Services.Images.Application.Wrappers;
@@ -45,8 +46,35 @@ public static class DependencyInjection
         IConfiguration configuration
     )
     {
+        var databaseProvider =
+            configuration.GetValue<string>("DatabaseProvider")
+            ?? throw new ConfigurationException("DatabaseProvider");
+        var connectionString =
+            configuration.GetConnectionString("Application")
+            ?? throw new ConfigurationException("ConnectionStrings:Application");
+
         services.AddDbContext<ApplicationDbContext>(
-            options => options.UseSqlite(configuration.GetConnectionString("Application"))
+            options =>
+                _ = databaseProvider switch
+                {
+                    "Sqlite"
+                        => options.UseSqlite(
+                            connectionString,
+                            x =>
+                                x.MigrationsAssembly(
+                                    "MyPeople.Services.Images.Infrastructure.Migrations.Sqlite"
+                                )
+                        ),
+                    "SqlServer"
+                        => options.UseSqlServer(
+                            connectionString,
+                            x =>
+                                x.MigrationsAssembly(
+                                    "MyPeople.Services.Images.Infrastructure.Migrations.SqlServer"
+                                )
+                        ),
+                    _ => throw new Exception($"Unsupported provider: {databaseProvider}.")
+                }
         );
 
         return services;

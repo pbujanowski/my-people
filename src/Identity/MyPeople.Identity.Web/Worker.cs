@@ -27,7 +27,7 @@ public class Worker(IServiceProvider serviceProvider) : IHostedService
                     ClientId = "postman",
                     ConsentType = ConsentTypes.Explicit,
                     DisplayName = "Postman application",
-                    Type = ClientTypes.Public,
+                    ClientType = ClientTypes.Public,
                     PostLogoutRedirectUris = { new Uri("http://localhost:12345/logout-callback") },
                     RedirectUris = { new Uri("http://localhost:12345/login-callback") },
                     Permissions =
@@ -98,7 +98,7 @@ public class Worker(IServiceProvider serviceProvider) : IHostedService
                     ClientId = "my-people-client",
                     ConsentType = ConsentTypes.Explicit,
                     DisplayName = "My People web application",
-                    Type = ClientTypes.Public,
+                    ClientType = ClientTypes.Public,
                     PostLogoutRedirectUris =
                     {
                         new Uri("http://localhost:3000/authentication/logout-callback")

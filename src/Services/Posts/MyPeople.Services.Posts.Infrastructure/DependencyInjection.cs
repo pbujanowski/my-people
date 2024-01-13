@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using MyPeople.Common.Abstractions.Services;
+using MyPeople.Common.Configuration.Exceptions;
 using MyPeople.Services.Posts.Application.Repositories;
 using MyPeople.Services.Posts.Application.Services;
 using MyPeople.Services.Posts.Application.Wrappers;
@@ -22,7 +23,7 @@ public static class DependencyInjection
     {
         services.ConfigureDbContext(configuration);
         services.ConfigureRepositories();
-        services.ConfigureServices();
+        services.ConfigureServices(configuration);
         services.ConfigureWrappers();
 
         return services;
@@ -44,8 +45,35 @@ public static class DependencyInjection
         IConfiguration configuration
     )
     {
+        var databaseProvider =
+            configuration.GetValue<string>("DatabaseProvider")
+            ?? throw new ConfigurationException("DatabaseProvider");
+        var connectionString =
+            configuration.GetConnectionString("Application")
+            ?? throw new ConfigurationException("ConnectionStrings:Application");
+
         services.AddDbContext<ApplicationDbContext>(
-            options => options.UseSqlite(configuration.GetConnectionString("Application"))
+            options =>
+                _ = databaseProvider switch
+                {
+                    "Sqlite"
+                        => options.UseSqlite(
+                            connectionString,
+                            x =>
+                                x.MigrationsAssembly(
+                                    "MyPeople.Services.Posts.Infrastructure.Migrations.Sqlite"
+                                )
+                        ),
+                    "SqlServer"
+                        => options.UseSqlServer(
+                            connectionString,
+                            x =>
+                                x.MigrationsAssembly(
+                                    "MyPeople.Services.Posts.Infrastructure.Migrations.SqlServer"
+                                )
+                        ),
+                    _ => throw new Exception($"Unsupported provider: {databaseProvider}.")
+                }
         );
 
         return services;
@@ -58,14 +86,18 @@ public static class DependencyInjection
         return services;
     }
 
-    private static IServiceCollection ConfigureServices(this IServiceCollection services)
+    private static IServiceCollection ConfigureServices(
+        this IServiceCollection services,
+        IConfiguration configuration
+    )
     {
         services.AddScoped<IPostService, PostService>();
 
-        services.AddHttpClient(
-            "identity",
-            cl => cl.BaseAddress = new Uri("http://localhost:4000/")
-        );
+        var oidcIssuerUrl =
+            configuration.GetValue<string>("Oidc:Issuer")
+            ?? throw new ConfigurationException("Oidc:Issuer");
+
+        services.AddHttpClient("identity", cl => cl.BaseAddress = new Uri(oidcIssuerUrl));
         services.AddScoped<IUserService>(
             sp =>
                 new UserService(
