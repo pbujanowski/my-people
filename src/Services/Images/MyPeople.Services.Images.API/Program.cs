@@ -8,13 +8,20 @@ builder.Services.ConfigureInfrastructure(builder.Configuration);
 builder.Services.ConfigureCors(builder.Configuration);
 builder.Services.ConfigureOpenIddict(builder.Configuration);
 builder.Services.ConfigureAuthentication();
+
+if (builder.Environment.IsStaging())
+{
+    builder.Services.ConfigureConsul(builder.Configuration);
+}
+
 builder.Services.AddControllers();
+builder.Services.AddHealthChecks();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 
-if (app.Environment.IsDevelopment())
+if (app.Environment.IsDevelopment() || app.Environment.IsStaging())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
@@ -29,5 +36,6 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
+app.MapHealthChecks("/healthcheck");
 
 app.Run();

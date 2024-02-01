@@ -1,52 +1,96 @@
-version: '3.8'
+version: '3.9'
 
 services:
+  # Service Discovery
+  my-people-consul:
+    container_name: my-people-consul
+    image: consul:1.15.4
+    command: consul agent -dev -log-level=warn -ui -client=0.0.0.0
+    # restart: always
+    networks:
+      - my-people-network
+
+  # Databases
+  my-people-identity-database:
+    container_name: my-people-identity-database
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    # restart: always
+    networks:
+      - my-people-network
+
+  my-people-services-images-database:
+    container_name: my-people-services-images-database
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    # restart: always
+    networks:
+      - my-people-network
+
+  my-people-services-posts-database:
+    container_name: my-people-services-posts-database
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    # restart: always
+    networks:
+      - my-people-network
+
+  # Services
   my-people-client-web:
     container_name: my-people-client-web
-    image: ${DOCKER_REGISTRY-}my-people-client-web
+    image: my-people-client-web
     build:
       context: .
       dockerfile: src/Clients/MyPeople.Client.Web/Dockerfile
-
-  my-people-database:
-    container_name: my-people-database
-    image: mcr.microsoft.com/mssql/server:2022-latest
-    ports:
-      - "1433:1433"
-    environment:
-      - SA_PASSWORD=VerySecretPassword!123
-      - ACCEPT_EULA=Y
+    # restart: always
+    networks:
+      - my-people-network
 
   my-people-gateways-web:
     container_name: my-people-gateways-web
-    image: ${DOCKER_REGISTRY-}my-people-gateways-web
+    image: my-people-gateways-web
     build:
       context: .
       dockerfile: src/Gateways/MyPeople.Gateways.Web/Dockerfile
+    # restart: always
+    depends_on:
+      - my-people-consul
+    networks:
+      - my-people-network
 
   my-people-identity-web:
     container_name: my-people-identity-web
-    image: ${DOCKER_REGISTRY-}my-people-identity-web
+    image: my-people-identity-web
     build:
       context: .
       dockerfile: src/Identity/MyPeople.Identity.Web/Dockerfile
+    # restart: always
     depends_on:
-      - my-people-database
+      - my-people-identity-database
+    networks:
+      - my-people-network
 
   my-people-services-images-api:
     container_name: my-people-services-images-api
-    image: ${DOCKER_REGISTRY-}my-people-services-images-api
+    image: my-people-services-images-api
     build:
       context: .
       dockerfile: src/Services/Images/MyPeople.Services.Images.API/Dockerfile
+    # restart: always
     depends_on:
-      - my-people-database
+      - my-people-services-images-database
+    networks:
+      - my-people-network
 
   my-people-services-posts-api:
     container_name: my-people-services-posts-api
-    image: ${DOCKER_REGISTRY-}my-people-services-posts-api
+    image: my-people-services-posts-api
     build:
       context: .
       dockerfile: src/Services/Posts/MyPeople.Services.Posts.API/Dockerfile
+    # restart: always
     depends_on:
-      - my-people-database
+      - my-people-services-posts-database
+    networks:
+      - my-people-network
+
+networks:
+  my-people-network:
+    driver: bridge

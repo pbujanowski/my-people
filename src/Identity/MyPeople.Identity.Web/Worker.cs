@@ -1,5 +1,4 @@
 using MyPeople.Identity.Application.Constants;
-using MyPeople.Identity.Infrastructure.Data;
 using OpenIddict.Abstractions;
 using static OpenIddict.Abstractions.OpenIddictConstants;
 
@@ -12,9 +11,6 @@ public class Worker(IServiceProvider serviceProvider) : IHostedService
     public async Task StartAsync(CancellationToken cancellationToken)
     {
         await using var scope = _serviceProvider.CreateAsyncScope();
-
-        var context = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
-        await context.Database.EnsureCreatedAsync(cancellationToken);
 
         var applicationManager =
             scope.ServiceProvider.GetRequiredService<IOpenIddictApplicationManager>();
@@ -134,7 +130,7 @@ public class Worker(IServiceProvider serviceProvider) : IHostedService
                 new OpenIddictScopeDescriptor
                 {
                     Name = AppScopes.Services.Posts,
-                    Resources = { "my-people-services-posts" }
+                    Resources = { "my-people-services-posts" },
                 },
                 cancellationToken
             );

@@ -12,6 +12,8 @@ COPY ["src/Identity/MyPeople.Identity.Web/MyPeople.Identity.Web.csproj", "src/Id
 COPY ["src/Common/MyPeople.Common.Configuration/MyPeople.Common.Configuration.csproj", "src/Common/MyPeople.Common.Configuration/"]
 COPY ["src/Identity/MyPeople.Identity.Application/MyPeople.Identity.Application.csproj", "src/Identity/MyPeople.Identity.Application/"]
 COPY ["src/Identity/MyPeople.Identity.Infrastructure/MyPeople.Identity.Infrastructure.csproj", "src/Identity/MyPeople.Identity.Infrastructure/"]
+COPY ["src/Identity/MyPeople.Identity.Infrastructure.Migrations.Sqlite/MyPeople.Identity.Infrastructure.Migrations.Sqlite.csproj", "src/Identity/MyPeople.Identity.Infrastructure.Migrations.Sqlite/"]
+COPY ["src/Identity/MyPeople.Identity.Infrastructure.Migrations.SqlServer/MyPeople.Identity.Infrastructure.Migrations.SqlServer.csproj", "src/Identity/MyPeople.Identity.Infrastructure.Migrations.SqlServer/"]
 COPY ["src/Identity/MyPeople.Identity.Domain/MyPeople.Identity.Domain.csproj", "src/Identity/MyPeople.Identity.Domain/"]
 RUN dotnet restore "./src/Identity/MyPeople.Identity.Web/./MyPeople.Identity.Web.csproj"
 COPY . .

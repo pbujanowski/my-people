@@ -1,6 +1,34 @@
-version: '3.8'
+version: '3.9'
 
 services:
+  # Service Discovery
+  my-people-consul:
+    ports:
+      - "8500:8500"
+
+  # Databases
+  my-people-identity-database:
+    environment:
+      - MSSQL_SA_PASSWORD=!PasswordToChange1!
+      - ACCEPT_EULA=Y
+    ports:
+      - "1434:1433"
+
+  my-people-services-images-database:
+    environment:
+      - MSSQL_SA_PASSWORD=!PasswordToChange1!
+      - ACCEPT_EULA=Y
+    ports:
+      - "1435:1433"
+
+  my-people-services-posts-database:
+    environment:
+      - MSSQL_SA_PASSWORD=!PasswordToChange1!
+      - ACCEPT_EULA=Y
+    ports:
+      - "1436:1433"
+
+  # Services
   my-people-client-web:
     environment:
       - ASPNETCORE_ENVIRONMENT=Staging
@@ -24,13 +52,13 @@ services:
   my-people-services-images-api:
     environment:
       - ASPNETCORE_ENVIRONMENT=Staging
-      - ASPNETCORE_HTTP_PORTS=5020
+      - ASPNETCORE_HTTP_PORTS=5010
     ports:
-      - "5020:5020"
+      - "5010:5010"
 
   my-people-services-posts-api:
     environment:
       - ASPNETCORE_ENVIRONMENT=Staging
-      - ASPNETCORE_HTTP_PORTS=5010
+      - ASPNETCORE_HTTP_PORTS=5020
     ports:
-      - "5010:5010"
+      - "5020:5020"

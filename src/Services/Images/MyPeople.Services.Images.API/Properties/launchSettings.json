@@ -7,15 +7,15 @@
         "ASPNETCORE_ENVIRONMENT": "Development"
       },
       "dotnetRunMessages": true,
-      "applicationUrl": "http://localhost:5020"
+      "applicationUrl": "http://localhost:5010"
     },
     "Docker": {
       "commandName": "Docker",
       "launchUrl": "{Scheme}://{ServiceHost}:{ServicePort}/swagger",
       "environmentVariables": {
-        "ASPNETCORE_HTTP_PORTS": "5020"
+        "ASPNETCORE_HTTP_PORTS": "5010"
       },
-      "httpPort": 5020,
+      "httpPort": 5010,
       "publishAllPorts": true
     }
   }

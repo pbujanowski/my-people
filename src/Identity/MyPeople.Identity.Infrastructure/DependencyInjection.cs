@@ -46,10 +46,22 @@ public static class DependencyInjection
             switch (databaseProvider)
             {
                 case "Sqlite":
-                    options.UseSqlite(connectionString);
+                    options.UseSqlite(
+                        connectionString,
+                        x =>
+                            x.MigrationsAssembly(
+                                "MyPeople.Identity.Infrastructure.Migrations.Sqlite"
+                            )
+                    );
                     break;
                 case "SqlServer":
-                    options.UseSqlServer(connectionString);
+                    options.UseSqlServer(
+                        connectionString,
+                        x =>
+                            x.MigrationsAssembly(
+                                "MyPeople.Identity.Infrastructure.Migrations.SqlServer"
+                            )
+                    );
                     break;
                 default:
                     throw new Exception($"Unsupported provider: {databaseProvider}.");
@@ -126,6 +138,8 @@ public static class DependencyInjection
                     .EnableTokenEndpointPassthrough()
                     .EnableUserinfoEndpointPassthrough()
                     .DisableTransportSecurityRequirement();
+
+                options.SetIssuer("http://my-people-identity:4000/");
             })
             .AddValidation(options =>
             {
