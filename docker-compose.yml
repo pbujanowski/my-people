@@ -6,29 +6,13 @@ services:
     container_name: my-people-consul
     image: consul:1.15.4
     command: consul agent -dev -log-level=warn -ui -client=0.0.0.0
-    # restart: always
     networks:
       - my-people-network
 
   # Databases
-  my-people-identity-database:
-    container_name: my-people-identity-database
+  my-people-database:
+    container_name: my-people-database
     image: mcr.microsoft.com/mssql/server:2022-latest
-    # restart: always
-    networks:
-      - my-people-network
-
-  my-people-services-images-database:
-    container_name: my-people-services-images-database
-    image: mcr.microsoft.com/mssql/server:2022-latest
-    # restart: always
-    networks:
-      - my-people-network
-
-  my-people-services-posts-database:
-    container_name: my-people-services-posts-database
-    image: mcr.microsoft.com/mssql/server:2022-latest
-    # restart: always
     networks:
       - my-people-network
 
@@ -39,7 +23,6 @@ services:
     build:
       context: .
       dockerfile: src/Clients/MyPeople.Client.Web/Dockerfile
-    # restart: always
     networks:
       - my-people-network
 
@@ -49,7 +32,6 @@ services:
     build:
       context: .
       dockerfile: src/Gateways/MyPeople.Gateways.Web/Dockerfile
-    # restart: always
     depends_on:
       - my-people-consul
     networks:
@@ -61,9 +43,8 @@ services:
     build:
       context: .
       dockerfile: src/Identity/MyPeople.Identity.Web/Dockerfile
-    # restart: always
     depends_on:
-      - my-people-identity-database
+      - my-people-database
     networks:
       - my-people-network
 
@@ -73,9 +54,8 @@ services:
     build:
       context: .
       dockerfile: src/Services/Images/MyPeople.Services.Images.API/Dockerfile
-    # restart: always
     depends_on:
-      - my-people-services-images-database
+      - my-people-database
     networks:
       - my-people-network
 
@@ -85,9 +65,8 @@ services:
     build:
       context: .
       dockerfile: src/Services/Posts/MyPeople.Services.Posts.API/Dockerfile
-    # restart: always
     depends_on:
-      - my-people-services-posts-database
+      - my-people-database
     networks:
       - my-people-network
 

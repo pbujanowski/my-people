@@ -31,6 +31,8 @@ else
     app.UseSwaggerUI();
 }
 
+await app.UseInfrastructureAsync();
+
 app.UseStaticFiles();
 app.UseCookiePolicy();
 

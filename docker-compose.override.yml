@@ -7,26 +7,12 @@ services:
       - "8500:8500"
 
   # Databases
-  my-people-identity-database:
+  my-people-database:
     environment:
       - MSSQL_SA_PASSWORD=!PasswordToChange1!
       - ACCEPT_EULA=Y
     ports:
-      - "1434:1433"
-
-  my-people-services-images-database:
-    environment:
-      - MSSQL_SA_PASSWORD=!PasswordToChange1!
-      - ACCEPT_EULA=Y
-    ports:
-      - "1435:1433"
-
-  my-people-services-posts-database:
-    environment:
-      - MSSQL_SA_PASSWORD=!PasswordToChange1!
-      - ACCEPT_EULA=Y
-    ports:
-      - "1436:1433"
+      - "1433:1433"
 
   # Services
   my-people-client-web:

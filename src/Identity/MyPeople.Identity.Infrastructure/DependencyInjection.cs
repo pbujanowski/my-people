@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -27,6 +28,17 @@ public static class DependencyInjection
         services.ConfigureServices();
 
         return services;
+    }
+
+    public static async Task<IApplicationBuilder> UseInfrastructureAsync(
+        this IApplicationBuilder app
+    )
+    {
+        using var scope = app.ApplicationServices.CreateScope();
+        using var dbContext = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+        await dbContext.Database.MigrateAsync();
+
+        return app;
     }
 
     private static IServiceCollection ConfigureDbContext(
@@ -139,7 +151,13 @@ public static class DependencyInjection
                     .EnableUserinfoEndpointPassthrough()
                     .DisableTransportSecurityRequirement();
 
-                options.SetIssuer("http://my-people-identity:4000/");
+                options.Configure(
+                    x =>
+                        x.TokenValidationParameters.ValidIssuers = [
+                            "http://localhost:4000/",
+                            "http://my-people-identity-web:4000/"
+                        ]
+                );
             })
             .AddValidation(options =>
             {
