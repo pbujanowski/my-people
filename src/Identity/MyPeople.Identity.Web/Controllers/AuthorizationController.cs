@@ -53,8 +53,8 @@ public class AuthorizationController(
             result?.Succeeded != true
             || request.HasPrompt(Prompts.Login)
             || (
-                request.MaxAge != null
-                && result.Properties?.IssuedUtc != null
+                request.MaxAge is not null
+                && result.Properties?.IssuedUtc is not null
                 && DateTimeOffset.UtcNow - result.Properties.IssuedUtc
                     > TimeSpan.FromSeconds(request.MaxAge.Value)
             )

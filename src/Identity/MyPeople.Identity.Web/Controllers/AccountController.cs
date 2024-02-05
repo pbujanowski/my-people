@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using MyPeople.Identity.Application;
 using MyPeople.Identity.Domain.Entities;
 using MyPeople.Identity.Web.Logging;
 using MyPeople.Identity.Web.Models;
@@ -90,14 +91,16 @@ public class AccountController(
                 Email = model.Input.Email
             };
 
-            var result = await _userManager.CreateAsync(user, model.Input.Password);
+            var userCreatedResult = await _userManager.CreateAsync(user, model.Input.Password);
 
-            if (result.Succeeded)
+            if (userCreatedResult.Succeeded)
             {
                 _logger.LogInformation(
                     LoggerEventIds.UserCreated,
                     "User created a new account with password."
                 );
+
+                await _userManager.AddToRoleAsync(user, AppRoles.User);
 
                 // var userId = await _userManager.GetUserIdAsync(user);
                 // var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
@@ -124,7 +127,7 @@ public class AccountController(
                     return LocalRedirect(returnUrl);
                 }
             }
-            foreach (var error in result.Errors)
+            foreach (var error in userCreatedResult.Errors)
             {
                 ModelState.AddModelError(string.Empty, error.Description);
             }

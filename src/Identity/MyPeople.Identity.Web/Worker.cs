@@ -1,12 +1,17 @@
+using Microsoft.AspNetCore.Identity;
+using MyPeople.Common.Configuration.Exceptions;
+using MyPeople.Identity.Application;
 using MyPeople.Identity.Application.Constants;
+using MyPeople.Identity.Domain.Entities;
 using OpenIddict.Abstractions;
 using static OpenIddict.Abstractions.OpenIddictConstants;
 
 namespace MyPeople.Identity.Web;
 
-public class Worker(IServiceProvider serviceProvider) : IHostedService
+public class Worker(IServiceProvider serviceProvider, IConfiguration configuration) : IHostedService
 {
     private readonly IServiceProvider _serviceProvider = serviceProvider;
+    private readonly IConfiguration _configuration = configuration;
 
     public async Task StartAsync(CancellationToken cancellationToken)
     {
@@ -14,6 +19,10 @@ public class Worker(IServiceProvider serviceProvider) : IHostedService
 
         var applicationManager =
             scope.ServiceProvider.GetRequiredService<IOpenIddictApplicationManager>();
+
+        var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<ApplicationRole>>();
+
+        var userManager = scope.ServiceProvider.GetRequiredService<UserManager<ApplicationUser>>();
 
         if (await applicationManager.FindByClientIdAsync("postman", cancellationToken) is null)
         {
@@ -134,6 +143,60 @@ public class Worker(IServiceProvider serviceProvider) : IHostedService
                 },
                 cancellationToken
             );
+        }
+
+        if (!await roleManager.RoleExistsAsync(AppRoles.Administrator))
+        {
+            await roleManager.CreateAsync(new ApplicationRole(AppRoles.Administrator));
+        }
+
+        if (!await roleManager.RoleExistsAsync(AppRoles.User))
+        {
+            await roleManager.CreateAsync(new ApplicationRole(AppRoles.User));
+        }
+
+        var administratorEmail =
+            _configuration.GetSection("Administrator:Email").Get<string>()
+            ?? throw new ConfigurationException("Administrator:Email");
+
+        var administratorPassword =
+            _configuration.GetSection("Administrator:Password").Get<string>()
+            ?? throw new ConfigurationException("Administrator:Password");
+
+        if (await userManager.FindByEmailAsync(administratorEmail) is null)
+        {
+            var result = await userManager.CreateAsync(
+                new ApplicationUser { Email = administratorEmail, UserName = administratorEmail },
+                administratorPassword
+            );
+
+            var administratorUser =
+                await userManager.FindByEmailAsync(administratorEmail)
+                ?? throw new Exception(result.Errors.Select(x => x.Description).ToString());
+
+            await userManager.AddToRoleAsync(administratorUser, AppRoles.Administrator);
+        }
+
+        var userEmail =
+            _configuration.GetSection("User:Email").Get<string>()
+            ?? throw new ConfigurationException("User:Email");
+
+        var userPassword =
+            _configuration.GetSection("User:Password").Get<string>()
+            ?? throw new ConfigurationException("User:Password");
+
+        if (await userManager.FindByEmailAsync(userEmail) is null)
+        {
+            var result = await userManager.CreateAsync(
+                new ApplicationUser { Email = userEmail, UserName = userEmail },
+                userPassword
+            );
+
+            var user =
+                await userManager.FindByEmailAsync(userEmail)
+                ?? throw new Exception(result.Errors.Select(x => x.Description).ToString());
+
+            await userManager.AddToRoleAsync(user, AppRoles.User);
         }
     }
 

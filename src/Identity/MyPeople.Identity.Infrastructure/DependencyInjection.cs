@@ -103,7 +103,10 @@ public static class DependencyInjection
         return services;
     }
 
-    private static IServiceCollection ConfigureOpenIddict(this IServiceCollection services, IConfiguration configuration)
+    private static IServiceCollection ConfigureOpenIddict(
+        this IServiceCollection services,
+        IConfiguration configuration
+    )
     {
         services
             .AddOpenIddict()
@@ -151,13 +154,11 @@ public static class DependencyInjection
                     .EnableUserinfoEndpointPassthrough()
                     .DisableTransportSecurityRequirement();
 
-                var validIssuers = configuration.GetSection("ValidIssuers").Get<string[]>()
+                var validIssuers =
+                    configuration.GetSection("ValidIssuers").Get<string[]>()
                     ?? throw new ConfigurationException("ValidIssuers");
 
-                options.Configure(
-                    x =>
-                        x.TokenValidationParameters.ValidIssuers = validIssuers
-                );
+                options.Configure(x => x.TokenValidationParameters.ValidIssuers = validIssuers);
             })
             .AddValidation(options =>
             {
