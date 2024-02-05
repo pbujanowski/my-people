@@ -23,7 +23,7 @@ public static class DependencyInjection
     {
         services.ConfigureDbContext(configuration);
         services.ConfigureIdentity();
-        services.ConfigureOpenIddict();
+        services.ConfigureOpenIddict(configuration);
         services.ConfigureQuartz();
         services.ConfigureServices();
 
@@ -103,7 +103,7 @@ public static class DependencyInjection
         return services;
     }
 
-    private static IServiceCollection ConfigureOpenIddict(this IServiceCollection services)
+    private static IServiceCollection ConfigureOpenIddict(this IServiceCollection services, IConfiguration configuration)
     {
         services
             .AddOpenIddict()
@@ -151,12 +151,12 @@ public static class DependencyInjection
                     .EnableUserinfoEndpointPassthrough()
                     .DisableTransportSecurityRequirement();
 
+                var validIssuers = configuration.GetSection("ValidIssuers").Get<string[]>()
+                    ?? throw new ConfigurationException("ValidIssuers");
+
                 options.Configure(
                     x =>
-                        x.TokenValidationParameters.ValidIssuers = [
-                            "http://localhost:4000/",
-                            "http://my-people-identity-web:4000/"
-                        ]
+                        x.TokenValidationParameters.ValidIssuers = validIssuers
                 );
             })
             .AddValidation(options =>
