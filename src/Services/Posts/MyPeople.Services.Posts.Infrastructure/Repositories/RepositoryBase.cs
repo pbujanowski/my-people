@@ -1,3 +1,4 @@
+using System.Collections.ObjectModel;
 using System.Linq.Expressions;
 using Microsoft.EntityFrameworkCore;
 using MyPeople.Services.Posts.Application.Repositories;
@@ -23,6 +24,17 @@ public abstract class RepositoryBase<TEntity> : IRepository<TEntity>
     public TEntity Delete(TEntity entity)
     {
         return _dbContext.Set<TEntity>().Remove(entity).Entity;
+    }
+
+    public IEnumerable<TEntity> Delete(IEnumerable<TEntity> entities)
+    {
+        var deletedEntities = new List<TEntity>();
+        foreach (var entity in entities)
+        {
+            var deletedEntity = _dbContext.Set<TEntity>().Remove(entity).Entity;
+            deletedEntities.Add(deletedEntity);
+        }
+        return deletedEntities;
     }
 
     public IQueryable<TEntity> FindAll()

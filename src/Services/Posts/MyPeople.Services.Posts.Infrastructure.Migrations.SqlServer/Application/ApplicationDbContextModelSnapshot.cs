@@ -48,6 +48,45 @@ namespace MyPeople.Services.Posts.Infrastructure.Migrations.SqlServer.Applicatio
 
                     b.ToTable("Posts");
                 });
+
+            modelBuilder.Entity("MyPeople.Services.Posts.Domain.Entities.PostImage", b =>
+                {
+                    b.Property<Guid?>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime?>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid?>("ImageId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid?>("PostId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("PostId");
+
+                    b.ToTable("PostImages");
+                });
+
+            modelBuilder.Entity("MyPeople.Services.Posts.Domain.Entities.PostImage", b =>
+                {
+                    b.HasOne("MyPeople.Services.Posts.Domain.Entities.Post", "Post")
+                        .WithMany("ImagesIds")
+                        .HasForeignKey("PostId");
+
+                    b.Navigation("Post");
+                });
+
+            modelBuilder.Entity("MyPeople.Services.Posts.Domain.Entities.Post", b =>
+                {
+                    b.Navigation("ImagesIds");
+                });
 #pragma warning restore 612, 618
         }
     }

@@ -13,4 +13,6 @@ public class PostDto
     public string? UserDisplayName { get; set; }
 
     public string? Content { get; set; }
+
+    public IEnumerable<Guid>? ImagesIds { get; set; }
 }

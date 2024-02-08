@@ -5,4 +5,6 @@ public class Post : Entity
     public Guid? UserId { get; set; }
 
     public string? Content { get; set; }
+
+    public ICollection<PostImage>? ImagesIds { get; set; }
 }

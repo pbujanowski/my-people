@@ -13,4 +13,6 @@ public interface IRepository<TEntity>
     TEntity Update(TEntity entity);
 
     TEntity Delete(TEntity entity);
+
+    IEnumerable<TEntity> Delete(IEnumerable<TEntity> entities);
 }

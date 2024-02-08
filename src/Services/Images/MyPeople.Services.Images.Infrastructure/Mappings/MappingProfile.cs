@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using MyPeople.Services.Images.Application.Dtos;
+using MyPeople.Common.Models.Dtos;
 using MyPeople.Services.Images.Domain.Entities;
 
 namespace MyPeople.Services.Images.Infrastructure.Mappings;
@@ -10,5 +10,7 @@ public class MappingProfile : Profile
     {
         CreateMap<Image, ImageDto>();
         CreateMap<ImageDto, Image>();
+        CreateMap<CreateImageDto, Image>();
+        CreateMap<DeleteImageDto, Image>();
     }
 }

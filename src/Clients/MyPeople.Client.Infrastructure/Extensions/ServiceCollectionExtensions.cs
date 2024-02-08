@@ -38,7 +38,7 @@ public static class ServiceCollectionExtensions
                 sp =>
                     sp.GetRequiredService<AuthorizationMessageHandler>()
                         .ConfigureHandler(
-                            authorizedUrls: new[] { gatewayWebUrl },
+                            authorizedUrls: [gatewayWebUrl],
                             scopes: servicesPostsScopes
                         )
             );
@@ -54,6 +54,8 @@ public static class ServiceCollectionExtensions
                     sp.GetRequiredService<IHttpClientFactory>().CreateClient("services.posts")
                 )
         );
+
+        services.AddScoped<ImageBrowseService>();
 
         return services;
     }

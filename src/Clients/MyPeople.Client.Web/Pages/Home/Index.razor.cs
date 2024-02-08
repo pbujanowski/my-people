@@ -13,7 +13,7 @@ public partial class Index
     [Inject]
     public AuthenticationStateProvider AuthenticationStateProvider { get; set; } = default!;
 
-    public IEnumerable<PostDto> Posts { get; set; } = Enumerable.Empty<PostDto>();
+    public IEnumerable<PostDto> Posts { get; set; } = [];
 
     public CreatePostDto NewPost { get; set; } = new();
 

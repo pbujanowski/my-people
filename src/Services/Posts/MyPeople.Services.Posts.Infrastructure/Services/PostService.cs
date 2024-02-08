@@ -23,6 +23,14 @@ public class PostService(IRepositoryWrapper repositories, IMapper mapper) : IPos
     public async Task<PostDto?> DeletePostAsync(DeletePostDto postDto)
     {
         var entity = _mapper.Map<Post>(postDto);
+
+        var postImagesToDelete = _repositories.PostImages.FindByPostId(entity.Id);
+        var anyPostImages = await postImagesToDelete.AnyAsync();
+        if (anyPostImages)
+        {
+            _repositories.PostImages.Delete(postImagesToDelete);
+        }
+
         var deletedEntity = _repositories.Posts.Delete(entity);
         await _repositories.SaveChangesAsync();
         return _mapper.Map<PostDto>(deletedEntity);
@@ -30,7 +38,7 @@ public class PostService(IRepositoryWrapper repositories, IMapper mapper) : IPos
 
     public async Task<IEnumerable<PostDto>> GetAllPostsAsync()
     {
-        var entities = await _repositories.Posts.FindAll().ToListAsync();
+        var entities = await _repositories.Posts.FindAllWithPostImages().ToListAsync();
         return _mapper.Map<IEnumerable<PostDto>>(entities);
     }
 

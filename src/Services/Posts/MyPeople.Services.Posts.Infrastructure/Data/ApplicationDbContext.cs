@@ -9,6 +9,8 @@ public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options
 {
     public DbSet<Post> Posts => Set<Post>();
 
+    public DbSet<PostImage> PostImages => Set<PostImage>();
+
     public override int SaveChanges()
     {
         SetProperties();

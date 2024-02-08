@@ -82,6 +82,7 @@ public static class DependencyInjection
     private static IServiceCollection ConfigureRepositories(this IServiceCollection services)
     {
         services.AddScoped<IPostRepository, PostRepository>();
+        services.AddScoped<IPostImageRepository, PostImageRepository>();
 
         return services;
     }
@@ -92,6 +93,7 @@ public static class DependencyInjection
     )
     {
         services.AddScoped<IPostService, PostService>();
+        services.AddScoped<IPostImageService, PostImageService>();
 
         var oidcIssuerUrl =
             configuration.GetValue<string>("Oidc:Issuer")
@@ -102,6 +104,17 @@ public static class DependencyInjection
             sp =>
                 new UserService(
                     sp.GetRequiredService<IHttpClientFactory>().CreateClient("identity")
+                )
+        );
+        var gatewayWebUrl =
+            configuration.GetValue<string>("Gateways:Web:Url")
+            ?? throw new ConfigurationException("Gateways:Web:Url");
+
+        services.AddHttpClient("services.images", cl => cl.BaseAddress = new Uri(gatewayWebUrl));
+        services.AddScoped<IImageService>(
+            sp =>
+                new ImageService(
+                    sp.GetRequiredService<IHttpClientFactory>().CreateClient("services.images")
                 )
         );
 

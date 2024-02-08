@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Components;
 using MudBlazor;
-using MyPeople.Common.Abstractions.Services;
+using MyPeople.Client.Infrastructure.Services;
 using MyPeople.Common.Models.Dtos;
 
 namespace MyPeople.Client.Web.Components.Post;
@@ -10,7 +10,7 @@ public partial class PostItem
     private PostDto? _oldPost;
 
     [Inject]
-    public IPostService PostService { get; set; } = default!;
+    public ImageBrowseService ImageBrowseService { get; set; } = default!;
 
     [Inject]
     public IDialogService DialogService { get; set; } = default!;
@@ -22,10 +22,12 @@ public partial class PostItem
     public Guid CurrentUserId { get; set; }
 
     [Parameter, EditorRequired]
-    public EventCallback OnPostEdit { get; set; }
+    public EventCallback<PostDto> EditPost { get; set; }
 
     [Parameter, EditorRequired]
-    public EventCallback OnPostRemove { get; set; }
+    public EventCallback<PostDto> RemovePost { get; set; }
+
+    public ImageDto? SelectedImage { get; set; }
 
     public bool IsEditMode { get; set; }
 
@@ -62,6 +64,12 @@ public partial class PostItem
         IsEditMode = false;
     }
 
+    private async Task OnEditPostClick()
+    {
+        await EditPost.InvokeAsync(Post);
+        DisableEditMode(false);
+    }
+
     private async Task OnRemovePostClick()
     {
         var result = await DialogService.ShowMessageBox(
@@ -72,32 +80,7 @@ public partial class PostItem
         );
         if (result == true)
         {
-            await RemovePostAsync();
+            await RemovePost.InvokeAsync(Post);
         }
-    }
-
-    private async Task RemovePostAsync()
-    {
-        var deletePostDto = new DeletePostDto { Id = Post.Id, UserId = Post.UserId };
-
-        await PostService.DeletePostAsync(deletePostDto);
-        await OnPostRemove.InvokeAsync();
-    }
-
-    private async Task EditPostAsync()
-    {
-        var updatePostDto = new UpdatePostDto
-        {
-            Id = Post.Id,
-            CreatedAt = Post.CreatedAt,
-            UpdatedAt = Post.UpdatedAt,
-            UserId = Post.UserId,
-            UserDisplayName = Post.UserDisplayName,
-            Content = Post.Content
-        };
-
-        await PostService.UpdatePostAsync(updatePostDto);
-        await OnPostEdit.InvokeAsync();
-        DisableEditMode(false);
     }
 }

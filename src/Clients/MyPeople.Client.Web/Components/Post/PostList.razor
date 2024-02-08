@@ -1,9 +1,11 @@
 <MudStack>
-
     @foreach (var post in Posts)
     {
-        <PostItem Post="post" CurrentUserId="@GetCurrentUserId()"
-            OnPostEdit="() => GetAllPostsAsync()" OnPostRemove="() => GetAllPostsAsync()" />
+        <PostItem
+            Post="post"
+            CurrentUserId="CurrentUserId"
+            EditPost="EditPostAsync"
+            RemovePost="RemovePostAsync"
+        />
     }
-
 </MudStack>

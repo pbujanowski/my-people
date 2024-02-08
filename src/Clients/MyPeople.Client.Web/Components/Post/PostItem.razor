@@ -14,25 +14,72 @@
     @if (IsEditMode)
     {
             <MudCardContent>
-                <MudTextField T="string" Label="Write something..." Variant="Variant.Outlined" @bind-Text="@Post.Content"
-                    Lines="5" />
+                <MudTextField
+                    T="string"
+                    Label="Write something..."
+                    Variant="Variant.Outlined"
+                    @bind-Text="@Post.Content"
+                    Lines="5"
+                />
             </MudCardContent>
             <MudCardActions>
-                <MudButton Color="Color.Primary" OnClick="() => EditPostAsync()">Send</MudButton>
-                <MudButton Color="Color.Default" OnClick="() => DisableEditMode(true)">Cancel</MudButton>
+                <MudButton
+                    Color="Color.Primary"
+                    OnClick="() => OnEditPostClick()"
+                >
+                    Send
+                </MudButton>
+                <MudButton
+                    Color="Color.Default"
+                    OnClick="() => DisableEditMode(true)"
+                >
+                    Cancel
+                </MudButton>
             </MudCardActions>
     }
     else
     {
         <MudCardContent>
-            <MudText Typo="Typo.body1">@Post.Content</MudText>
+            <MudStack>
+                <MudText Typo="Typo.body1">@Post.Content</MudText>
+                @if (Post.ImagesIds?.Any() == true)
+                {
+                    <MudGrid>
+                    @foreach (var imageId in Post.ImagesIds)
+                    {
+                        <MudCard>
+                            <MudCardContent>
+                                <MudImage
+                                    Width="100"
+                                    Height="50"
+                                    ObjectFit="ObjectFit.ScaleDown"
+                                    Src="@ImageBrowseService.GetImageUrlById(imageId)"
+                                />
+                            </MudCardContent>
+                        </MudCard>
+                    }
+                    </MudGrid>
+                }
+            </MudStack>
         </MudCardContent>
     }
     @if (CheckIfPostIsOwnedByCurrentUser())
     {
         <MudCardActions>
-            <MudButton Variant="Variant.Text" Color="Color.Primary" OnClick="() => EnableEditMode()">Edit</MudButton>
-            <MudButton Variant="Variant.Text" Color="Color.Error" OnClick="() => OnRemovePostClick()">Remove</MudButton>
+            <MudButton
+                Variant="Variant.Text"
+                Color="Color.Primary"
+                OnClick="() => EnableEditMode()"
+            >
+                Edit
+            </MudButton>
+            <MudButton
+                Variant="Variant.Text"
+                Color="Color.Error"
+                OnClick="() => OnRemovePostClick()"
+            >
+                Remove
+            </MudButton>
         </MudCardActions>
     }
 </MudCard>

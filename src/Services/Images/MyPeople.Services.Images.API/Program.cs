@@ -14,6 +14,7 @@ if (builder.Environment.IsStaging())
     builder.Services.ConfigureConsul(builder.Configuration);
 }
 
+builder.Services.AddAuthorization();
 builder.Services.AddControllers();
 builder.Services.AddHealthChecks();
 builder.Services.AddEndpointsApiExplorer();

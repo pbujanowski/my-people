@@ -6,6 +6,8 @@ public interface IRepositoryWrapper
 {
     IPostRepository Posts { get; }
 
+    IPostImageRepository PostImages { get; }
+
     void SaveChanges();
 
     Task SaveChangesAsync();

@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using Microsoft.EntityFrameworkCore;
-using MyPeople.Services.Images.Application.Dtos;
-using MyPeople.Services.Images.Application.Services;
+using MyPeople.Common.Abstractions.Services;
+using MyPeople.Common.Models.Dtos;
 using MyPeople.Services.Images.Application.Wrappers;
 using MyPeople.Services.Images.Domain.Entities;
 
@@ -12,12 +12,42 @@ namespace MyPeople.Services.Images.Infrastructure.Services
         private readonly IRepositoryWrapper _repositories = repositories;
         private readonly IMapper _mapper = mapper;
 
-        public async Task<ImageDto?> CreateImageAsync(ImageDto imageDto)
+        public async Task<ImageDto?> CreateImageAsync(CreateImageDto imageDto)
         {
             var entity = _mapper.Map<Image>(imageDto);
             var createdEntity = _repositories.Images.Create(entity);
             await _repositories.SaveChangesAsync();
             return _mapper.Map<ImageDto>(createdEntity);
+        }
+
+        public async Task<IEnumerable<ImageDto>?> CreateImagesAsync(
+            IEnumerable<CreateImageDto> imagesDto
+        )
+        {
+            var createdEntities = new List<Image>();
+            foreach (var imageDto in imagesDto)
+            {
+                var entity = _mapper.Map<Image>(imageDto);
+                var createdEntity = _repositories.Images.Create(entity);
+                createdEntities.Add(createdEntity);
+            }
+            await _repositories.SaveChangesAsync();
+            return _mapper.Map<IEnumerable<ImageDto>>(createdEntities);
+        }
+
+        public async Task<IEnumerable<ImageDto>?> DeleteImagesAsync(
+            IEnumerable<DeleteImageDto> imagesDtos
+        )
+        {
+            var entities = _mapper.Map<IEnumerable<Image>>(imagesDtos);
+            var deletedEntities = new List<Image>();
+            foreach (var entity in entities)
+            {
+                var deletedEntity = _repositories.Images.Delete(entity);
+                deletedEntities.Add(deletedEntity);
+            }
+            await _repositories.SaveChangesAsync();
+            return _mapper.Map<IEnumerable<ImageDto>>(deletedEntities);
         }
 
         public async Task<ImageDto?> GetImageByIdAsync(Guid id)

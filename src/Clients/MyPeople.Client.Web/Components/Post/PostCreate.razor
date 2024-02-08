@@ -1,9 +1,36 @@
 <MudCard>
     <MudCardContent>
-        <MudTextField T="string" Label="Write something..." Variant="Variant.Outlined" @bind-Text="@Post.Content"
-            Lines="5" />
+        <MudTextField
+            T="string"
+            Label="Write something..."
+            Variant="Variant.Outlined"
+            @bind-Text="@Post.Content"
+            Lines="5"
+        />
+        <MudFileUpload
+            T="IReadOnlyList<IBrowserFile>"
+            Accept=".png, .jpg"
+            FilesChanged="UploadImages"
+            MaximumFileCount="100"
+        >
+            <ButtonTemplate>
+                <MudButton
+                    HtmlTag="label"
+                    Color="Color.Primary"
+                    StartIcon="@Icons.Material.Filled.CloudUpload"
+                    for="@context.Id"
+                >
+                    Upload images
+                </MudButton>
+            </ButtonTemplate>
+        </MudFileUpload>
     </MudCardContent>
     <MudCardActions>
-        <MudButton Color="Color.Primary" OnClick="() => OnPostCreate.InvokeAsync()">Send</MudButton>
+        <MudButton
+            Color="Color.Primary"
+            OnClick="() => OnPostCreate.InvokeAsync()"
+        >
+            Send
+        </MudButton>
     </MudCardActions>
 </MudCard>

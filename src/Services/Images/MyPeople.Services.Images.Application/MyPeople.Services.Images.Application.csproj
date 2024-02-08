@@ -8,6 +8,8 @@
 
   <ItemGroup>
     <ProjectReference Include="..\MyPeople.Services.Images.Domain\MyPeople.Services.Images.Domain.csproj" />
+    <ProjectReference Include="..\..\..\Common\MyPeople.Common.Abstractions\MyPeople.Common.Abstractions.csproj" />
+    <ProjectReference Include="..\..\..\Common\MyPeople.Common.Models\MyPeople.Common.Models.csproj" />
   </ItemGroup>
 
 </Project>

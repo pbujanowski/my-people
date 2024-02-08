@@ -26,8 +26,7 @@ public class PostService(HttpClient httpClient) : IPostService
 
     public async Task<IEnumerable<PostDto>> GetAllPostsAsync()
     {
-        return await _httpClient.GetFromJsonAsync<IEnumerable<PostDto>>("/posts")
-            ?? Enumerable.Empty<PostDto>();
+        return await _httpClient.GetFromJsonAsync<IEnumerable<PostDto>>("/posts") ?? [];
     }
 
     public async Task<PostDto?> GetPostByIdAsync(Guid id)

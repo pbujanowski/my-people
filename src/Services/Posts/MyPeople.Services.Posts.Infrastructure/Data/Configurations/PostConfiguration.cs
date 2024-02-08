@@ -12,5 +12,7 @@ public class PostConfiguration : EntityConfiguration<Post>
         builder.Property(e => e.UserId).IsRequired();
 
         builder.Property(e => e.Content).IsRequired();
+
+        builder.HasMany(e => e.ImagesIds).WithOne(e => e.Post).HasForeignKey(e => e.PostId);
     }
 }
