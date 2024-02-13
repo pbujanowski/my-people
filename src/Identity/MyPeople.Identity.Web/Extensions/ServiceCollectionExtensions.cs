@@ -45,9 +45,9 @@ public static class ServiceCollectionExtensions
                             .AllowAnyMethod()
                             .WithOrigins(
                                 corsConfiguration.Origins
-                                    ?? throw new ConfigurationException(
-                                        nameof(corsConfiguration.Origins)
-                                    )
+                                ?? throw new ConfigurationException(
+                                    nameof(corsConfiguration.Origins)
+                                )
                             )
                 )
         );

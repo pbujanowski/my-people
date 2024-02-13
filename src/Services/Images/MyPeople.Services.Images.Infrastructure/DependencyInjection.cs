@@ -25,7 +25,6 @@ public static class DependencyInjection
         services.ConfigureRepositories();
         services.ConfigureServices();
         services.ConfigureWrappers();
-        services.ConfigureAutoMapper();
 
         return services;
     }

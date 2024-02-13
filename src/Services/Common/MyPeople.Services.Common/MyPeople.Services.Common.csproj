@@ -1,19 +1,19 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <TargetFramework>net8.0</TargetFramework>
-    <ImplicitUsings>enable</ImplicitUsings>
-    <Nullable>enable</Nullable>
-  </PropertyGroup>
+    <PropertyGroup>
+        <TargetFramework>net8.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
 
-  <ItemGroup>
-    <PackageReference Include="Consul" Version="1.7.14.3" />
-	  <PackageReference Include="OpenIddict.Validation.AspNetCore" Version="5.1.0" />
-	  <PackageReference Include="OpenIddict.Validation.SystemNetHttp" Version="5.1.0" />
-  </ItemGroup>
+    <ItemGroup>
+        <PackageReference Include="Consul" Version="1.7.14.3"/>
+        <PackageReference Include="OpenIddict.Validation.AspNetCore" Version="5.1.0"/>
+        <PackageReference Include="OpenIddict.Validation.SystemNetHttp" Version="5.2.0" />
+    </ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\..\..\Common\MyPeople.Common.Configuration\MyPeople.Common.Configuration.csproj" />
-  </ItemGroup>
+    <ItemGroup>
+        <ProjectReference Include="..\..\..\Common\MyPeople.Common.Configuration\MyPeople.Common.Configuration.csproj"/>
+    </ItemGroup>
 
 </Project>

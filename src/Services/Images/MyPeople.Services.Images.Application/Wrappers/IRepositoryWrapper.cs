@@ -1,13 +1,12 @@
 ﻿using MyPeople.Services.Images.Application.Repositories;
 
-namespace MyPeople.Services.Images.Application.Wrappers
+namespace MyPeople.Services.Images.Application.Wrappers;
+
+public interface IRepositoryWrapper
 {
-    public interface IRepositoryWrapper
-    {
-        IImageRepository Images { get; }
+    IImageRepository Images { get; }
 
-        void SaveChanges();
+    void SaveChanges();
 
-        Task SaveChangesAsync();
-    }
+    Task SaveChangesAsync();
 }

@@ -14,6 +14,5 @@ public class LoginInputModel
     [Display(Name = "Password")]
     public string Password { get; set; } = default!;
 
-    [Display(Name = "Remember me?")]
-    public bool RememberMe { get; set; }
+    [Display(Name = "Remember me?")] public bool RememberMe { get; set; }
 }

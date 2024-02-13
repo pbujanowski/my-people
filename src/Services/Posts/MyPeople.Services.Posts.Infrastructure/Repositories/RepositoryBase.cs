@@ -1,4 +1,3 @@
-using System.Collections.ObjectModel;
 using System.Linq.Expressions;
 using Microsoft.EntityFrameworkCore;
 using MyPeople.Services.Posts.Application.Repositories;
@@ -34,6 +33,7 @@ public abstract class RepositoryBase<TEntity> : IRepository<TEntity>
             var deletedEntity = _dbContext.Set<TEntity>().Remove(entity).Entity;
             deletedEntities.Add(deletedEntity);
         }
+
         return deletedEntities;
     }
 

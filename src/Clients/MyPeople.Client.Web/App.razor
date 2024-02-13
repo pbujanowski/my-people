@@ -3,12 +3,11 @@
         <Found Context="routeData">
             <AuthorizeRouteView
                 RouteData="@routeData"
-                DefaultLayout="@typeof(MainLayout)"
-            >
+                DefaultLayout="@typeof(MainLayout)">
                 <NotAuthorized>
                     @if (context.User.Identity?.IsAuthenticated != true)
                     {
-                        <RedirectToLogin />
+                        <RedirectToLogin/>
                     }
                     else
                     {
@@ -18,8 +17,7 @@
             </AuthorizeRouteView>
             <FocusOnNavigate
                 RouteData="@routeData"
-                Selector="h1"
-            />
+                Selector="h1"/>
         </Found>
         <NotFound>
             <PageTitle>Not found</PageTitle>

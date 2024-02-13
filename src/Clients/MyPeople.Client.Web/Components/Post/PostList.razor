@@ -4,8 +4,7 @@
         <PostItem
             Post="post"
             CurrentUserId="CurrentUserId"
-            EditPost="EditPostAsync"
-            RemovePost="RemovePostAsync"
-        />
+            EditPost="async () => await EditPostAsync(post)"
+            RemovePost="async () => await RemovePostAsync(post)"/>
     }
 </MudStack>

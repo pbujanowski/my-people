@@ -6,5 +6,5 @@ public class Post : Entity
 
     public string? Content { get; set; }
 
-    public ICollection<PostImage>? ImagesIds { get; set; }
+    public ICollection<PostImage>? Images { get; set; }
 }

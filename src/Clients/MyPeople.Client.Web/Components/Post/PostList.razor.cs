@@ -7,14 +7,11 @@ namespace MyPeople.Client.Web.Components.Post;
 
 public partial class PostList
 {
-    [Inject]
-    public IPostService PostService { get; set; } = default!;
+    [Inject] public IPostService PostService { get; set; } = default!;
 
-    [Inject]
-    public AuthenticationStateProvider AuthenticationStateProvider { get; set; } = default!;
+    [Inject] public AuthenticationStateProvider AuthenticationStateProvider { get; set; } = default!;
 
-    [Parameter, EditorRequired]
-    public IEnumerable<PostDto> Posts { get; set; } = default!;
+    [Parameter] [EditorRequired] public IEnumerable<PostDto> Posts { get; set; } = default!;
 
     public Guid CurrentUserId { get; set; }
 

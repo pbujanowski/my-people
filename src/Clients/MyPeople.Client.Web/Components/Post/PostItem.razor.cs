@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Components;
 using MudBlazor;
-using MyPeople.Client.Infrastructure.Services;
 using MyPeople.Common.Models.Dtos;
 
 namespace MyPeople.Client.Web.Components.Post;
@@ -9,29 +8,22 @@ public partial class PostItem
 {
     private PostDto? _oldPost;
 
-    [Inject]
-    public ImageBrowseService ImageBrowseService { get; set; } = default!;
+    [Inject] public IDialogService DialogService { get; set; } = default!;
 
-    [Inject]
-    public IDialogService DialogService { get; set; } = default!;
+    [Parameter] [EditorRequired] public PostDto Post { get; set; } = default!;
 
-    [Parameter, EditorRequired]
-    public PostDto Post { get; set; } = default!;
+    [Parameter] [EditorRequired] public Guid CurrentUserId { get; set; }
 
-    [Parameter, EditorRequired]
-    public Guid CurrentUserId { get; set; }
+    [Parameter] [EditorRequired] public EventCallback<PostDto> EditPost { get; set; }
 
-    [Parameter, EditorRequired]
-    public EventCallback<PostDto> EditPost { get; set; }
-
-    [Parameter, EditorRequired]
-    public EventCallback<PostDto> RemovePost { get; set; }
-
-    public ImageDto? SelectedImage { get; set; }
+    [Parameter] [EditorRequired] public EventCallback<PostDto> RemovePost { get; set; }
 
     public bool IsEditMode { get; set; }
 
-    private bool CheckIfPostIsOwnedByCurrentUser() => Post.UserId == CurrentUserId;
+    private bool CheckIfPostIsOwnedByCurrentUser()
+    {
+        return Post.UserId == CurrentUserId;
+    }
 
     private void EnableEditMode()
     {
@@ -50,7 +42,6 @@ public partial class PostItem
     private void DisableEditMode(bool restoreOldPost)
     {
         if (restoreOldPost)
-        {
             Post = new PostDto
             {
                 Id = _oldPost?.Id,
@@ -60,7 +51,6 @@ public partial class PostItem
                 UserDisplayName = _oldPost?.UserDisplayName,
                 Content = _oldPost?.Content
             };
-        }
         IsEditMode = false;
     }
 
@@ -73,14 +63,12 @@ public partial class PostItem
     private async Task OnRemovePostClick()
     {
         var result = await DialogService.ShowMessageBox(
-            title: "Confirmation",
-            message: "Do you really want to remove this post?",
-            yesText: "Remove",
-            noText: "Cancel"
+            "Confirmation",
+            "Do you really want to remove this post?",
+            "Remove",
+            "Cancel"
         );
         if (result == true)
-        {
             await RemovePost.InvokeAsync(Post);
-        }
     }
 }

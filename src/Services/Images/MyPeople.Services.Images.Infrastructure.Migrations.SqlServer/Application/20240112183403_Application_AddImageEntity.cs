@@ -1,39 +1,34 @@
-﻿using System;
+﻿#nullable disable
+
 using Microsoft.EntityFrameworkCore.Migrations;
 
-#nullable disable
+namespace MyPeople.Services.Images.Infrastructure.Migrations.SqlServer.Application;
 
-namespace MyPeople.Services.Images.Infrastructure.Migrations.SqlServer.Application
+/// <inheritdoc />
+public partial class Application_AddImageEntity : Migration
 {
     /// <inheritdoc />
-    public partial class Application_AddImageEntity : Migration
+    protected override void Up(MigrationBuilder migrationBuilder)
     {
-        /// <inheritdoc />
-        protected override void Up(MigrationBuilder migrationBuilder)
-        {
-            migrationBuilder.CreateTable(
-                name: "Images",
-                columns: table =>
-                    new
-                    {
-                        Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                        Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                        ContentType = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                        Content = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                        CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                        UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: false)
-                    },
-                constraints: table =>
+        migrationBuilder.CreateTable(
+            "Images",
+            table =>
+                new
                 {
-                    table.PrimaryKey("PK_Images", x => x.Id);
-                }
-            );
-        }
+                    Id = table.Column<Guid>("uniqueidentifier", nullable: false),
+                    Name = table.Column<string>("nvarchar(max)", nullable: false),
+                    ContentType = table.Column<string>("nvarchar(max)", nullable: false),
+                    Content = table.Column<string>("nvarchar(max)", nullable: false),
+                    CreatedAt = table.Column<DateTime>("datetime2", nullable: false),
+                    UpdatedAt = table.Column<DateTime>("datetime2", nullable: false)
+                },
+            constraints: table => { table.PrimaryKey("PK_Images", x => x.Id); }
+        );
+    }
 
-        /// <inheritdoc />
-        protected override void Down(MigrationBuilder migrationBuilder)
-        {
-            migrationBuilder.DropTable(name: "Images");
-        }
+    /// <inheritdoc />
+    protected override void Down(MigrationBuilder migrationBuilder)
+    {
+        migrationBuilder.DropTable("Images");
     }
 }

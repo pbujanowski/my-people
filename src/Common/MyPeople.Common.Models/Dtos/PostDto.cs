@@ -14,5 +14,5 @@ public class PostDto
 
     public string? Content { get; set; }
 
-    public IEnumerable<Guid>? ImagesIds { get; set; }
+    public ICollection<PostImageDto>? Images { get; set; }
 }

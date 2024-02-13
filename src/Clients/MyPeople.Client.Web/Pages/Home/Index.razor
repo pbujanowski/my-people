@@ -7,7 +7,6 @@
 <MudStack>
     <PostCreate
         Post="NewPost"
-        OnPostCreate="CreatePostAsync"
-    />
-    <PostList Posts="Posts" />
+        OnPostCreate="async () => await CreatePostAsync()"/>
+    <PostList Posts="Posts"/>
 </MudStack>

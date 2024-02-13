@@ -13,7 +13,7 @@ public class PostImageConfiguration : EntityConfiguration<PostImage>
 
         builder
             .HasOne(e => e.Post)
-            .WithMany(e => e.ImagesIds)
+            .WithMany(e => e.Images)
             .HasForeignKey(e => e.PostId)
             .IsRequired();
 

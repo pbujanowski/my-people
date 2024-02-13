@@ -6,11 +6,9 @@ namespace MyPeople.Client.Web.Components.Post;
 
 public partial class PostCreate
 {
-    [Parameter, EditorRequired]
-    public CreatePostDto Post { get; set; } = default!;
+    [Parameter] [EditorRequired] public CreatePostDto Post { get; set; } = default!;
 
-    [Parameter, EditorRequired]
-    public EventCallback OnPostCreate { get; set; }
+    [Parameter] [EditorRequired] public EventCallback OnPostCreate { get; set; }
 
     private async Task UploadImages(IReadOnlyList<IBrowserFile> browserFiles)
     {
@@ -26,12 +24,14 @@ public partial class PostCreate
                 ContentType = browserFile.ContentType
             };
 
-            if (Post.Images is null)
-            {
-                Post.Images = [];
-            }
+            Post.Images ??= [];
 
             Post.Images.Add(createImageDto);
         }
+    }
+
+    private static string GetImageSource(CreateImageDto image)
+    {
+        return $"data:{image.ContentType};base64,{image.Content}";
     }
 }

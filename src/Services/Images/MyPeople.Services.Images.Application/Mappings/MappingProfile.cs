@@ -1,8 +1,8 @@
-﻿using AutoMapper;
+using AutoMapper;
 using MyPeople.Common.Models.Dtos;
 using MyPeople.Services.Images.Domain.Entities;
 
-namespace MyPeople.Services.Images.Infrastructure.Mappings;
+namespace MyPeople.Services.Images.Application.Mappings;
 
 public class MappingProfile : Profile
 {

@@ -1,7 +1,7 @@
-﻿using System.Reflection;
+using System.Reflection;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace MyPeople.Services.Posts.Application;
+namespace MyPeople.Services.Images.Application;
 
 public static class DependencyInjection
 {

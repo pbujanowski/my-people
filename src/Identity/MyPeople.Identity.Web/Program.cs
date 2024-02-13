@@ -14,9 +14,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 if (builder.Environment.IsDevelopment() || builder.Environment.IsStaging())
-{
     builder.Services.AddHostedService<Worker>();
-}
 
 var app = builder.Build();
 
@@ -43,6 +41,6 @@ app.UseRouting();
 app.UseAuthentication();
 app.UseAuthorization();
 
-app.MapControllerRoute(name: "default", pattern: "{controller=Home}/{action=Index}/{id?}");
+app.MapControllerRoute("default", "{controller=Home}/{action=Index}/{id?}");
 
 app.Run();

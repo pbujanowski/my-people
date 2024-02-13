@@ -1,19 +1,15 @@
-@using Microsoft.AspNetCore.Components.WebAssembly.Authentication
-
 <AuthorizeView>
     <Authorized>
         <MudIconButton
             Icon="@Icons.Material.Filled.Person"
             Title="@context.User.Identity?.Name"
-            Color="Color.Inherit"
-        />
+            Color="Color.Inherit"/>
         <MudIconButton
             Icon="@Icons.Material.Filled.Logout"
             Title="Log out"
             Match="NavLinkMatch.All"
             Color="Color.Inherit"
-            OnClick="BeginLogOut"
-        />
+            OnClick="BeginLogOut"/>
     </Authorized>
     <NotAuthorized>
         <MudIconButton
@@ -21,7 +17,6 @@
             Title="Log in"
             Match="NavLinkMatch.All"
             Color="Color.Inherit"
-            Href="/authentication/login"
-        />
+            Href="/authentication/login"/>
     </NotAuthorized>
 </AuthorizeView>

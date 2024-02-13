@@ -5,31 +5,46 @@
             Label="Write something..."
             Variant="Variant.Outlined"
             @bind-Text="@Post.Content"
-            Lines="5"
-        />
+            Lines="5"/>
         <MudFileUpload
             T="IReadOnlyList<IBrowserFile>"
             Accept=".png, .jpg"
             FilesChanged="UploadImages"
-            MaximumFileCount="100"
-        >
+            MaximumFileCount="100">
             <ButtonTemplate>
                 <MudButton
                     HtmlTag="label"
                     Color="Color.Primary"
                     StartIcon="@Icons.Material.Filled.CloudUpload"
-                    for="@context.Id"
-                >
+                    for="@context.Id">
                     Upload images
                 </MudButton>
             </ButtonTemplate>
         </MudFileUpload>
+        @if (Post.Images?.Count > 0)
+        {
+            <MudGrid Spacing="2">
+                @foreach (var image in Post.Images!)
+                {
+                    <MudItem>
+                        <MudImage
+                            Class="mx-auto my-auto rounded-lg"
+                            Fluid
+                            Width="150"
+                            Height="100"
+                            Elevation="25"
+                            ObjectFit="ObjectFit.ScaleDown"
+                            Src="@GetImageSource(image)"/>
+                    </MudItem>
+                }
+            </MudGrid>
+        }
+
     </MudCardContent>
     <MudCardActions>
         <MudButton
             Color="Color.Primary"
-            OnClick="() => OnPostCreate.InvokeAsync()"
-        >
+            OnClick="async () => await OnPostCreate.InvokeAsync()">
             Send
         </MudButton>
     </MudCardActions>

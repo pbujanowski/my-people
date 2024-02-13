@@ -63,9 +63,7 @@ public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options
         {
             ((Entity)entry.Entity).UpdatedAt = now;
             if (entry.State == EntityState.Added)
-            {
                 ((Entity)entry.Entity).CreatedAt = now;
-            }
         }
     }
 }

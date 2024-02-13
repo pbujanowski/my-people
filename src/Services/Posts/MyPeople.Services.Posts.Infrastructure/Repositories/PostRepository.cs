@@ -11,6 +11,6 @@ public class PostRepository(ApplicationDbContext dbContext)
 {
     public IQueryable<Post> FindAllWithPostImages()
     {
-        return _dbContext.Set<Post>().Include(e => e.ImagesIds).AsNoTracking();
+        return _dbContext.Set<Post>().Include(e => e.Images).AsNoTracking();
     }
 }

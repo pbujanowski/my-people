@@ -10,9 +10,7 @@ builder.Services.ConfigureCors(builder.Configuration);
 var ocelotBuilder = builder.Services.AddOcelot();
 
 if (builder.Environment.IsStaging())
-{
     ocelotBuilder.AddConsul();
-}
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();

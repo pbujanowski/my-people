@@ -1,7 +1,6 @@
 ﻿using Consul;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
 using MyPeople.Common.Configuration.Configurations;
 using MyPeople.Common.Configuration.Exceptions;
 using MyPeople.Services.Common.Services;
@@ -29,9 +28,9 @@ public static class ServiceCollectionExtensions
                         .AllowAnyMethod()
                         .WithOrigins(
                             corsConfiguration.Origins
-                                ?? throw new ConfigurationException(
-                                    nameof(corsConfiguration.Origins)
-                                )
+                            ?? throw new ConfigurationException(
+                                nameof(corsConfiguration.Origins)
+                            )
                         );
                 })
         );
@@ -54,24 +53,24 @@ public static class ServiceCollectionExtensions
             {
                 options.SetIssuer(
                     oidcConfiguration.Issuer
-                        ?? throw new ConfigurationException(nameof(oidcConfiguration.Issuer))
+                    ?? throw new ConfigurationException(nameof(oidcConfiguration.Issuer))
                 );
                 options.AddAudiences(
                     oidcConfiguration.Audience
-                        ?? throw new ConfigurationException(nameof(oidcConfiguration.Audience))
+                    ?? throw new ConfigurationException(nameof(oidcConfiguration.Audience))
                 );
 
                 options
                     .UseIntrospection()
                     .SetClientId(
                         oidcConfiguration.ClientId
-                            ?? throw new ConfigurationException(nameof(oidcConfiguration.ClientId))
+                        ?? throw new ConfigurationException(nameof(oidcConfiguration.ClientId))
                     )
                     .SetClientSecret(
                         oidcConfiguration.ClientSecret
-                            ?? throw new ConfigurationException(
-                                nameof(oidcConfiguration.ClientSecret)
-                            )
+                        ?? throw new ConfigurationException(
+                            nameof(oidcConfiguration.ClientSecret)
+                        )
                     );
 
                 options.UseSystemNetHttp();
@@ -102,7 +101,7 @@ public static class ServiceCollectionExtensions
         {
             config.Address = new Uri(
                 serviceDiscoveryConfiguration?.DiscoveryAddress
-                    ?? throw new ConfigurationException("ServiceDiscovery:DiscoveryAddress")
+                ?? throw new ConfigurationException("ServiceDiscovery:DiscoveryAddress")
             );
         });
 

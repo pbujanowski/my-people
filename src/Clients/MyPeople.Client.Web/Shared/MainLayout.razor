@@ -1,21 +1,20 @@
 ﻿@inherits LayoutComponentBase
 
-<MudThemeProvider />
-<MudDialogProvider />
-<MudSnackbarProvider />
+<MudThemeProvider/>
+<MudDialogProvider/>
+<MudSnackbarProvider/>
 
 <MudLayout>
     <MudAppBar Elevation="1">
         <MudText Typo="Typo.h6">My People</MudText>
-        <MudSpacer />
+        <MudSpacer/>
         <MudIconButton
             Icon="@Icons.Material.Filled.Home"
             Title="Home"
             Match="NavLinkMatch.All"
             Color="Color.Inherit"
-            Href="/"
-        />
-        <LoginDisplay />
+            Href="/"/>
+        <LoginDisplay/>
     </MudAppBar>
     <MudMainContent>
         <MudContainer MaxWidth="MaxWidth.Large">

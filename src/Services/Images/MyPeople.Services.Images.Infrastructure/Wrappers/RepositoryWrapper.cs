@@ -2,23 +2,22 @@
 using MyPeople.Services.Images.Application.Wrappers;
 using MyPeople.Services.Images.Infrastructure.Data;
 
-namespace MyPeople.Services.Images.Infrastructure.Wrappers
+namespace MyPeople.Services.Images.Infrastructure.Wrappers;
+
+public class RepositoryWrapper(ApplicationDbContext dbContext, IImageRepository images)
+    : IRepositoryWrapper
 {
-    public class RepositoryWrapper(ApplicationDbContext dbContext, IImageRepository images)
-        : IRepositoryWrapper
+    private readonly ApplicationDbContext _dbContext = dbContext;
+
+    public IImageRepository Images { get; } = images;
+
+    public void SaveChanges()
     {
-        private readonly ApplicationDbContext _dbContext = dbContext;
+        _dbContext.SaveChanges();
+    }
 
-        public IImageRepository Images { get; } = images;
-
-        public void SaveChanges()
-        {
-            _dbContext.SaveChanges();
-        }
-
-        public async Task SaveChangesAsync()
-        {
-            await _dbContext.SaveChangesAsync();
-        }
+    public async Task SaveChangesAsync()
+    {
+        await _dbContext.SaveChangesAsync();
     }
 }

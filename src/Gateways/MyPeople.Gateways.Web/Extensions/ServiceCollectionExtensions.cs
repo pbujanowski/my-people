@@ -21,7 +21,7 @@ public static class ServiceCollectionExtensions
                 policy
                     .WithOrigins(
                         corsConfiguration.Origins
-                            ?? throw new ConfigurationException(nameof(corsConfiguration.Origins))
+                        ?? throw new ConfigurationException(nameof(corsConfiguration.Origins))
                     )
                     .AllowAnyHeader()
                     .AllowAnyMethod()

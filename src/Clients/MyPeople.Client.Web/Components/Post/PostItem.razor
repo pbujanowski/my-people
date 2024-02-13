@@ -13,52 +13,46 @@
     </MudCardHeader>
     @if (IsEditMode)
     {
-            <MudCardContent>
-                <MudTextField
-                    T="string"
-                    Label="Write something..."
-                    Variant="Variant.Outlined"
-                    @bind-Text="@Post.Content"
-                    Lines="5"
-                />
-            </MudCardContent>
-            <MudCardActions>
-                <MudButton
-                    Color="Color.Primary"
-                    OnClick="() => OnEditPostClick()"
-                >
-                    Send
-                </MudButton>
-                <MudButton
-                    Color="Color.Default"
-                    OnClick="() => DisableEditMode(true)"
-                >
-                    Cancel
-                </MudButton>
-            </MudCardActions>
+        <MudCardContent>
+            <MudTextField
+                T="string"
+                Label="Write something..."
+                Variant="Variant.Outlined"
+                @bind-Text="@Post.Content"
+                Lines="5"/>
+        </MudCardContent>
+        <MudCardActions>
+            <MudButton
+                Color="Color.Primary"
+                OnClick="async () => await OnEditPostClick()">
+                Send
+            </MudButton>
+            <MudButton
+                Color="Color.Default"
+                OnClick="() => DisableEditMode(true)">
+                Cancel
+            </MudButton>
+        </MudCardActions>
     }
     else
     {
         <MudCardContent>
             <MudStack>
                 <MudText Typo="Typo.body1">@Post.Content</MudText>
-                @if (Post.ImagesIds?.Any() == true)
-                {
-                    <MudGrid>
-                    @foreach (var imageId in Post.ImagesIds)
+                @{
+                    var anyImages = Post.Images?.Any() == true;
+                    if (anyImages)
                     {
-                        <MudCard>
-                            <MudCardContent>
-                                <MudImage
-                                    Width="100"
-                                    Height="50"
-                                    ObjectFit="ObjectFit.ScaleDown"
-                                    Src="@ImageBrowseService.GetImageUrlById(imageId)"
-                                />
-                            </MudCardContent>
-                        </MudCard>
+                        @foreach (var image in Post.Images!)
+                        {
+                            <MudImage
+                                Class="mx-auto my-auto rounded-lg"
+                                Fluid
+                                Elevation="25"
+                                ObjectFit="ObjectFit.ScaleDown"
+                                Src="@image.Url"/>
+                        }
                     }
-                    </MudGrid>
                 }
             </MudStack>
         </MudCardContent>
@@ -69,15 +63,13 @@
             <MudButton
                 Variant="Variant.Text"
                 Color="Color.Primary"
-                OnClick="() => EnableEditMode()"
-            >
+                OnClick="() => EnableEditMode()">
                 Edit
             </MudButton>
             <MudButton
                 Variant="Variant.Text"
                 Color="Color.Error"
-                OnClick="() => OnRemovePostClick()"
-            >
+                OnClick="() => OnRemovePostClick()">
                 Remove
             </MudButton>
         </MudCardActions>

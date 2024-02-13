@@ -9,8 +9,8 @@ namespace MyPeople.Services.Common.Services;
 public class ServiceDiscoveryHostedService(IConsulClient consulClient, IConfiguration configuration)
     : IHostedService
 {
-    private readonly IConsulClient _consulClient = consulClient;
     private readonly IConfiguration _configuration = configuration;
+    private readonly IConsulClient _consulClient = consulClient;
     private AgentServiceRegistration? _registration;
 
     public async Task StartAsync(CancellationToken cancellationToken)

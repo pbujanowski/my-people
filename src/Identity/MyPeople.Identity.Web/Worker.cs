@@ -10,8 +10,8 @@ namespace MyPeople.Identity.Web;
 
 public class Worker(IServiceProvider serviceProvider, IConfiguration configuration) : IHostedService
 {
-    private readonly IServiceProvider _serviceProvider = serviceProvider;
     private readonly IConfiguration _configuration = configuration;
+    private readonly IServiceProvider _serviceProvider = serviceProvider;
 
     public async Task StartAsync(CancellationToken cancellationToken)
     {
@@ -25,7 +25,6 @@ public class Worker(IServiceProvider serviceProvider, IConfiguration configurati
         var userManager = scope.ServiceProvider.GetRequiredService<UserManager<ApplicationUser>>();
 
         if (await applicationManager.FindByClientIdAsync("postman", cancellationToken) is null)
-        {
             await applicationManager.CreateAsync(
                 new OpenIddictApplicationDescriptor
                 {
@@ -48,11 +47,10 @@ public class Worker(IServiceProvider serviceProvider, IConfiguration configurati
                         Permissions.Scopes.Roles,
                         Permissions.Prefixes.Scope + AppScopes.Services.Posts
                     },
-                    Requirements = { Requirements.Features.ProofKeyForCodeExchange },
+                    Requirements = { Requirements.Features.ProofKeyForCodeExchange }
                 },
                 cancellationToken
             );
-        }
 
         if (
             await applicationManager.FindByClientIdAsync(
@@ -61,7 +59,6 @@ public class Worker(IServiceProvider serviceProvider, IConfiguration configurati
             )
             is null
         )
-        {
             await applicationManager.CreateAsync(
                 new OpenIddictApplicationDescriptor
                 {
@@ -71,7 +68,6 @@ public class Worker(IServiceProvider serviceProvider, IConfiguration configurati
                 },
                 cancellationToken
             );
-        }
 
         if (
             await applicationManager.FindByClientIdAsync(
@@ -80,7 +76,6 @@ public class Worker(IServiceProvider serviceProvider, IConfiguration configurati
             )
             is null
         )
-        {
             await applicationManager.CreateAsync(
                 new OpenIddictApplicationDescriptor
                 {
@@ -90,13 +85,11 @@ public class Worker(IServiceProvider serviceProvider, IConfiguration configurati
                 },
                 cancellationToken
             );
-        }
 
         if (
             await applicationManager.FindByClientIdAsync("my-people-client", cancellationToken)
             is null
         )
-        {
             await applicationManager.CreateAsync(
                 new OpenIddictApplicationDescriptor
                 {
@@ -125,35 +118,28 @@ public class Worker(IServiceProvider serviceProvider, IConfiguration configurati
                         Permissions.Scopes.Roles,
                         Permissions.Prefixes.Scope + AppScopes.Services.Posts
                     },
-                    Requirements = { Requirements.Features.ProofKeyForCodeExchange },
+                    Requirements = { Requirements.Features.ProofKeyForCodeExchange }
                 },
                 cancellationToken
             );
-        }
 
         var scopeManager = scope.ServiceProvider.GetRequiredService<IOpenIddictScopeManager>();
 
         if (await scopeManager.FindByNameAsync(AppScopes.Services.Posts, cancellationToken) is null)
-        {
             await scopeManager.CreateAsync(
                 new OpenIddictScopeDescriptor
                 {
                     Name = AppScopes.Services.Posts,
-                    Resources = { "my-people-services-posts" },
+                    Resources = { "my-people-services-posts" }
                 },
                 cancellationToken
             );
-        }
 
         if (!await roleManager.RoleExistsAsync(AppRoles.Administrator))
-        {
             await roleManager.CreateAsync(new ApplicationRole(AppRoles.Administrator));
-        }
 
         if (!await roleManager.RoleExistsAsync(AppRoles.User))
-        {
             await roleManager.CreateAsync(new ApplicationRole(AppRoles.User));
-        }
 
         var administratorEmail =
             _configuration.GetSection("Administrator:Email").Get<string>()
@@ -200,5 +186,8 @@ public class Worker(IServiceProvider serviceProvider, IConfiguration configurati
         }
     }
 
-    public Task StopAsync(CancellationToken cancellationToken) => Task.CompletedTask;
+    public Task StopAsync(CancellationToken cancellationToken)
+    {
+        return Task.CompletedTask;
+    }
 }

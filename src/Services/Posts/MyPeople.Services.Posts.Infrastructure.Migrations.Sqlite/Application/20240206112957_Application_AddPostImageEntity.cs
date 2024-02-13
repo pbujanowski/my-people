@@ -1,50 +1,39 @@
-﻿using System;
+﻿#nullable disable
+
 using Microsoft.EntityFrameworkCore.Migrations;
 
-#nullable disable
+namespace MyPeople.Services.Posts.Infrastructure.Migrations.Sqlite.Application;
 
-namespace MyPeople.Services.Posts.Infrastructure.Migrations.Sqlite.Application
+/// <inheritdoc />
+public partial class Application_AddPostImageEntity : Migration
 {
     /// <inheritdoc />
-    public partial class Application_AddPostImageEntity : Migration
+    protected override void Up(MigrationBuilder migrationBuilder)
     {
-        /// <inheritdoc />
-        protected override void Up(MigrationBuilder migrationBuilder)
-        {
-            migrationBuilder.CreateTable(
-                name: "PostImages",
-                columns: table =>
-                    new
-                    {
-                        Id = table.Column<Guid>(type: "TEXT", nullable: false),
-                        PostId = table.Column<Guid>(type: "TEXT", nullable: true),
-                        ImageId = table.Column<Guid>(type: "TEXT", nullable: true),
-                        CreatedAt = table.Column<DateTime>(type: "TEXT", nullable: true),
-                        UpdatedAt = table.Column<DateTime>(type: "TEXT", nullable: true)
-                    },
-                constraints: table =>
+        migrationBuilder.CreateTable(
+            "PostImages",
+            table =>
+                new
                 {
-                    table.PrimaryKey("PK_PostImages", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_PostImages_Posts_PostId",
-                        column: x => x.PostId,
-                        principalTable: "Posts",
-                        principalColumn: "Id"
-                    );
-                }
-            );
+                    Id = table.Column<Guid>("TEXT", nullable: false),
+                    PostId = table.Column<Guid>("TEXT", nullable: true),
+                    ImageId = table.Column<Guid>("TEXT", nullable: true),
+                    CreatedAt = table.Column<DateTime>("TEXT", nullable: true),
+                    UpdatedAt = table.Column<DateTime>("TEXT", nullable: true)
+                },
+            constraints: table =>
+            {
+                table.PrimaryKey("PK_PostImages", x => x.Id);
+                table.ForeignKey("FK_PostImages_Posts_PostId", x => x.PostId, "Posts", "Id");
+            }
+        );
 
-            migrationBuilder.CreateIndex(
-                name: "IX_PostImages_PostId",
-                table: "PostImages",
-                column: "PostId"
-            );
-        }
+        migrationBuilder.CreateIndex("IX_PostImages_PostId", "PostImages", "PostId");
+    }
 
-        /// <inheritdoc />
-        protected override void Down(MigrationBuilder migrationBuilder)
-        {
-            migrationBuilder.DropTable(name: "PostImages");
-        }
+    /// <inheritdoc />
+    protected override void Down(MigrationBuilder migrationBuilder)
+    {
+        migrationBuilder.DropTable("PostImages");
     }
 }

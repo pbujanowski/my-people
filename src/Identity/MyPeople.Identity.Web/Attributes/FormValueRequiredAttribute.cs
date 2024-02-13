@@ -31,14 +31,10 @@ public sealed class FormValueRequiredAttribute(string name) : ActionMethodSelect
                 StringComparison.OrdinalIgnoreCase
             )
         )
-        {
             return false;
-        }
 
         if (string.IsNullOrEmpty(context.HttpContext.Request.ContentType))
-        {
             return false;
-        }
 
         if (
             !context.HttpContext.Request.ContentType.StartsWith(
@@ -46,9 +42,7 @@ public sealed class FormValueRequiredAttribute(string name) : ActionMethodSelect
                 StringComparison.OrdinalIgnoreCase
             )
         )
-        {
             return false;
-        }
 
         return !string.IsNullOrEmpty(context.HttpContext.Request.Form[_name]);
     }

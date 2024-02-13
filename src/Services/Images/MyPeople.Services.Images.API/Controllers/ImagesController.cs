@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using MyPeople.Common.Abstractions.Services;
 using MyPeople.Common.Models.Dtos;
 
@@ -21,9 +20,7 @@ public class ImagesController(IImageService imageService, ILogger<ImagesControll
         {
             var image = await _imageService.GetImageByIdAsync(id);
             if (image is null)
-            {
                 return NotFound();
-            }
 
             return Ok(image);
         }
@@ -42,15 +39,36 @@ public class ImagesController(IImageService imageService, ILogger<ImagesControll
         {
             var image = await _imageService.GetImageByIdAsync(id);
             if (image is null || image.Content is null || image.ContentType is null)
-            {
                 return NotFound();
-            }
 
             return File(Convert.FromBase64String(image.Content), image.ContentType);
         }
         catch (Exception ex)
         {
             _logger.LogError(ex, "Error during browsing image by ID. Image ID: '{ImageId}.", id);
+            return StatusCode(500);
+        }
+    }
+
+    // [Authorize]
+    [HttpPost("many")]
+    public async Task<IActionResult> GetImagesByIds(IEnumerable<Guid> ids)
+    {
+        try
+        {
+            var images = await _imageService.GetImagesByIdsAsync(ids);
+            if (images is null)
+                return NotFound();
+
+            return Ok(images);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(
+                ex,
+                "Error during getting images by images IDs. Images IDs: '{ImagesIds}'.",
+                ids
+            );
             return StatusCode(500);
         }
     }

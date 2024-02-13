@@ -58,4 +58,16 @@ public class ImageService(HttpClient httpClient) : IImageService
             ? await response.Content.ReadFromJsonAsync<ImageDto>()
             : null;
     }
+
+    public async Task<IEnumerable<ImageDto>?> GetImagesByIdsAsync(IEnumerable<Guid> ids)
+    {
+        var content = JsonSerializer.Serialize(ids);
+        using var response = await _httpClient.PostAsync(
+            "/images/many",
+            new StringContent(content, Encoding.UTF8, MediaTypeNames.Application.Json)
+        );
+        return response.IsSuccessStatusCode
+            ? await response.Content.ReadFromJsonAsync<IEnumerable<ImageDto>>()
+            : null;
+    }
 }

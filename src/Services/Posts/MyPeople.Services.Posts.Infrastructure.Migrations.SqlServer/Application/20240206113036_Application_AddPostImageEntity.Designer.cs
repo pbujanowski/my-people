@@ -80,7 +80,7 @@ namespace MyPeople.Services.Posts.Infrastructure.Migrations.SqlServer.Applicatio
             modelBuilder.Entity("MyPeople.Services.Posts.Domain.Entities.PostImage", b =>
                 {
                     b.HasOne("MyPeople.Services.Posts.Domain.Entities.Post", "Post")
-                        .WithMany("ImagesIds")
+                        .WithMany("Images")
                         .HasForeignKey("PostId");
 
                     b.Navigation("Post");
@@ -88,7 +88,7 @@ namespace MyPeople.Services.Posts.Infrastructure.Migrations.SqlServer.Applicatio
 
             modelBuilder.Entity("MyPeople.Services.Posts.Domain.Entities.Post", b =>
                 {
-                    b.Navigation("ImagesIds");
+                    b.Navigation("Images");
                 });
 #pragma warning restore 612, 618
         }

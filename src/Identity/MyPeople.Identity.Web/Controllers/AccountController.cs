@@ -14,9 +14,9 @@ public class AccountController(
     ILogger<AccountController> logger
 ) : Controller
 {
+    private readonly ILogger<AccountController> _logger = logger;
     private readonly SignInManager<ApplicationUser> _signInManager = signInManager;
     private readonly UserManager<ApplicationUser> _userManager = userManager;
-    private readonly ILogger<AccountController> _logger = logger;
 
     [HttpGet]
     public async Task<IActionResult> Login(string? returnUrl = null)
@@ -39,7 +39,7 @@ public class AccountController(
                 model.Input.Email,
                 model.Input.Password,
                 model.Input.RememberMe,
-                lockoutOnFailure: false
+                false
             );
 
             if (result.Succeeded)
@@ -47,23 +47,21 @@ public class AccountController(
                 _logger.LogInformation(LoggerEventIds.UserLogin, "User logged in.");
                 return LocalRedirect(returnUrl);
             }
-            if (result.RequiresTwoFactor)
-            {
-                return RedirectToAction(
-                    "LoginWith2fa",
-                    new { ReturnUrl = returnUrl, model.Input.RememberMe }
-                );
-            }
-            if (result.IsLockedOut)
-            {
-                _logger.LogWarning(LoggerEventIds.UserLockout, "User account locked out.");
-                return RedirectToAction("Lockout");
-            }
-            else
-            {
-                ModelState.AddModelError(string.Empty, "Invalid login attempt.");
-                return View(model);
-            }
+
+            // if (result.RequiresTwoFactor)
+            //     return RedirectToAction(
+            //         "LoginWith2fa",
+            //         new { ReturnUrl = returnUrl, model.Input.RememberMe }
+            //     );
+            //
+            // if (result.IsLockedOut)
+            // {
+            //     _logger.LogWarning(LoggerEventIds.UserLockout, "User account locked out.");
+            //     return RedirectToAction("Lockout");
+            // }
+
+            ModelState.AddModelError(string.Empty, "Invalid login attempt.");
+            return View(model);
         }
 
         return View(model);
@@ -114,23 +112,17 @@ public class AccountController(
                 // await _emailSender.SendEmailAsync(model.Input.Email, "Confirm your email",
                 //     $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
 
-                if (_userManager.Options.SignIn.RequireConfirmedAccount)
-                {
-                    return RedirectToAction(
-                        "RegisterConfirmation",
-                        new { email = model.Input.Email, returnUrl }
-                    );
-                }
-                else
-                {
-                    await _signInManager.SignInAsync(user, isPersistent: false);
-                    return LocalRedirect(returnUrl);
-                }
+                // if (_userManager.Options.SignIn.RequireConfirmedAccount)
+                //     return RedirectToAction(
+                //         "RegisterConfirmation",
+                //         new { email = model.Input.Email, returnUrl }
+                //     );
+
+                await _signInManager.SignInAsync(user, false);
+                return LocalRedirect(returnUrl);
             }
-            foreach (var error in userCreatedResult.Errors)
-            {
-                ModelState.AddModelError(string.Empty, error.Description);
-            }
+
+            foreach (var error in userCreatedResult.Errors) ModelState.AddModelError(string.Empty, error.Description);
         }
 
         return View(model);

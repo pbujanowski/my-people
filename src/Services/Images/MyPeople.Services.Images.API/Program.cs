@@ -1,18 +1,18 @@
 using Microsoft.IdentityModel.Logging;
 using MyPeople.Services.Common.Extensions;
+using MyPeople.Services.Images.Application;
 using MyPeople.Services.Images.Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Services.ConfigureApplication();
 builder.Services.ConfigureInfrastructure(builder.Configuration);
 builder.Services.ConfigureCors(builder.Configuration);
 builder.Services.ConfigureOpenIddict(builder.Configuration);
 builder.Services.ConfigureAuthentication();
 
 if (builder.Environment.IsStaging())
-{
     builder.Services.ConfigureConsul(builder.Configuration);
-}
 
 builder.Services.AddAuthorization();
 builder.Services.AddControllers();

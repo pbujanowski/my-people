@@ -11,4 +11,6 @@ public interface IImageService
     Task<IEnumerable<ImageDto>?> DeleteImagesAsync(IEnumerable<DeleteImageDto> imagesDtos);
 
     Task<ImageDto?> GetImageByIdAsync(Guid id);
+
+    Task<IEnumerable<ImageDto>?> GetImagesByIdsAsync(IEnumerable<Guid> ids);
 }

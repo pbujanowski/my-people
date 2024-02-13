@@ -93,7 +93,6 @@ public static class DependencyInjection
     )
     {
         services.AddScoped<IPostService, PostService>();
-        services.AddScoped<IPostImageService, PostImageService>();
 
         var oidcIssuerUrl =
             configuration.GetValue<string>("Oidc:Issuer")
