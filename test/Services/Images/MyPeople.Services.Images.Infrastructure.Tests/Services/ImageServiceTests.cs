@@ -1,3 +1,4 @@
+using FluentAssertions;
 using MyPeople.Common.Models.Dtos;
 using MyPeople.Services.Images.Domain.Entities;
 using MyPeople.Services.Images.Infrastructure.Tests.Fixtures;
@@ -20,12 +21,12 @@ public class ImageServiceTests(ImageServiceFixture fixture) : IClassFixture<Imag
             ContentType = image.ContentType
         };
         var createdImageDto = await _fixture.ImageService.CreateImageAsync(createImageDto);
-        Assert.NotNull(createdImageDto?.Id);
+        createdImageDto?.Id.Should().NotBeNull();
         
-        var existingImageDto = await _fixture.ImageService.GetImageByIdAsync((Guid)createdImageDto.Id);
+        var existingImageDto = await _fixture.ImageService.GetImageByIdAsync((Guid)createdImageDto!.Id!);
         var compareResult = existingImageDto is not null 
                             && _fixture.ImageDtoComparer.Compare(createdImageDto, existingImageDto);
-        Assert.True(compareResult);
+        compareResult.Should().BeTrue();
     }
 
     [Theory]
@@ -41,18 +42,20 @@ public class ImageServiceTests(ImageServiceFixture fixture) : IClassFixture<Imag
             }).ToList();
 
         var createdImageDtos = await _fixture.ImageService.CreateImagesAsync(createImageDtos);
-        Assert.NotNull(createdImageDtos);
+        var createdImageDtosList = createdImageDtos?.ToList();
+        createdImageDtosList.Should().NotBeNull();
 
-        var existingImageDtos = await _fixture.ImageService.GetImagesByIdsAsync(createdImageDtos.Select(x => x.Id ?? Guid.Empty));
-        Assert.NotNull(existingImageDtos);
+        var existingImageDtos = await _fixture.ImageService.GetImagesByIdsAsync(createdImageDtosList!.Select(x => x.Id ?? Guid.Empty));
+        var existingImageDtosList = existingImageDtos?.ToList();
+        existingImageDtosList.Should().NotBeNull();
         
-        foreach (var createdImageDto in existingImageDtos.ToList())
+        foreach (var createdImageDto in existingImageDtosList!)
         {
-            Assert.NotNull(createdImageDto?.Id);
+            createdImageDto?.Id.Should().NotBeNull();
                             
-            var existingImageDto = await _fixture.ImageService.GetImageByIdAsync((Guid)createdImageDto.Id);
+            var existingImageDto = await _fixture.ImageService.GetImageByIdAsync((Guid)createdImageDto!.Id!);
             var compareResult = existingImageDto is not null && _fixture.ImageDtoComparer.Compare(createdImageDto, existingImageDto);
-            Assert.True(compareResult);
+            compareResult.Should().BeTrue();
         }
     }
 
@@ -69,24 +72,28 @@ public class ImageServiceTests(ImageServiceFixture fixture) : IClassFixture<Imag
             });
 
         var createdImageDtos = await _fixture.ImageService.CreateImagesAsync(createImageDtos);
-        Assert.NotNull(createdImageDtos);
+        var createdImageDtosList = createdImageDtos?.ToList();
+        createdImageDtosList.Should().NotBeNull();
 
         var existingImageDtos = await _fixture.ImageService
-            .GetImagesByIdsAsync(createdImageDtos?
+            .GetImagesByIdsAsync(createdImageDtosList?
                 .Select(x => (Guid)x.Id!) ?? Enumerable.Empty<Guid>());
-        Assert.NotNull(existingImageDtos);
+
+        var existingImageDtosList = existingImageDtos?.ToList();
+        existingImageDtosList.Should().NotBeNull();
         
-        var existingImageDtosList = existingImageDtos.ToList();
-        
-        var deleteImageDtos = existingImageDtosList.Select(image =>
+        var deleteImageDtos = existingImageDtosList!.Select(image =>
             new DeleteImageDto
             {
                 Id = image.Id
             });
 
         var deletedImageDtos = await _fixture.ImageService.DeleteImagesAsync(deleteImageDtos);
-        Assert.NotNull(deletedImageDtos);
-        
-        Assert.Equal(deletedImageDtos.Select(x => x.Id), existingImageDtosList.Select(x => x.Id));
+        var deletedImageDtosList = deletedImageDtos?.ToList();
+        deletedImageDtosList.Should().NotBeNull();
+
+        existingImageDtosList!.Select(x => x.Id)
+            .Should()
+            .BeEquivalentTo(deletedImageDtosList!.Select(x => x.Id));
     }
 }

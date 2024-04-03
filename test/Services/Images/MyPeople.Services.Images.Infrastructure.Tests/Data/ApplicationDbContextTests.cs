@@ -1,3 +1,4 @@
+using FluentAssertions;
 using Microsoft.EntityFrameworkCore;
 using MyPeople.Services.Images.Domain.Entities;
 using MyPeople.Services.Images.Infrastructure.Tests.Fixtures;
@@ -18,7 +19,7 @@ public class ApplicationDbContextTests(ApplicationDbContextFixture fixture)
 
         var createdImage = await GetImageEntityByIdAsync(image.Id);
         var compareResult = createdImage is not null && _fixture.ImageComparer.Compare(image, createdImage);
-        Assert.True(compareResult);
+        compareResult.Should().BeTrue();
     }
 
     [Theory]
@@ -33,7 +34,7 @@ public class ApplicationDbContextTests(ApplicationDbContextFixture fixture)
         await _fixture.DbContext.SaveChangesAsync();
 
         var updatedImage = await GetImageEntityByIdAsync(existingImage.Id);
-        Assert.Equal(imageNewName, updatedImage?.Name);
+        updatedImage?.Name.Should().Be(imageNewName);
     }
 
     [Theory]
@@ -45,7 +46,7 @@ public class ApplicationDbContextTests(ApplicationDbContextFixture fixture)
         await _fixture.DbContext.SaveChangesAsync();
 
         var deletedImage = await GetImageEntityByIdAsync(existingImage.Id);
-        Assert.Null(deletedImage);
+        deletedImage.Should().BeNull();
     }
 
     private async Task<Image> CreateImageEntityAsync(Image image)

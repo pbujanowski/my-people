@@ -1,3 +1,5 @@
+using AutoMapper;
+using FluentAssertions;
 using MyPeople.Common.Models.Dtos;
 using MyPeople.Services.Images.Application.Tests.Fixtures;
 using MyPeople.Services.Images.Domain.Entities;
@@ -16,9 +18,9 @@ public class MappingProfileTests : IClassFixture<MappingProfileFixture>
     [Fact]
     public void ShouldHaveValidConfiguration()
     {
-        _fixture.ConfigurationProvider.AssertConfigurationIsValid();
+        var action = () => _fixture.ConfigurationProvider.AssertConfigurationIsValid();
 
-        Assert.True(true);
+        action.Should().NotThrow<AutoMapperConfigurationException>();
     }
     
     [Theory]
@@ -30,7 +32,7 @@ public class MappingProfileTests : IClassFixture<MappingProfileFixture>
     {
         var sourceObject = Activator.CreateInstance(sourceType);
         var destinationObject = _fixture.Mapper.Map(sourceObject, sourceType, destinationType);
-        
-        Assert.Equal(destinationType, destinationObject?.GetType());
+
+        destinationType.Should().Be(destinationObject?.GetType());
     }
 }
