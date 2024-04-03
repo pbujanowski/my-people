@@ -5,18 +5,31 @@ namespace MyPeople.Services.Images.Infrastructure.Tests.TestData;
 
 public class ImageTestData : IEnumerable<object[]>
 {
-    private readonly IEnumerable<object[]> _images = [
+    public IEnumerator<object[]> GetEnumerator()
+    {
+        yield return
         [
             new Image
             {
-                Name = "image1.png",
-                Content = "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNk+A8AAQUBAScY42YAAAAASUVORK5CYII=",
+                Id = Guid.NewGuid(),
+                Name = $"{Guid.NewGuid()}.png",
+                Content =
+                    "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNk+A8AAQUBAScY42YAAAAASUVORK5CYII=",
                 ContentType = "image/png"
             }
-        ]
-    ];
-
-    public IEnumerator<object[]> GetEnumerator() => _images.GetEnumerator();
+        ];
+        yield return
+        [
+            new Image
+            {
+                Id = Guid.NewGuid(),
+                Name = $"{Guid.NewGuid()}.jpg",
+                Content
+                    = "/9j/4AAQSkZJRgABAQEASABIAAD/2wBDAAMCAgMCAgMDAwMEAwMEBQgFBQQEBQoHBwYIDAoMDAsKCwsNDhIQDQ4RDgsLEBYQERMUFRUVDA8XGBYUGBIUFRT/wAALCAABAAEBAREA/8QAFAABAAAAAAAAAAAAAAAAAAAACf/EABQQAQAAAAAAAAAAAAAAAAAAAAD/2gAIAQEAAD8AKp//2Q==",
+                ContentType = "image/jpeg"
+            }
+        ];
+    }
 
     IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 }

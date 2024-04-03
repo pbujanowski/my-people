@@ -16,7 +16,11 @@ public class ImageService(IRepositoryWrapper repositories, IMapper mapper) : IIm
     {
         var entity = _mapper.Map<Image>(imageDto);
         var createdEntity = _repositories.Images.Create(entity);
+        
         await _repositories.SaveChangesAsync();
+        
+        _repositories.Images.Detach(createdEntity);
+        
         return _mapper.Map<ImageDto>(createdEntity);
     }
 
@@ -24,15 +28,18 @@ public class ImageService(IRepositoryWrapper repositories, IMapper mapper) : IIm
         IEnumerable<CreateImageDto> imagesDto
     )
     {
-        var createdEntities = new List<Image>();
-        foreach (var imageDto in imagesDto)
-        {
-            var entity = _mapper.Map<Image>(imageDto);
-            var createdEntity = _repositories.Images.Create(entity);
-            createdEntities.Add(createdEntity);
-        }
+        var createdEntities = imagesDto
+            .Select(imageDto => _mapper.Map<Image>(imageDto))
+            .Select(entity => _repositories.Images.Create(entity))
+            .ToList();
 
         await _repositories.SaveChangesAsync();
+
+        foreach (var entity in createdEntities)
+        {
+            _repositories.Images.Detach(entity);
+        }
+        
         return _mapper.Map<IEnumerable<ImageDto>>(createdEntities);
     }
 
@@ -41,14 +48,17 @@ public class ImageService(IRepositoryWrapper repositories, IMapper mapper) : IIm
     )
     {
         var entities = _mapper.Map<IEnumerable<Image>>(imagesDtos);
-        var deletedEntities = new List<Image>();
-        foreach (var entity in entities)
-        {
-            var deletedEntity = _repositories.Images.Delete(entity);
-            deletedEntities.Add(deletedEntity);
-        }
+        var deletedEntities = entities
+            .Select(entity => _repositories.Images.Delete(entity))
+            .ToList();
 
         await _repositories.SaveChangesAsync();
+
+        foreach (var entity in deletedEntities)
+        {
+            _repositories.Images.Detach(entity);
+        }
+        
         return _mapper.Map<IEnumerable<ImageDto>>(deletedEntities);
     }
 
@@ -69,6 +79,6 @@ public class ImageService(IRepositoryWrapper repositories, IMapper mapper) : IIm
             .AsNoTracking()
             .ToListAsync();
 
-        return entities is null ? null : _mapper.Map<IEnumerable<ImageDto>>(entities);
+        return _mapper.Map<IEnumerable<ImageDto>>(entities);
     }
 }

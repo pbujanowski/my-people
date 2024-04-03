@@ -39,4 +39,14 @@ public abstract class RepositoryBase<TEntity> : IRepository<TEntity>
     {
         return _dbContext.Set<TEntity>().Update(entity).Entity;
     }
+
+    public void Detach(TEntity entity)
+    {
+        _dbContext.Entry(entity).State = EntityState.Detached;
+    }
+
+    public async Task SaveChangesAsync()
+    {
+        await _dbContext.SaveChangesAsync();
+    }
 }

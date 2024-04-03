@@ -13,4 +13,8 @@ public interface IRepository<TEntity>
     TEntity Update(TEntity entity);
 
     TEntity Delete(TEntity entity);
+
+    void Detach(TEntity entity);
+
+    Task SaveChangesAsync();
 }

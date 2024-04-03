@@ -3,21 +3,20 @@ using MyPeople.Services.Images.Domain.Entities;
 using MyPeople.Services.Images.Infrastructure.Tests.Fixtures;
 using MyPeople.Services.Images.Infrastructure.Tests.TestData;
 
-namespace MyPeople.Services.Images.Infrastructure.Tests.Data;
+namespace MyPeople.Services.Images.Infrastructure.Tests.Repositories;
 
-public class ApplicationDbContextTests(ApplicationDbContextFixture fixture)
-    : IClassFixture<ApplicationDbContextFixture>
+public class ImageRepositoryTests(ImageRepositoryFixture fixture) : IClassFixture<ImageRepositoryFixture>
 {
-    private readonly ApplicationDbContextFixture _fixture = fixture;
+    private readonly ImageRepositoryFixture _fixture = fixture;
 
     [Theory]
     [ClassData(typeof(ImageTestData))]
     public async Task ShouldCreateImageEntity(Image image)
     {
-        await CreateImageEntityAsync(image);
+        var createdImage = await CreateImageEntityAsync(image);
 
-        var createdImage = await GetImageEntityByIdAsync(image.Id);
-        var compareResult = createdImage is not null && _fixture.ImageComparer.Compare(image, createdImage);
+        var existingImage = await GetImageEntityByIdAsync(createdImage.Id);
+        var compareResult = existingImage is not null && _fixture.ImageComparer.Compare(image, existingImage);
         Assert.True(compareResult);
     }
 
@@ -29,37 +28,37 @@ public class ApplicationDbContextTests(ApplicationDbContextFixture fixture)
         var existingImage = await CreateImageEntityAsync(image);
         existingImage.Name = imageNewName;
 
-        _fixture.DbContext.Images.Update(existingImage);
-        await _fixture.DbContext.SaveChangesAsync();
-
+        _fixture.ImageRepository.Update(existingImage);
+        await _fixture.ImageRepository.SaveChangesAsync();
+        
         var updatedImage = await GetImageEntityByIdAsync(existingImage.Id);
         Assert.Equal(imageNewName, updatedImage?.Name);
     }
-
+    
     [Theory]
     [ClassData(typeof(ImageTestData))]
     public async Task ShouldDeleteImageEntity(Image image)
     {
         var existingImage = await CreateImageEntityAsync(image);
-        _fixture.DbContext.Images.Remove(image);
-        await _fixture.DbContext.SaveChangesAsync();
-
+        _fixture.ImageRepository.Delete(image);
+        await _fixture.ImageRepository.SaveChangesAsync();
+    
         var deletedImage = await GetImageEntityByIdAsync(existingImage.Id);
         Assert.Null(deletedImage);
     }
 
     private async Task<Image> CreateImageEntityAsync(Image image)
     {
-        var createdImage = await _fixture.DbContext.Images.AddAsync(image);
-        await _fixture.DbContext.SaveChangesAsync();
-        
-        return createdImage.Entity;
+        var createdImage = _fixture.ImageRepository.Create(image);
+        await _fixture.ImageRepository.SaveChangesAsync();
+                
+        return createdImage;
     }
 
     private async Task<Image?> GetImageEntityByIdAsync(Guid? id)
     {
-        return await _fixture.DbContext.Images
-            .AsNoTracking()
-            .FirstOrDefaultAsync(x => x.Id == id);
+        return await _fixture.ImageRepository
+            .FindByCondition(x => x.Id == id)
+            .FirstOrDefaultAsync();
     }
 }
