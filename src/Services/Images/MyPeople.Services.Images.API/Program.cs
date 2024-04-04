@@ -1,10 +1,13 @@
+using FluentValidation.AspNetCore;
 using Microsoft.IdentityModel.Logging;
+using MyPeople.Common.Models;
 using MyPeople.Services.Common.Extensions;
 using MyPeople.Services.Images.Application;
 using MyPeople.Services.Images.Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Services.ConfigureCommonModels();
 builder.Services.ConfigureApplication();
 builder.Services.ConfigureInfrastructure(builder.Configuration);
 builder.Services.ConfigureCors(builder.Configuration);
@@ -16,6 +19,7 @@ if (builder.Environment.IsStaging())
 
 builder.Services.AddAuthorization();
 builder.Services.AddControllers();
+builder.Services.AddFluentValidationAutoValidation();
 builder.Services.AddHealthChecks();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
