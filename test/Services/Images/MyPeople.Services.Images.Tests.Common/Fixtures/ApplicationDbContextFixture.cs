@@ -2,7 +2,7 @@ using Microsoft.EntityFrameworkCore;
 using MyPeople.Services.Images.Domain.Entities;
 using MyPeople.Services.Images.Infrastructure.Data;
 
-namespace MyPeople.Services.Images.Infrastructure.Tests.Fixtures;
+namespace MyPeople.Services.Images.Tests.Common.Fixtures;
 
 public class ApplicationDbContextFixture : IAsyncDisposable
 {

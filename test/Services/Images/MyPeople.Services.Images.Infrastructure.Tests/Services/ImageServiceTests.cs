@@ -1,8 +1,8 @@
 using FluentAssertions;
 using MyPeople.Common.Models.Dtos;
 using MyPeople.Services.Images.Domain.Entities;
-using MyPeople.Services.Images.Infrastructure.Tests.Fixtures;
-using MyPeople.Services.Images.Infrastructure.Tests.TestData;
+using MyPeople.Services.Images.Tests.Common.Fixtures;
+using MyPeople.Services.Images.Tests.Common.TestData;
 
 namespace MyPeople.Services.Images.Infrastructure.Tests.Services;
 

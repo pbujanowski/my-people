@@ -15,10 +15,14 @@
           <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         </PackageReference>
         <PackageReference Include="FluentAssertions" Version="6.12.0" />
-        <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.8.0"/>
+        <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.9.0" />
+        <PackageReference Include="NSubstitute" Version="5.1.0" />
         <PackageReference Include="ObjectsComparer" Version="1.4.1" />
-        <PackageReference Include="xunit" Version="2.5.3"/>
-        <PackageReference Include="xunit.runner.visualstudio" Version="2.5.3"/>
+        <PackageReference Include="xunit" Version="2.7.0" />
+        <PackageReference Include="xunit.runner.visualstudio" Version="2.5.7">
+          <PrivateAssets>all</PrivateAssets>
+          <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+        </PackageReference>
     </ItemGroup>
 
     <ItemGroup>
@@ -26,7 +30,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\..\..\..\src\Services\Images\MyPeople.Services.Images.Infrastructure\MyPeople.Services.Images.Infrastructure.csproj" />
+      <ProjectReference Include="..\..\..\..\src\Services\Images\MyPeople.Services.Images.API\MyPeople.Services.Images.API.csproj" />
       <ProjectReference Include="..\MyPeople.Services.Images.Tests.Common\MyPeople.Services.Images.Tests.Common.csproj" />
     </ItemGroup>
 

@@ -1,7 +1,7 @@
 using System.Collections;
 using MyPeople.Services.Images.Domain.Entities;
 
-namespace MyPeople.Services.Images.Infrastructure.Tests.TestData;
+namespace MyPeople.Services.Images.Tests.Common.TestData;
 
 public class ImageTestData : IEnumerable<object[]>
 {

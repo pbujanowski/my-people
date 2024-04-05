@@ -1,7 +1,7 @@
 using MyPeople.Services.Images.Application.Repositories;
 using MyPeople.Services.Images.Infrastructure.Repositories;
 
-namespace MyPeople.Services.Images.Infrastructure.Tests.Fixtures;
+namespace MyPeople.Services.Images.Tests.Common.Fixtures;
 
 public class ImageRepositoryFixture : ApplicationDbContextFixture
 {
