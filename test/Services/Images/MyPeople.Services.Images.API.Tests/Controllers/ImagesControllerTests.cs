@@ -5,7 +5,6 @@ using MyPeople.Common.Models.Dtos;
 using MyPeople.Services.Images.API.Tests.Fixtures;
 using MyPeople.Services.Images.Domain.Entities;
 using MyPeople.Services.Images.Tests.Common.TestData;
-using NSubstitute.Extensions;
 
 namespace MyPeople.Services.Images.API.Tests.Controllers;
 
@@ -37,11 +36,11 @@ public class ImagesControllerTests(ImagesControllerFixture fixture) : IClassFixt
 
     [Theory]
     [ClassData(typeof(ImageTestData))]
-    public async Task ShouldBrowseImageByIdReturnOkObjectResult(Image image)
+    public async Task ShouldBrowseImageByIdReturnFileContentResult(Image image)
     {
         var createdImageDto = await CreateImageAndAssertAsync(image);
         var result = await _fixture.ImagesController.BrowseImageById((Guid)createdImageDto.Id!);
-        result.Should().BeOfType<OkObjectResult>();
+        result.Should().BeOfType<FileContentResult>();
     }
 
     [Theory]
@@ -58,11 +57,13 @@ public class ImagesControllerTests(ImagesControllerFixture fixture) : IClassFixt
     }
 
     [Theory]
-    [ClassData(typeof(ImageTestData))]
+    [ClassData(typeof(ImagesTestData))]
     public async Task ShouldGetImagesByIdsReturnOkObjectResult(IEnumerable<Image> images)
     {
         var createdImagesDtos = await CreateImagesAndAssertAsync(images);
-        var result = await _fixture.ImagesController.GetImagesByIds(createdImagesDtos.Select(x => (Guid)x.Id!));
+        createdImagesDtos.Should().NotBeNull();
+        
+        var result = await _fixture.ImagesController.GetImagesByIds(createdImagesDtos!.Select(x => (Guid)x.Id!));
         result.Should().BeOfType<OkObjectResult>();
     }
 
@@ -95,7 +96,9 @@ public class ImagesControllerTests(ImagesControllerFixture fixture) : IClassFixt
     public async Task ShouldDeleteImagesReturnOkObjectResult(IEnumerable<Image> images)
     {
         var createdImagesDtos = await CreateImagesAndAssertAsync(images);
-        var deleteImageDtos = MapImageDtosToDeleteImageDtos(createdImagesDtos);
+        createdImagesDtos.Should().NotBeNull();
+        
+        var deleteImageDtos = MapImageDtosToDeleteImageDtos(createdImagesDtos!);
         var result = await _fixture.ImagesController.DeleteImages(deleteImageDtos);
         result.Should().BeOfType<OkObjectResult>();
     }
@@ -109,7 +112,7 @@ public class ImagesControllerTests(ImagesControllerFixture fixture) : IClassFixt
         result.Should().BeOfType<StatusCodeResult>();
         
         var statusCodeResult = result as StatusCodeResult;
-        statusCodeResult.StatusCode.Should().Be(StatusCodes.Status500InternalServerError);
+        statusCodeResult?.StatusCode.Should().Be(StatusCodes.Status500InternalServerError);
     }
 
     private async Task<ImageDto> CreateImageAndAssertAsync(Image image)
@@ -129,7 +132,7 @@ public class ImagesControllerTests(ImagesControllerFixture fixture) : IClassFixt
         return createdImageDto;
     }
 
-    private async Task<IEnumerable<ImageDto>> CreateImagesAndAssertAsync(IEnumerable<Image> images)
+    private async Task<IEnumerable<ImageDto>?> CreateImagesAndAssertAsync(IEnumerable<Image> images)
     {
         var createImageDtos = MapImagesToCreateImageDtos(images);
 
