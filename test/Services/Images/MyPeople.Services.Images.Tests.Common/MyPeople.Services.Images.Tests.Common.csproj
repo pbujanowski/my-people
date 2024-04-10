@@ -4,6 +4,9 @@
         <TargetFramework>net8.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
+
+        <IsPackable>false</IsPackable>
+        <IsTestProject>true</IsTestProject>
     </PropertyGroup>
 
     <ItemGroup>
@@ -11,15 +14,12 @@
     </ItemGroup>
 
     <ItemGroup>
-      <PackageReference Include="AutoMapper" Version="13.0.1" />
       <PackageReference Include="ObjectsComparer" Version="1.4.1" />
       <PackageReference Include="xunit" Version="2.7.0" />
     </ItemGroup>
 
     <ItemGroup>
-      <Reference Include="xunit.core">
-        <HintPath>..\..\..\..\..\..\.nuget\packages\xunit.extensibility.core\2.7.0\lib\netstandard1.1\xunit.core.dll</HintPath>
-      </Reference>
+        <Using Include="Xunit"/>
     </ItemGroup>
 
 </Project>
