@@ -2,7 +2,7 @@ using FluentAssertions;
 using Microsoft.EntityFrameworkCore;
 using MyPeople.Services.Images.Domain.Entities;
 using MyPeople.Services.Images.Tests.Common.Fixtures;
-using MyPeople.Services.Images.Tests.Common.TestData;
+using MyPeople.Services.Images.Tests.Common.Generators;
 
 namespace MyPeople.Services.Images.Infrastructure.Tests.Repositories;
 
@@ -11,7 +11,7 @@ public class ImageRepositoryTests(ImageRepositoryFixture fixture) : IClassFixtur
     private readonly ImageRepositoryFixture _fixture = fixture;
 
     [Theory]
-    [ClassData(typeof(ImageTestData))]
+    [MemberData(nameof(ImageDataGenerator.GetImage), MemberType = typeof(ImageDataGenerator))]
     public async Task ShouldCreateImageEntity(Image image)
     {
         var createdImage = await CreateImageEntityAsync(image);
@@ -22,7 +22,7 @@ public class ImageRepositoryTests(ImageRepositoryFixture fixture) : IClassFixtur
     }
 
     [Theory]
-    [ClassData(typeof(ImageTestData))]
+    [MemberData(nameof(ImageDataGenerator.GetImage), MemberType = typeof(ImageDataGenerator))]
     public async Task ShouldUpdateImageEntity(Image image)
     {
         var imageNewName = $"{Guid.NewGuid()}.png";
@@ -37,7 +37,7 @@ public class ImageRepositoryTests(ImageRepositoryFixture fixture) : IClassFixtur
     }
     
     [Theory]
-    [ClassData(typeof(ImageTestData))]
+    [MemberData(nameof(ImageDataGenerator.GetImage), MemberType = typeof(ImageDataGenerator))]
     public async Task ShouldDeleteImageEntity(Image image)
     {
         var existingImage = await CreateImageEntityAsync(image);
