@@ -19,20 +19,17 @@ public static class ServiceCollectionExtensions
             configuration.GetSection("Cors").Get<CorsConfiguration>()
             ?? throw new ConfigurationException("Cors");
 
-        services.AddCors(
-            options =>
-                options.AddDefaultPolicy(policy =>
-                {
-                    policy
-                        .AllowAnyHeader()
-                        .AllowAnyMethod()
-                        .WithOrigins(
-                            corsConfiguration.Origins
-                            ?? throw new ConfigurationException(
-                                nameof(corsConfiguration.Origins)
-                            )
-                        );
-                })
+        services.AddCors(options =>
+            options.AddDefaultPolicy(policy =>
+            {
+                policy
+                    .AllowAnyHeader()
+                    .AllowAnyMethod()
+                    .WithOrigins(
+                        corsConfiguration.Origins
+                            ?? throw new ConfigurationException(nameof(corsConfiguration.Origins))
+                    );
+            })
         );
 
         return services;
@@ -53,24 +50,24 @@ public static class ServiceCollectionExtensions
             {
                 options.SetIssuer(
                     oidcConfiguration.Issuer
-                    ?? throw new ConfigurationException(nameof(oidcConfiguration.Issuer))
+                        ?? throw new ConfigurationException(nameof(oidcConfiguration.Issuer))
                 );
                 options.AddAudiences(
                     oidcConfiguration.Audience
-                    ?? throw new ConfigurationException(nameof(oidcConfiguration.Audience))
+                        ?? throw new ConfigurationException(nameof(oidcConfiguration.Audience))
                 );
 
                 options
                     .UseIntrospection()
                     .SetClientId(
                         oidcConfiguration.ClientId
-                        ?? throw new ConfigurationException(nameof(oidcConfiguration.ClientId))
+                            ?? throw new ConfigurationException(nameof(oidcConfiguration.ClientId))
                     )
                     .SetClientSecret(
                         oidcConfiguration.ClientSecret
-                        ?? throw new ConfigurationException(
-                            nameof(oidcConfiguration.ClientSecret)
-                        )
+                            ?? throw new ConfigurationException(
+                                nameof(oidcConfiguration.ClientSecret)
+                            )
                     );
 
                 options.UseSystemNetHttp();
@@ -101,7 +98,7 @@ public static class ServiceCollectionExtensions
         {
             config.Address = new Uri(
                 serviceDiscoveryConfiguration?.DiscoveryAddress
-                ?? throw new ConfigurationException("ServiceDiscovery:DiscoveryAddress")
+                    ?? throw new ConfigurationException("ServiceDiscovery:DiscoveryAddress")
             );
         });
 

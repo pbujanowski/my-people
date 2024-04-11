@@ -74,11 +74,13 @@ public class PostService(
                 var gatewayWebUrl = _configuration.GetSection("Gateways:Web:Url").Get<string>();
                 dto.Images = [];
                 foreach (var image in entity.Images!)
-                    dto.Images.Add(new PostImageDto
-                    {
-                        ImageId = image.ImageId,
-                        Url = $"{gatewayWebUrl}/images/browse/{image.ImageId}"
-                    });
+                    dto.Images.Add(
+                        new PostImageDto
+                        {
+                            ImageId = image.ImageId,
+                            Url = $"{gatewayWebUrl}/images/browse/{image.ImageId}"
+                        }
+                    );
             }
         }
 

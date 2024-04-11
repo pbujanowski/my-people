@@ -7,9 +7,11 @@ namespace MyPeople.Client.Web.Pages.Home;
 
 public partial class Index
 {
-    [Inject] public IPostService PostService { get; set; } = default!;
+    [Inject]
+    public IPostService PostService { get; set; } = default!;
 
-    [Inject] public AuthenticationStateProvider AuthenticationStateProvider { get; set; } = default!;
+    [Inject]
+    public AuthenticationStateProvider AuthenticationStateProvider { get; set; } = default!;
 
     public IEnumerable<PostDto> Posts { get; set; } = [];
 

@@ -52,28 +52,27 @@ public static class DependencyInjection
             configuration.GetConnectionString("Application")
             ?? throw new ConfigurationException("ConnectionStrings:Application");
 
-        services.AddDbContext<ApplicationDbContext>(
-            options =>
-                _ = databaseProvider switch
-                {
-                    "Sqlite"
-                        => options.UseSqlite(
-                            connectionString,
-                            x =>
-                                x.MigrationsAssembly(
-                                    "MyPeople.Services.Images.Infrastructure.Migrations.Sqlite"
-                                )
-                        ),
-                    "SqlServer"
-                        => options.UseSqlServer(
-                            connectionString,
-                            x =>
-                                x.MigrationsAssembly(
-                                    "MyPeople.Services.Images.Infrastructure.Migrations.SqlServer"
-                                )
-                        ),
-                    _ => throw new Exception($"Unsupported provider: {databaseProvider}.")
-                }
+        services.AddDbContext<ApplicationDbContext>(options =>
+            _ = databaseProvider switch
+            {
+                "Sqlite"
+                    => options.UseSqlite(
+                        connectionString,
+                        x =>
+                            x.MigrationsAssembly(
+                                "MyPeople.Services.Images.Infrastructure.Migrations.Sqlite"
+                            )
+                    ),
+                "SqlServer"
+                    => options.UseSqlServer(
+                        connectionString,
+                        x =>
+                            x.MigrationsAssembly(
+                                "MyPeople.Services.Images.Infrastructure.Migrations.SqlServer"
+                            )
+                    ),
+                _ => throw new Exception($"Unsupported provider: {databaseProvider}.")
+            }
         );
 
         return services;

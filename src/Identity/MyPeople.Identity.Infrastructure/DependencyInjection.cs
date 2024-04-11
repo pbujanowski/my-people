@@ -94,8 +94,8 @@ public static class DependencyInjection
     private static IServiceCollection ConfigureIdentity(this IServiceCollection services)
     {
         services
-            .AddIdentity<ApplicationUser, ApplicationRole>(
-                options => options.SignIn.RequireConfirmedEmail = false
+            .AddIdentity<ApplicationUser, ApplicationRole>(options =>
+                options.SignIn.RequireConfirmedEmail = false
             )
             .AddEntityFrameworkStores<ApplicationDbContext>()
             .AddDefaultTokenProviders();

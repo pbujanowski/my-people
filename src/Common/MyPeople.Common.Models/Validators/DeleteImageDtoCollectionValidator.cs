@@ -7,7 +7,6 @@ public class DeleteImageDtoCollectionValidator : AbstractValidator<List<DeleteIm
 {
     public DeleteImageDtoCollectionValidator()
     {
-        RuleForEach(x => x)
-            .SetValidator(new DeleteImageDtoValidator());
+        RuleForEach(x => x).SetValidator(new DeleteImageDtoValidator());
     }
 }

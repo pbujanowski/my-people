@@ -5,7 +5,8 @@ namespace MyPeople.Client.Web.Shared;
 
 public partial class LoginDisplay
 {
-    [Inject] public NavigationManager Navigation { get; set; } = default!;
+    [Inject]
+    public NavigationManager Navigation { get; set; } = default!;
 
     private void BeginLogOut()
     {

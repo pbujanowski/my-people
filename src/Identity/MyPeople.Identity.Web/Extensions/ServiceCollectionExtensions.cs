@@ -36,20 +36,16 @@ public static class ServiceCollectionExtensions
             configuration.GetSection("Cors").Get<CorsConfiguration>()
             ?? throw new ConfigurationException("Cors");
 
-        services.AddCors(
-            options =>
-                options.AddDefaultPolicy(
-                    policy =>
-                        policy
-                            .AllowAnyHeader()
-                            .AllowAnyMethod()
-                            .WithOrigins(
-                                corsConfiguration.Origins
-                                ?? throw new ConfigurationException(
-                                    nameof(corsConfiguration.Origins)
-                                )
-                            )
-                )
+        services.AddCors(options =>
+            options.AddDefaultPolicy(policy =>
+                policy
+                    .AllowAnyHeader()
+                    .AllowAnyMethod()
+                    .WithOrigins(
+                        corsConfiguration.Origins
+                            ?? throw new ConfigurationException(nameof(corsConfiguration.Origins))
+                    )
+            )
         );
 
         return services;

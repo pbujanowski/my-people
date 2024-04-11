@@ -16,11 +16,11 @@ public class ImageService(IRepositoryWrapper repositories, IMapper mapper) : IIm
     {
         var entity = _mapper.Map<Image>(imageDto);
         var createdEntity = _repositories.Images.Create(entity);
-        
+
         await _repositories.SaveChangesAsync();
-        
+
         _repositories.Images.Detach(createdEntity);
-        
+
         return _mapper.Map<ImageDto>(createdEntity);
     }
 
@@ -39,7 +39,7 @@ public class ImageService(IRepositoryWrapper repositories, IMapper mapper) : IIm
         {
             _repositories.Images.Detach(entity);
         }
-        
+
         return _mapper.Map<IEnumerable<ImageDto>>(createdEntities);
     }
 
@@ -58,7 +58,7 @@ public class ImageService(IRepositoryWrapper repositories, IMapper mapper) : IIm
         {
             _repositories.Images.Detach(entity);
         }
-        
+
         return _mapper.Map<IEnumerable<ImageDto>>(deletedEntities);
     }
 

@@ -7,7 +7,6 @@ public class DeleteImageDtoValidator : AbstractValidator<DeleteImageDto>
 {
     public DeleteImageDtoValidator()
     {
-        RuleFor(x => x.Id)
-            .NotEmptyGuid();
+        RuleFor(x => x.Id).NotEmptyGuid();
     }
 }

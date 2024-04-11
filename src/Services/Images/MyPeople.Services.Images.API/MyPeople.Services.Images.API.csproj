@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+<Project Sdk="Microsoft.NET.Sdk.Web">
 
     <PropertyGroup>
         <TargetFramework>net8.0</TargetFramework>
@@ -11,21 +11,21 @@
 
     <ItemGroup>
         <PackageReference Include="FluentValidation.AspNetCore" Version="11.3.0" />
-        <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="8.0.1"/>
-        <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.1">
+        <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="8.0.4" />
+        <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.4">
             <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
             <PrivateAssets>all</PrivateAssets>
         </PackageReference>
-        <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.20.0" />
-        <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0"/>
+        <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.20.1" />
+        <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
     </ItemGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\..\Common\MyPeople.Services.Common\MyPeople.Services.Common.csproj"/>
-        <ProjectReference Include="..\MyPeople.Services.Images.Application\MyPeople.Services.Images.Application.csproj"/>
-        <ProjectReference Include="..\MyPeople.Services.Images.Infrastructure.Migrations.Sqlite\MyPeople.Services.Images.Infrastructure.Migrations.Sqlite.csproj"/>
-        <ProjectReference Include="..\MyPeople.Services.Images.Infrastructure.Migrations.SqlServer\MyPeople.Services.Images.Infrastructure.Migrations.SqlServer.csproj"/>
-        <ProjectReference Include="..\MyPeople.Services.Images.Infrastructure\MyPeople.Services.Images.Infrastructure.csproj"/>
+        <ProjectReference Include="..\..\Common\MyPeople.Services.Common\MyPeople.Services.Common.csproj" />
+        <ProjectReference Include="..\MyPeople.Services.Images.Application\MyPeople.Services.Images.Application.csproj" />
+        <ProjectReference Include="..\MyPeople.Services.Images.Infrastructure.Migrations.Sqlite\MyPeople.Services.Images.Infrastructure.Migrations.Sqlite.csproj" />
+        <ProjectReference Include="..\MyPeople.Services.Images.Infrastructure.Migrations.SqlServer\MyPeople.Services.Images.Infrastructure.Migrations.SqlServer.csproj" />
+        <ProjectReference Include="..\MyPeople.Services.Images.Infrastructure\MyPeople.Services.Images.Infrastructure.csproj" />
     </ItemGroup>
 
 </Project>

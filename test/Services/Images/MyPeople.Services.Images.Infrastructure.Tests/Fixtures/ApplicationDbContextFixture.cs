@@ -7,7 +7,7 @@ namespace MyPeople.Services.Images.Infrastructure.Tests.Fixtures;
 public class ApplicationDbContextFixture : IAsyncDisposable
 {
     public ApplicationDbContext DbContext { get; }
-    
+
     public ObjectsComparer.Comparer<Image> ImageComparer { get; }
 
     public ApplicationDbContextFixture()
@@ -17,7 +17,7 @@ public class ApplicationDbContextFixture : IAsyncDisposable
             .Options;
 
         DbContext = new ApplicationDbContext(options);
-        
+
         DbContext.Database.EnsureCreated();
 
         ImageComparer = new ObjectsComparer.Comparer<Image>();
@@ -27,7 +27,7 @@ public class ApplicationDbContextFixture : IAsyncDisposable
     {
         await DbContext.Database.EnsureDeletedAsync();
         await DbContext.DisposeAsync();
-        
+
         GC.SuppressFinalize(this);
     }
 }

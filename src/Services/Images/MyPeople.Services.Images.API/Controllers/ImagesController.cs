@@ -1,24 +1,28 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using MyPeople.Common.Abstractions.Services;
+﻿using MediatR;
+using Microsoft.AspNetCore.Mvc;
 using MyPeople.Common.Models.Dtos;
+using MyPeople.Services.Images.Application.Commands.CreateImages;
+using MyPeople.Services.Images.Application.Commands.DeleteImages;
+using MyPeople.Services.Images.Application.Queries.GetImageById;
+using MyPeople.Services.Images.Application.Queries.GetImagesByIds;
 
 namespace MyPeople.Services.Images.API.Controllers;
 
 [ApiController]
 [Route("[controller]")]
-public class ImagesController(IImageService imageService, ILogger<ImagesController> logger)
-    : ControllerBase
+public class ImagesController(ILogger<ImagesController> logger, IMediator mediator) : ControllerBase
 {
-    private readonly IImageService _imageService = imageService;
     private readonly ILogger<ImagesController> _logger = logger;
+    private readonly IMediator _mediator = mediator;
 
     // [Authorize]
-    [HttpGet("{id}")]
+    [HttpGet("{id:guid}")]
     public async Task<IActionResult> GetImageById(Guid id)
     {
         try
         {
-            var image = await _imageService.GetImageByIdAsync(id);
+            var result = await _mediator.Send(new GetImageByIdQuery(id));
+            var image = result.Image;
             if (image is null)
                 return NotFound();
 
@@ -32,13 +36,14 @@ public class ImagesController(IImageService imageService, ILogger<ImagesControll
     }
 
     // [Authorize]
-    [HttpGet("browse/{id}")]
+    [HttpGet("browse/{id:guid}")]
     public async Task<IActionResult> BrowseImageById(Guid id)
     {
         try
         {
-            var image = await _imageService.GetImageByIdAsync(id);
-            if (image is null || image.Content is null || image.ContentType is null)
+            var result = await _mediator.Send(new GetImageByIdQuery(id));
+            var image = result.Image;
+            if (image?.Content is null || image.ContentType is null)
                 return NotFound();
 
             return File(Convert.FromBase64String(image.Content), image.ContentType);
@@ -56,8 +61,9 @@ public class ImagesController(IImageService imageService, ILogger<ImagesControll
     {
         try
         {
-            var images = await _imageService.GetImagesByIdsAsync(ids);
-            if (images is null)
+            var result = await _mediator.Send(new GetImagesByIdsQuery(ids));
+            var images = result.Images;
+            if (images is null || !images.Any())
                 return NotFound();
 
             return Ok(images);
@@ -79,8 +85,8 @@ public class ImagesController(IImageService imageService, ILogger<ImagesControll
     {
         try
         {
-            var image = await _imageService.CreateImagesAsync(imageDtos);
-            return Ok(image);
+            var result = await _mediator.Send(new CreateImagesCommand(imageDtos));
+            return Ok(result.Images);
         }
         catch (Exception ex)
         {
@@ -95,8 +101,8 @@ public class ImagesController(IImageService imageService, ILogger<ImagesControll
     {
         try
         {
-            var images = await _imageService.DeleteImagesAsync(imageDtos);
-            return Ok(images);
+            var result = await _mediator.Send(new DeleteImagesCommand(imageDtos));
+            return Ok(result.Images);
         }
         catch (Exception ex)
         {

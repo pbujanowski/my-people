@@ -8,15 +8,24 @@ public partial class PostItem
 {
     private PostDto? _oldPost;
 
-    [Inject] public IDialogService DialogService { get; set; } = default!;
+    [Inject]
+    public IDialogService DialogService { get; set; } = default!;
 
-    [Parameter] [EditorRequired] public PostDto Post { get; set; } = default!;
+    [Parameter]
+    [EditorRequired]
+    public PostDto Post { get; set; } = default!;
 
-    [Parameter] [EditorRequired] public Guid CurrentUserId { get; set; }
+    [Parameter]
+    [EditorRequired]
+    public Guid CurrentUserId { get; set; }
 
-    [Parameter] [EditorRequired] public EventCallback<PostDto> EditPost { get; set; }
+    [Parameter]
+    [EditorRequired]
+    public EventCallback<PostDto> EditPost { get; set; }
 
-    [Parameter] [EditorRequired] public EventCallback<PostDto> RemovePost { get; set; }
+    [Parameter]
+    [EditorRequired]
+    public EventCallback<PostDto> RemovePost { get; set; }
 
     public bool IsEditMode { get; set; }
 

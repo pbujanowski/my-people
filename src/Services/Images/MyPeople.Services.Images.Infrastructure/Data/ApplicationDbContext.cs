@@ -51,10 +51,9 @@ public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options
     {
         var entries = ChangeTracker
             .Entries()
-            .Where(
-                e =>
-                    e.Entity is Entity
-                    && (e.State == EntityState.Added || e.State == EntityState.Modified)
+            .Where(e =>
+                e.Entity is Entity
+                && (e.State == EntityState.Added || e.State == EntityState.Modified)
             );
 
         var now = DateTime.Now;

@@ -22,7 +22,7 @@ public class MappingProfileTests : IClassFixture<MappingProfileFixture>
 
         action.Should().NotThrow<AutoMapperConfigurationException>();
     }
-    
+
     [Theory]
     [InlineData(typeof(Image), typeof(ImageDto))]
     [InlineData(typeof(ImageDto), typeof(Image))]

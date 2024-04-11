@@ -2,7 +2,7 @@ using FluentAssertions;
 using Microsoft.EntityFrameworkCore;
 using MyPeople.Services.Images.Domain.Entities;
 using MyPeople.Services.Images.Infrastructure.Tests.Fixtures;
-using MyPeople.Services.Images.Infrastructure.Tests.TestData;
+using MyPeople.Services.Images.Infrastructure.Tests.Generators;
 
 namespace MyPeople.Services.Images.Infrastructure.Tests.Data;
 
@@ -12,18 +12,19 @@ public class ApplicationDbContextTests(ApplicationDbContextFixture fixture)
     private readonly ApplicationDbContextFixture _fixture = fixture;
 
     [Theory]
-    [ClassData(typeof(ImageTestData))]
+    [ClassData(typeof(ImageDataGenerator))]
     public async Task ShouldCreateImageEntity(Image image)
     {
         await CreateImageEntityAsync(image);
 
         var createdImage = await GetImageEntityByIdAsync(image.Id);
-        var compareResult = createdImage is not null && _fixture.ImageComparer.Compare(image, createdImage);
+        var compareResult =
+            createdImage is not null && _fixture.ImageComparer.Compare(image, createdImage);
         compareResult.Should().BeTrue();
     }
 
     [Theory]
-    [ClassData(typeof(ImageTestData))]
+    [ClassData(typeof(ImageDataGenerator))]
     public async Task ShouldUpdateImageEntity(Image image)
     {
         var imageNewName = $"{Guid.NewGuid()}.png";
@@ -38,7 +39,7 @@ public class ApplicationDbContextTests(ApplicationDbContextFixture fixture)
     }
 
     [Theory]
-    [ClassData(typeof(ImageTestData))]
+    [ClassData(typeof(ImageDataGenerator))]
     public async Task ShouldDeleteImageEntity(Image image)
     {
         var existingImage = await CreateImageEntityAsync(image);
@@ -53,14 +54,12 @@ public class ApplicationDbContextTests(ApplicationDbContextFixture fixture)
     {
         var createdImage = await _fixture.DbContext.Images.AddAsync(image);
         await _fixture.DbContext.SaveChangesAsync();
-        
+
         return createdImage.Entity;
     }
 
     private async Task<Image?> GetImageEntityByIdAsync(Guid? id)
     {
-        return await _fixture.DbContext.Images
-            .AsNoTracking()
-            .FirstOrDefaultAsync(x => x.Id == id);
+        return await _fixture.DbContext.Images.AsNoTracking().FirstOrDefaultAsync(x => x.Id == id);
     }
 }

@@ -9,5 +9,6 @@ public class NotEmptyGuidValidator<T> : PropertyValidator<T, Guid?>
 
     public override bool IsValid(ValidationContext<T> context, Guid? value) => value != Guid.Empty;
 
-    protected override string GetDefaultMessageTemplate(string errorCode) => Localized(errorCode, Name);
+    protected override string GetDefaultMessageTemplate(string errorCode) =>
+        Localized(errorCode, Name);
 }

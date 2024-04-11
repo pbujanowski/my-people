@@ -8,6 +8,7 @@ public static class DependencyInjection
     public static IServiceCollection ConfigureApplication(this IServiceCollection services)
     {
         services.ConfigureAutoMapper();
+        services.ConfigureMediatR();
 
         return services;
     }
@@ -16,6 +17,14 @@ public static class DependencyInjection
     {
         var assembly = Assembly.GetExecutingAssembly();
         services.AddAutoMapper(assembly);
+
+        return services;
+    }
+
+    private static IServiceCollection ConfigureMediatR(this IServiceCollection services)
+    {
+        var assembly = Assembly.GetExecutingAssembly();
+        services.AddMediatR(config => config.RegisterServicesFromAssembly(assembly));
 
         return services;
     }

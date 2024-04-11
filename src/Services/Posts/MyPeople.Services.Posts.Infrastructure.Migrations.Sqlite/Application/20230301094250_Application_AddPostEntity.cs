@@ -12,15 +12,14 @@ public partial class Application_AddPostEntity : Migration
     {
         migrationBuilder.CreateTable(
             "Posts",
-            table =>
-                new
-                {
-                    Id = table.Column<Guid>("TEXT", nullable: false),
-                    UserId = table.Column<Guid>("TEXT", nullable: false),
-                    Content = table.Column<string>("TEXT", nullable: false),
-                    CreatedAt = table.Column<DateTime>("TEXT", nullable: false),
-                    UpdatedAt = table.Column<DateTime>("TEXT", nullable: false)
-                },
+            table => new
+            {
+                Id = table.Column<Guid>("TEXT", nullable: false),
+                UserId = table.Column<Guid>("TEXT", nullable: false),
+                Content = table.Column<string>("TEXT", nullable: false),
+                CreatedAt = table.Column<DateTime>("TEXT", nullable: false),
+                UpdatedAt = table.Column<DateTime>("TEXT", nullable: false)
+            },
             constraints: table => table.PrimaryKey("PK_Posts", x => x.Id)
         );
     }

@@ -12,16 +12,18 @@ public partial class Application_AddPostEntity : Migration
     {
         migrationBuilder.CreateTable(
             "Posts",
-            table =>
-                new
-                {
-                    Id = table.Column<Guid>("uniqueidentifier", nullable: false),
-                    UserId = table.Column<Guid>("uniqueidentifier", nullable: false),
-                    Content = table.Column<string>("nvarchar(max)", nullable: false),
-                    CreatedAt = table.Column<DateTime>("datetime2", nullable: false),
-                    UpdatedAt = table.Column<DateTime>("datetime2", nullable: false)
-                },
-            constraints: table => { table.PrimaryKey("PK_Posts", x => x.Id); }
+            table => new
+            {
+                Id = table.Column<Guid>("uniqueidentifier", nullable: false),
+                UserId = table.Column<Guid>("uniqueidentifier", nullable: false),
+                Content = table.Column<string>("nvarchar(max)", nullable: false),
+                CreatedAt = table.Column<DateTime>("datetime2", nullable: false),
+                UpdatedAt = table.Column<DateTime>("datetime2", nullable: false)
+            },
+            constraints: table =>
+            {
+                table.PrimaryKey("PK_Posts", x => x.Id);
+            }
         );
     }
 

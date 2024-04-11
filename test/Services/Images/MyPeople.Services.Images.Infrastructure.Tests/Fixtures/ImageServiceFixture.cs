@@ -11,13 +11,14 @@ public class ImageServiceFixture : ImageRepositoryFixture
 {
     public IImageService ImageService { get; }
 
-    public ObjectsComparer.Comparer<ImageDto> ImageDtoComparer { get; } 
+    public ObjectsComparer.Comparer<ImageDto> ImageDtoComparer { get; }
 
     public ImageServiceFixture()
     {
         var repositoryWrapper = new RepositoryWrapper(DbContext, ImageRepository);
         var configurationProvider = new MapperConfiguration(config =>
-            config.AddProfile(typeof(MappingProfile)));
+            config.AddProfile(typeof(MappingProfile))
+        );
 
         var mapper = configurationProvider.CreateMapper();
         ImageService = new ImageService(repositoryWrapper, mapper);
