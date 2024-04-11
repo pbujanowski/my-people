@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using MyPeople.Common.Models.Dtos;
 using MyPeople.Services.Images.API.Tests.Fixtures;
 using MyPeople.Services.Images.Domain.Entities;
-using MyPeople.Services.Images.Tests.Common.Generators;
+using MyPeople.Services.Images.Infrastructure.Tests.Generators;
 
 namespace MyPeople.Services.Images.API.Tests.Controllers;
 
@@ -14,7 +14,7 @@ public class ImagesControllerTests(ImagesControllerFixture fixture)
     private readonly ImagesControllerFixture _fixture = fixture;
 
     [Theory]
-    [MemberData(nameof(ImageDataGenerator.GetImage), MemberType = typeof(ImageDataGenerator))]
+    [ClassData(typeof(ImageDataGenerator))]
     public async Task ShouldGetImageByIdReturnOkObjectResult(Image image)
     {
         var createdImageDto = await CreateImageAndAssertAsync(image);
@@ -31,7 +31,7 @@ public class ImagesControllerTests(ImagesControllerFixture fixture)
     }
 
     [Theory]
-    [MemberData(nameof(ImageDataGenerator.GetImage), MemberType = typeof(ImageDataGenerator))]
+    [ClassData(typeof(ImageDataGenerator))]
     public async Task ShouldBrowseImageByIdReturnFileContentResult(Image image)
     {
         var createdImageDto = await CreateImageAndAssertAsync(image);
@@ -70,10 +70,7 @@ public class ImagesControllerTests(ImagesControllerFixture fixture)
     }
 
     [Theory]
-    [MemberData(
-        nameof(ImageCollectionDataGenerator.GetImages),
-        MemberType = typeof(ImageCollectionDataGenerator)
-    )]
+    [ClassData(typeof(ImageCollectionDataGenerator))]
     public async Task ShouldCreateImagesReturnOkObjectResult(IEnumerable<Image> images)
     {
         var createImageDtos = MapImagesToCreateImageDtos(images);
@@ -82,10 +79,7 @@ public class ImagesControllerTests(ImagesControllerFixture fixture)
     }
 
     [Theory]
-    [MemberData(
-        nameof(ImageCollectionDataGenerator.GetImages),
-        MemberType = typeof(ImageCollectionDataGenerator)
-    )]
+    [ClassData(typeof(ImageCollectionDataGenerator))]
     public async Task ShouldDeleteImagesReturnOkObjectResult(IEnumerable<Image> images)
     {
         var createdImagesDtos = await CreateImagesAndAssertAsync(images);
@@ -98,10 +92,7 @@ public class ImagesControllerTests(ImagesControllerFixture fixture)
     }
 
     [Theory]
-    [MemberData(
-        nameof(ImageCollectionDataGenerator.GetImages),
-        MemberType = typeof(ImageCollectionDataGenerator)
-    )]
+    [ClassData(typeof(ImageCollectionDataGenerator))]
     public async Task ShouldDeleteImagesReturnStatusCodeResult(IEnumerable<Image> images)
     {
         var deleteImageDtos = MapImagesToDeleteImageDtos(images);

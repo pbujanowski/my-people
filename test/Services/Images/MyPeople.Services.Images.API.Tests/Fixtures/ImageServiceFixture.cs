@@ -5,7 +5,7 @@ using MyPeople.Services.Images.Application.Mappings;
 using MyPeople.Services.Images.Infrastructure.Services;
 using MyPeople.Services.Images.Infrastructure.Wrappers;
 
-namespace MyPeople.Services.Images.Tests.Common.Fixtures;
+namespace MyPeople.Services.Images.API.Tests.Fixtures;
 
 public class ImageServiceFixture : ImageRepositoryFixture
 {

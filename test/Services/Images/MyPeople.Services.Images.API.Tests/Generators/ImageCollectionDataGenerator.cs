@@ -1,12 +1,12 @@
 using MyPeople.Services.Images.Domain.Entities;
-using Xunit;
 
-namespace MyPeople.Services.Images.Tests.Common.Generators;
+namespace MyPeople.Services.Images.Infrastructure.Tests.Generators;
 
-public class ImageCollectionDataGenerator
+public class ImageCollectionDataGenerator : TheoryData<IEnumerable<Image>>
 {
-    public static TheoryData<IEnumerable<Image>> GetImages() =>
-        [
+    public ImageCollectionDataGenerator()
+    {
+        Add(
             [
                 new Image
                 {
@@ -25,5 +25,6 @@ public class ImageCollectionDataGenerator
                     ContentType = "image/jpeg"
                 }
             ]
-        ];
+        );
+    }
 }

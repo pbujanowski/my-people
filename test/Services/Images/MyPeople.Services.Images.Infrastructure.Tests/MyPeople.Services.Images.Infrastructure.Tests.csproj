@@ -25,12 +25,16 @@
     </ItemGroup>
 
     <ItemGroup>
-        <Using Include="Xunit"/>
+        <Using Include="Xunit" />
     </ItemGroup>
 
     <ItemGroup>
       <ProjectReference Include="..\..\..\..\src\Services\Images\MyPeople.Services.Images.Infrastructure\MyPeople.Services.Images.Infrastructure.csproj" />
-      <ProjectReference Include="..\MyPeople.Services.Images.Tests.Common\MyPeople.Services.Images.Tests.Common.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="Fixtures/" />
+      <Folder Include="Generators/" />
     </ItemGroup>
 
 </Project>

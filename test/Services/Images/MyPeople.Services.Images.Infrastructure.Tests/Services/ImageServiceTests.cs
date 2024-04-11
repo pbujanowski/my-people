@@ -1,8 +1,8 @@
 using FluentAssertions;
 using MyPeople.Common.Models.Dtos;
 using MyPeople.Services.Images.Domain.Entities;
-using MyPeople.Services.Images.Tests.Common.Fixtures;
-using MyPeople.Services.Images.Tests.Common.Generators;
+using MyPeople.Services.Images.Infrastructure.Tests.Fixtures;
+using MyPeople.Services.Images.Infrastructure.Tests.Generators;
 
 namespace MyPeople.Services.Images.Infrastructure.Tests.Services;
 
@@ -11,7 +11,7 @@ public class ImageServiceTests(ImageServiceFixture fixture) : IClassFixture<Imag
     private readonly ImageServiceFixture _fixture = fixture;
 
     [Theory]
-    [MemberData(nameof(ImageDataGenerator.GetImage), MemberType = typeof(ImageDataGenerator))]
+    [ClassData(typeof(ImageDataGenerator))]
     public async Task ShouldCreateImageEntity(Image image)
     {
         var createImageDto = new CreateImageDto
@@ -33,10 +33,7 @@ public class ImageServiceTests(ImageServiceFixture fixture) : IClassFixture<Imag
     }
 
     [Theory]
-    [MemberData(
-        nameof(ImageCollectionDataGenerator.GetImages),
-        MemberType = typeof(ImageCollectionDataGenerator)
-    )]
+    [ClassData(typeof(ImageCollectionDataGenerator))]
     public async Task ShouldCreateImageEntities(IEnumerable<Image> images)
     {
         var createImageDtos = images
@@ -73,10 +70,7 @@ public class ImageServiceTests(ImageServiceFixture fixture) : IClassFixture<Imag
     }
 
     [Theory]
-    [MemberData(
-        nameof(ImageCollectionDataGenerator.GetImages),
-        MemberType = typeof(ImageCollectionDataGenerator)
-    )]
+    [ClassData(typeof(ImageCollectionDataGenerator))]
     public async Task ShouldDeleteImageEntities(IEnumerable<Image> images)
     {
         var createImageDtos = images.Select(image => new CreateImageDto

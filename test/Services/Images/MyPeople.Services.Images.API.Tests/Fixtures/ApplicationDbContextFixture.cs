@@ -2,7 +2,7 @@ using Microsoft.EntityFrameworkCore;
 using MyPeople.Services.Images.Domain.Entities;
 using MyPeople.Services.Images.Infrastructure.Data;
 
-namespace MyPeople.Services.Images.Tests.Common.Fixtures;
+namespace MyPeople.Services.Images.API.Tests.Fixtures;
 
 public class ApplicationDbContextFixture : IAsyncDisposable
 {
@@ -13,7 +13,7 @@ public class ApplicationDbContextFixture : IAsyncDisposable
     public ApplicationDbContextFixture()
     {
         var options = new DbContextOptionsBuilder<ApplicationDbContext>()
-            .UseInMemoryDatabase("MyPeople.Services.Images.Infrastructure.Tests")
+            .UseInMemoryDatabase("MyPeople.Services.Images.API.Tests")
             .Options;
 
         DbContext = new ApplicationDbContext(options);

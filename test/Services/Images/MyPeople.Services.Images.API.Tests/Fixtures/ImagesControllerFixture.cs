@@ -3,7 +3,6 @@ using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using MyPeople.Services.Images.API.Controllers;
-using MyPeople.Services.Images.Tests.Common.Fixtures;
 using NSubstitute;
 
 namespace MyPeople.Services.Images.API.Tests.Fixtures;
