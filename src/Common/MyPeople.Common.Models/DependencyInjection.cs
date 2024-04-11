@@ -13,14 +13,14 @@ public static class DependencyInjection
 
         return services;
     }
-    
+
     private static IServiceCollection ConfigureFluentValidation(this IServiceCollection services)
     {
         var assembly = Assembly.GetExecutingAssembly();
         services.AddValidatorsFromAssembly(assembly);
 
         ValidatorOptions.Global.LanguageManager = new CustomLanguageManager();
-    
+
         return services;
     }
 }

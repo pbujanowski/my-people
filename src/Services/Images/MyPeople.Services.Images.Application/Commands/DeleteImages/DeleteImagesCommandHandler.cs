@@ -7,8 +7,11 @@ public class DeleteImagesCommandHandler(IImageService imageService)
     : IRequestHandler<DeleteImagesCommand, DeleteImagesCommandResponse>
 {
     private readonly IImageService _imageService = imageService;
-    
-    public async Task<DeleteImagesCommandResponse> Handle(DeleteImagesCommand request, CancellationToken cancellationToken)
+
+    public async Task<DeleteImagesCommandResponse> Handle(
+        DeleteImagesCommand request,
+        CancellationToken cancellationToken
+    )
     {
         var result = await _imageService.DeleteImagesAsync(request.Images);
         var response = new DeleteImagesCommandResponse(result);

@@ -10,8 +10,7 @@ namespace MyPeople.Services.Images.API.Controllers;
 
 [ApiController]
 [Route("[controller]")]
-public class ImagesController(ILogger<ImagesController> logger, IMediator mediator)
-    : ControllerBase
+public class ImagesController(ILogger<ImagesController> logger, IMediator mediator) : ControllerBase
 {
     private readonly ILogger<ImagesController> _logger = logger;
     private readonly IMediator _mediator = mediator;

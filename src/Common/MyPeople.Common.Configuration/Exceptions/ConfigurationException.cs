@@ -2,17 +2,11 @@
 
 public class ConfigurationException : Exception
 {
-    public ConfigurationException()
-    {
-    }
+    public ConfigurationException() { }
 
     public ConfigurationException(string? configurationKey)
-        : base($"Configuration '{configurationKey}' not found.")
-    {
-    }
+        : base($"Configuration '{configurationKey}' not found.") { }
 
     public ConfigurationException(string? message, Exception? innerException)
-        : base(message, innerException)
-    {
-    }
+        : base(message, innerException) { }
 }

@@ -7,17 +7,12 @@ public class CreateImageDtoValidator : AbstractValidator<CreateImageDto>
 {
     public CreateImageDtoValidator()
     {
-        RuleFor(x => x.Name)
-            .NotEmpty()
-            .MaximumLength(256);
+        RuleFor(x => x.Name).NotEmpty().MaximumLength(256);
 
-        RuleFor(x => x.Content)
-            .NotEmpty();
+        RuleFor(x => x.Content).NotEmpty();
 
-        RuleFor(x => x.ContentType)
-            .NotEmpty();
+        RuleFor(x => x.ContentType).NotEmpty();
 
-        RuleFor(x => x.PostId)
-            .NotEmpty();
+        RuleFor(x => x.PostId).NotEmpty();
     }
 }

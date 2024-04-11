@@ -8,7 +8,8 @@ using MyPeople.Services.Images.Tests.Common.Generators;
 
 namespace MyPeople.Services.Images.API.Tests.Controllers;
 
-public class ImagesControllerTests(ImagesControllerFixture fixture) : IClassFixture<ImagesControllerFixture>
+public class ImagesControllerTests(ImagesControllerFixture fixture)
+    : IClassFixture<ImagesControllerFixture>
 {
     private readonly ImagesControllerFixture _fixture = fixture;
 
@@ -20,7 +21,7 @@ public class ImagesControllerTests(ImagesControllerFixture fixture) : IClassFixt
         var result = await _fixture.ImagesController.GetImageById((Guid)createdImageDto.Id!);
         result.Should().BeOfType<OkObjectResult>();
     }
-    
+
     [Fact]
     public async Task ShouldGetImageByIdReturnNotFoundResult()
     {
@@ -54,7 +55,7 @@ public class ImagesControllerTests(ImagesControllerFixture fixture) : IClassFixt
     //     var createdImagesDtos = await CreateImagesAndAssertAsync(images);
     //     var createdImagesDtosList = createdImagesDtos?.ToList();
     //     createdImagesDtosList?.Should().NotBeNull();
-    //     
+    //
     //     var result = await _fixture.ImagesController.GetImagesByIds(createdImagesDtosList!.Select(x => (Guid)x.Id!));
     //     result.Should().BeOfType<OkObjectResult>();
     // }
@@ -62,18 +63,17 @@ public class ImagesControllerTests(ImagesControllerFixture fixture) : IClassFixt
     [Fact]
     public async Task ShouldGetImagesByIdsReturnNotFoundResult()
     {
-        var imagesIds = new List<Guid>()
-        {
-            Guid.NewGuid(),
-            Guid.NewGuid()
-        };
+        var imagesIds = new List<Guid>() { Guid.NewGuid(), Guid.NewGuid() };
 
         var result = await _fixture.ImagesController.GetImagesByIds(imagesIds);
         result.Should().BeOfType<NotFoundResult>();
     }
 
     [Theory]
-    [MemberData(nameof(ImageCollectionDataGenerator.GetImages), MemberType = typeof(ImageCollectionDataGenerator))]
+    [MemberData(
+        nameof(ImageCollectionDataGenerator.GetImages),
+        MemberType = typeof(ImageCollectionDataGenerator)
+    )]
     public async Task ShouldCreateImagesReturnOkObjectResult(IEnumerable<Image> images)
     {
         var createImageDtos = MapImagesToCreateImageDtos(images);
@@ -82,26 +82,32 @@ public class ImagesControllerTests(ImagesControllerFixture fixture) : IClassFixt
     }
 
     [Theory]
-    [MemberData(nameof(ImageCollectionDataGenerator.GetImages), MemberType = typeof(ImageCollectionDataGenerator))]
+    [MemberData(
+        nameof(ImageCollectionDataGenerator.GetImages),
+        MemberType = typeof(ImageCollectionDataGenerator)
+    )]
     public async Task ShouldDeleteImagesReturnOkObjectResult(IEnumerable<Image> images)
     {
         var createdImagesDtos = await CreateImagesAndAssertAsync(images);
         var createdImagesDtosList = createdImagesDtos?.ToList();
         createdImagesDtosList.Should().NotBeNull();
-        
+
         var deleteImageDtos = MapImageDtosToDeleteImageDtos(createdImagesDtosList!);
         var result = await _fixture.ImagesController.DeleteImages(deleteImageDtos);
         result.Should().BeOfType<OkObjectResult>();
     }
 
     [Theory]
-    [MemberData(nameof(ImageCollectionDataGenerator.GetImages), MemberType = typeof(ImageCollectionDataGenerator))]
+    [MemberData(
+        nameof(ImageCollectionDataGenerator.GetImages),
+        MemberType = typeof(ImageCollectionDataGenerator)
+    )]
     public async Task ShouldDeleteImagesReturnStatusCodeResult(IEnumerable<Image> images)
     {
         var deleteImageDtos = MapImagesToDeleteImageDtos(images);
         var result = await _fixture.ImagesController.DeleteImages(deleteImageDtos);
         result.Should().BeOfType<StatusCodeResult>();
-        
+
         var statusCodeResult = result as StatusCodeResult;
         statusCodeResult?.StatusCode.Should().Be(StatusCodes.Status500InternalServerError);
     }
@@ -109,17 +115,13 @@ public class ImagesControllerTests(ImagesControllerFixture fixture) : IClassFixt
     private async Task<ImageDto> CreateImageAndAssertAsync(Image image)
     {
         var createImageDto = MapImageToCreateImageDto(image);
-        
+
         var createdImageDto = await _fixture.ImageService.CreateImageAsync(createImageDto);
-        
-        createdImageDto
-            .Should().NotBeNull();
-        
-        createdImageDto!.Id
-            .Should().NotBeNull()
-            .And
-            .NotBe(Guid.Empty);
-                
+
+        createdImageDto.Should().NotBeNull();
+
+        createdImageDto!.Id.Should().NotBeNull().And.NotBe(Guid.Empty);
+
         return createdImageDto;
     }
 
@@ -130,16 +132,12 @@ public class ImagesControllerTests(ImagesControllerFixture fixture) : IClassFixt
         var createdImagesDtos = await _fixture.ImageService.CreateImagesAsync(createImageDtos);
         var createdImagesDtosList = createdImagesDtos?.ToList();
 
-        createdImagesDtosList?.Should().AllSatisfy(image =>
-            image
-                .Should().NotBeNull());
+        createdImagesDtosList?.Should().AllSatisfy(image => image.Should().NotBeNull());
 
-        createdImagesDtosList?.Should().AllSatisfy(image =>
-            image.Id
-                .Should().NotBeNull()
-                .And
-                .NotBe(Guid.Empty));
-        
+        createdImagesDtosList
+            ?.Should()
+            .AllSatisfy(image => image.Id.Should().NotBeNull().And.NotBe(Guid.Empty));
+
         return createdImagesDtosList;
     }
 
@@ -165,17 +163,13 @@ public class ImagesControllerTests(ImagesControllerFixture fixture) : IClassFixt
 
     private IEnumerable<DeleteImageDto> MapImagesToDeleteImageDtos(IEnumerable<Image> images)
     {
-        return images.Select(image => new DeleteImageDto
-        {
-            Id = image.Id
-        });
+        return images.Select(image => new DeleteImageDto { Id = image.Id });
     }
 
-    private IEnumerable<DeleteImageDto> MapImageDtosToDeleteImageDtos(IEnumerable<ImageDto> imageDtos)
+    private IEnumerable<DeleteImageDto> MapImageDtosToDeleteImageDtos(
+        IEnumerable<ImageDto> imageDtos
+    )
     {
-        return imageDtos.Select(image => new DeleteImageDto
-        {
-            Id = image.Id
-        });
+        return imageDtos.Select(image => new DeleteImageDto { Id = image.Id });
     }
 }

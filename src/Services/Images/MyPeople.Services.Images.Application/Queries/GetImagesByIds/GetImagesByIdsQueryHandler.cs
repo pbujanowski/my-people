@@ -7,8 +7,11 @@ public class GetImagesByIdsQueryHandler(IImageService imageService)
     : IRequestHandler<GetImagesByIdsQuery, GetImagesByIdsQueryResponse>
 {
     private readonly IImageService _imageService = imageService;
-    
-    public async Task<GetImagesByIdsQueryResponse> Handle(GetImagesByIdsQuery request, CancellationToken cancellationToken)
+
+    public async Task<GetImagesByIdsQueryResponse> Handle(
+        GetImagesByIdsQuery request,
+        CancellationToken cancellationToken
+    )
     {
         var result = await _imageService.GetImagesByIdsAsync(request.Ids);
         var response = new GetImagesByIdsQueryResponse(result);

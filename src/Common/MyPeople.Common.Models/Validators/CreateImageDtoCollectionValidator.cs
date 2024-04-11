@@ -7,7 +7,6 @@ public class CreateImageDtoCollectionValidator : AbstractValidator<List<CreateIm
 {
     public CreateImageDtoCollectionValidator()
     {
-        RuleForEach(x => x)
-            .SetValidator(new CreateImageDtoValidator());
+        RuleForEach(x => x).SetValidator(new CreateImageDtoValidator());
     }
 }

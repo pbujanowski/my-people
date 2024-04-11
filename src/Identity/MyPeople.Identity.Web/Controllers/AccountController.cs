@@ -122,7 +122,8 @@ public class AccountController(
                 return LocalRedirect(returnUrl);
             }
 
-            foreach (var error in userCreatedResult.Errors) ModelState.AddModelError(string.Empty, error.Description);
+            foreach (var error in userCreatedResult.Errors)
+                ModelState.AddModelError(string.Empty, error.Description);
         }
 
         return View(model);

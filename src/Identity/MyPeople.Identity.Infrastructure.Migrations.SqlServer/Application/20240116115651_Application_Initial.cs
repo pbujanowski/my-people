@@ -12,136 +12,127 @@ public partial class Application_Initial : Migration
     {
         migrationBuilder.CreateTable(
             "AspNetRoles",
-            table =>
-                new
-                {
-                    Id = table.Column<Guid>("uniqueidentifier", nullable: false),
-                    Name = table.Column<string>("nvarchar(256)", maxLength: 256, nullable: true),
-                    NormalizedName = table.Column<string>(
-                        "nvarchar(256)",
-                        maxLength: 256,
-                        nullable: true
-                    ),
-                    ConcurrencyStamp = table.Column<string>("nvarchar(max)", nullable: true)
-                },
-            constraints: table => { table.PrimaryKey("PK_AspNetRoles", x => x.Id); }
+            table => new
+            {
+                Id = table.Column<Guid>("uniqueidentifier", nullable: false),
+                Name = table.Column<string>("nvarchar(256)", maxLength: 256, nullable: true),
+                NormalizedName = table.Column<string>(
+                    "nvarchar(256)",
+                    maxLength: 256,
+                    nullable: true
+                ),
+                ConcurrencyStamp = table.Column<string>("nvarchar(max)", nullable: true)
+            },
+            constraints: table =>
+            {
+                table.PrimaryKey("PK_AspNetRoles", x => x.Id);
+            }
         );
 
         migrationBuilder.CreateTable(
             "AspNetUsers",
-            table =>
-                new
-                {
-                    Id = table.Column<Guid>("uniqueidentifier", nullable: false),
-                    UserName = table.Column<string>(
-                        "nvarchar(256)",
-                        maxLength: 256,
-                        nullable: true
-                    ),
-                    NormalizedUserName = table.Column<string>(
-                        "nvarchar(256)",
-                        maxLength: 256,
-                        nullable: true
-                    ),
-                    Email = table.Column<string>("nvarchar(256)", maxLength: 256, nullable: true),
-                    NormalizedEmail = table.Column<string>(
-                        "nvarchar(256)",
-                        maxLength: 256,
-                        nullable: true
-                    ),
-                    EmailConfirmed = table.Column<bool>("bit", nullable: false),
-                    PasswordHash = table.Column<string>("nvarchar(max)", nullable: true),
-                    SecurityStamp = table.Column<string>("nvarchar(max)", nullable: true),
-                    ConcurrencyStamp = table.Column<string>("nvarchar(max)", nullable: true),
-                    PhoneNumber = table.Column<string>("nvarchar(max)", nullable: true),
-                    PhoneNumberConfirmed = table.Column<bool>("bit", nullable: false),
-                    TwoFactorEnabled = table.Column<bool>("bit", nullable: false),
-                    LockoutEnd = table.Column<DateTimeOffset>("datetimeoffset", nullable: true),
-                    LockoutEnabled = table.Column<bool>("bit", nullable: false),
-                    AccessFailedCount = table.Column<int>("int", nullable: false)
-                },
-            constraints: table => { table.PrimaryKey("PK_AspNetUsers", x => x.Id); }
+            table => new
+            {
+                Id = table.Column<Guid>("uniqueidentifier", nullable: false),
+                UserName = table.Column<string>("nvarchar(256)", maxLength: 256, nullable: true),
+                NormalizedUserName = table.Column<string>(
+                    "nvarchar(256)",
+                    maxLength: 256,
+                    nullable: true
+                ),
+                Email = table.Column<string>("nvarchar(256)", maxLength: 256, nullable: true),
+                NormalizedEmail = table.Column<string>(
+                    "nvarchar(256)",
+                    maxLength: 256,
+                    nullable: true
+                ),
+                EmailConfirmed = table.Column<bool>("bit", nullable: false),
+                PasswordHash = table.Column<string>("nvarchar(max)", nullable: true),
+                SecurityStamp = table.Column<string>("nvarchar(max)", nullable: true),
+                ConcurrencyStamp = table.Column<string>("nvarchar(max)", nullable: true),
+                PhoneNumber = table.Column<string>("nvarchar(max)", nullable: true),
+                PhoneNumberConfirmed = table.Column<bool>("bit", nullable: false),
+                TwoFactorEnabled = table.Column<bool>("bit", nullable: false),
+                LockoutEnd = table.Column<DateTimeOffset>("datetimeoffset", nullable: true),
+                LockoutEnabled = table.Column<bool>("bit", nullable: false),
+                AccessFailedCount = table.Column<int>("int", nullable: false)
+            },
+            constraints: table =>
+            {
+                table.PrimaryKey("PK_AspNetUsers", x => x.Id);
+            }
         );
 
         migrationBuilder.CreateTable(
             "OpenIddictApplications",
-            table =>
-                new
-                {
-                    Id = table.Column<Guid>("uniqueidentifier", nullable: false),
-                    ApplicationType = table.Column<string>(
-                        "nvarchar(50)",
-                        maxLength: 50,
-                        nullable: true
-                    ),
-                    ClientId = table.Column<string>(
-                        "nvarchar(100)",
-                        maxLength: 100,
-                        nullable: true
-                    ),
-                    ClientSecret = table.Column<string>("nvarchar(max)", nullable: true),
-                    ClientType = table.Column<string>(
-                        "nvarchar(50)",
-                        maxLength: 50,
-                        nullable: true
-                    ),
-                    ConcurrencyToken = table.Column<string>(
-                        "nvarchar(50)",
-                        maxLength: 50,
-                        nullable: true
-                    ),
-                    ConsentType = table.Column<string>(
-                        "nvarchar(50)",
-                        maxLength: 50,
-                        nullable: true
-                    ),
-                    DisplayName = table.Column<string>("nvarchar(max)", nullable: true),
-                    DisplayNames = table.Column<string>("nvarchar(max)", nullable: true),
-                    JsonWebKeySet = table.Column<string>("nvarchar(max)", nullable: true),
-                    Permissions = table.Column<string>("nvarchar(max)", nullable: true),
-                    PostLogoutRedirectUris = table.Column<string>("nvarchar(max)", nullable: true),
-                    Properties = table.Column<string>("nvarchar(max)", nullable: true),
-                    RedirectUris = table.Column<string>("nvarchar(max)", nullable: true),
-                    Requirements = table.Column<string>("nvarchar(max)", nullable: true),
-                    Settings = table.Column<string>("nvarchar(max)", nullable: true)
-                },
-            constraints: table => { table.PrimaryKey("PK_OpenIddictApplications", x => x.Id); }
+            table => new
+            {
+                Id = table.Column<Guid>("uniqueidentifier", nullable: false),
+                ApplicationType = table.Column<string>(
+                    "nvarchar(50)",
+                    maxLength: 50,
+                    nullable: true
+                ),
+                ClientId = table.Column<string>("nvarchar(100)", maxLength: 100, nullable: true),
+                ClientSecret = table.Column<string>("nvarchar(max)", nullable: true),
+                ClientType = table.Column<string>("nvarchar(50)", maxLength: 50, nullable: true),
+                ConcurrencyToken = table.Column<string>(
+                    "nvarchar(50)",
+                    maxLength: 50,
+                    nullable: true
+                ),
+                ConsentType = table.Column<string>("nvarchar(50)", maxLength: 50, nullable: true),
+                DisplayName = table.Column<string>("nvarchar(max)", nullable: true),
+                DisplayNames = table.Column<string>("nvarchar(max)", nullable: true),
+                JsonWebKeySet = table.Column<string>("nvarchar(max)", nullable: true),
+                Permissions = table.Column<string>("nvarchar(max)", nullable: true),
+                PostLogoutRedirectUris = table.Column<string>("nvarchar(max)", nullable: true),
+                Properties = table.Column<string>("nvarchar(max)", nullable: true),
+                RedirectUris = table.Column<string>("nvarchar(max)", nullable: true),
+                Requirements = table.Column<string>("nvarchar(max)", nullable: true),
+                Settings = table.Column<string>("nvarchar(max)", nullable: true)
+            },
+            constraints: table =>
+            {
+                table.PrimaryKey("PK_OpenIddictApplications", x => x.Id);
+            }
         );
 
         migrationBuilder.CreateTable(
             "OpenIddictScopes",
-            table =>
-                new
-                {
-                    Id = table.Column<Guid>("uniqueidentifier", nullable: false),
-                    ConcurrencyToken = table.Column<string>(
-                        "nvarchar(50)",
-                        maxLength: 50,
-                        nullable: true
-                    ),
-                    Description = table.Column<string>("nvarchar(max)", nullable: true),
-                    Descriptions = table.Column<string>("nvarchar(max)", nullable: true),
-                    DisplayName = table.Column<string>("nvarchar(max)", nullable: true),
-                    DisplayNames = table.Column<string>("nvarchar(max)", nullable: true),
-                    Name = table.Column<string>("nvarchar(200)", maxLength: 200, nullable: true),
-                    Properties = table.Column<string>("nvarchar(max)", nullable: true),
-                    Resources = table.Column<string>("nvarchar(max)", nullable: true)
-                },
-            constraints: table => { table.PrimaryKey("PK_OpenIddictScopes", x => x.Id); }
+            table => new
+            {
+                Id = table.Column<Guid>("uniqueidentifier", nullable: false),
+                ConcurrencyToken = table.Column<string>(
+                    "nvarchar(50)",
+                    maxLength: 50,
+                    nullable: true
+                ),
+                Description = table.Column<string>("nvarchar(max)", nullable: true),
+                Descriptions = table.Column<string>("nvarchar(max)", nullable: true),
+                DisplayName = table.Column<string>("nvarchar(max)", nullable: true),
+                DisplayNames = table.Column<string>("nvarchar(max)", nullable: true),
+                Name = table.Column<string>("nvarchar(200)", maxLength: 200, nullable: true),
+                Properties = table.Column<string>("nvarchar(max)", nullable: true),
+                Resources = table.Column<string>("nvarchar(max)", nullable: true)
+            },
+            constraints: table =>
+            {
+                table.PrimaryKey("PK_OpenIddictScopes", x => x.Id);
+            }
         );
 
         migrationBuilder.CreateTable(
             "AspNetRoleClaims",
-            table =>
-                new
-                {
-                    Id = table
-                        .Column<int>("int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    RoleId = table.Column<Guid>("uniqueidentifier", nullable: false),
-                    ClaimType = table.Column<string>("nvarchar(max)", nullable: true),
-                    ClaimValue = table.Column<string>("nvarchar(max)", nullable: true)
-                },
+            table => new
+            {
+                Id = table
+                    .Column<int>("int", nullable: false)
+                    .Annotation("SqlServer:Identity", "1, 1"),
+                RoleId = table.Column<Guid>("uniqueidentifier", nullable: false),
+                ClaimType = table.Column<string>("nvarchar(max)", nullable: true),
+                ClaimValue = table.Column<string>("nvarchar(max)", nullable: true)
+            },
             constraints: table =>
             {
                 table.PrimaryKey("PK_AspNetRoleClaims", x => x.Id);
@@ -157,16 +148,15 @@ public partial class Application_Initial : Migration
 
         migrationBuilder.CreateTable(
             "AspNetUserClaims",
-            table =>
-                new
-                {
-                    Id = table
-                        .Column<int>("int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    UserId = table.Column<Guid>("uniqueidentifier", nullable: false),
-                    ClaimType = table.Column<string>("nvarchar(max)", nullable: true),
-                    ClaimValue = table.Column<string>("nvarchar(max)", nullable: true)
-                },
+            table => new
+            {
+                Id = table
+                    .Column<int>("int", nullable: false)
+                    .Annotation("SqlServer:Identity", "1, 1"),
+                UserId = table.Column<Guid>("uniqueidentifier", nullable: false),
+                ClaimType = table.Column<string>("nvarchar(max)", nullable: true),
+                ClaimValue = table.Column<string>("nvarchar(max)", nullable: true)
+            },
             constraints: table =>
             {
                 table.PrimaryKey("PK_AspNetUserClaims", x => x.Id);
@@ -182,14 +172,13 @@ public partial class Application_Initial : Migration
 
         migrationBuilder.CreateTable(
             "AspNetUserLogins",
-            table =>
-                new
-                {
-                    LoginProvider = table.Column<string>("nvarchar(450)", nullable: false),
-                    ProviderKey = table.Column<string>("nvarchar(450)", nullable: false),
-                    ProviderDisplayName = table.Column<string>("nvarchar(max)", nullable: true),
-                    UserId = table.Column<Guid>("uniqueidentifier", nullable: false)
-                },
+            table => new
+            {
+                LoginProvider = table.Column<string>("nvarchar(450)", nullable: false),
+                ProviderKey = table.Column<string>("nvarchar(450)", nullable: false),
+                ProviderDisplayName = table.Column<string>("nvarchar(max)", nullable: true),
+                UserId = table.Column<Guid>("uniqueidentifier", nullable: false)
+            },
             constraints: table =>
             {
                 table.PrimaryKey(
@@ -208,12 +197,11 @@ public partial class Application_Initial : Migration
 
         migrationBuilder.CreateTable(
             "AspNetUserRoles",
-            table =>
-                new
-                {
-                    UserId = table.Column<Guid>("uniqueidentifier", nullable: false),
-                    RoleId = table.Column<Guid>("uniqueidentifier", nullable: false)
-                },
+            table => new
+            {
+                UserId = table.Column<Guid>("uniqueidentifier", nullable: false),
+                RoleId = table.Column<Guid>("uniqueidentifier", nullable: false)
+            },
             constraints: table =>
             {
                 table.PrimaryKey("PK_AspNetUserRoles", x => new { x.UserId, x.RoleId });
@@ -236,25 +224,23 @@ public partial class Application_Initial : Migration
 
         migrationBuilder.CreateTable(
             "AspNetUserTokens",
-            table =>
-                new
-                {
-                    UserId = table.Column<Guid>("uniqueidentifier", nullable: false),
-                    LoginProvider = table.Column<string>("nvarchar(450)", nullable: false),
-                    Name = table.Column<string>("nvarchar(450)", nullable: false),
-                    Value = table.Column<string>("nvarchar(max)", nullable: true)
-                },
+            table => new
+            {
+                UserId = table.Column<Guid>("uniqueidentifier", nullable: false),
+                LoginProvider = table.Column<string>("nvarchar(450)", nullable: false),
+                Name = table.Column<string>("nvarchar(450)", nullable: false),
+                Value = table.Column<string>("nvarchar(max)", nullable: true)
+            },
             constraints: table =>
             {
                 table.PrimaryKey(
                     "PK_AspNetUserTokens",
-                    x =>
-                        new
-                        {
-                            x.UserId,
-                            x.LoginProvider,
-                            x.Name
-                        }
+                    x => new
+                    {
+                        x.UserId,
+                        x.LoginProvider,
+                        x.Name
+                    }
                 );
                 table.ForeignKey(
                     "FK_AspNetUserTokens_AspNetUsers_UserId",
@@ -268,23 +254,22 @@ public partial class Application_Initial : Migration
 
         migrationBuilder.CreateTable(
             "OpenIddictAuthorizations",
-            table =>
-                new
-                {
-                    Id = table.Column<Guid>("uniqueidentifier", nullable: false),
-                    ApplicationId = table.Column<Guid>("uniqueidentifier", nullable: true),
-                    ConcurrencyToken = table.Column<string>(
-                        "nvarchar(50)",
-                        maxLength: 50,
-                        nullable: true
-                    ),
-                    CreationDate = table.Column<DateTime>("datetime2", nullable: true),
-                    Properties = table.Column<string>("nvarchar(max)", nullable: true),
-                    Scopes = table.Column<string>("nvarchar(max)", nullable: true),
-                    Status = table.Column<string>("nvarchar(50)", maxLength: 50, nullable: true),
-                    Subject = table.Column<string>("nvarchar(400)", maxLength: 400, nullable: true),
-                    Type = table.Column<string>("nvarchar(50)", maxLength: 50, nullable: true)
-                },
+            table => new
+            {
+                Id = table.Column<Guid>("uniqueidentifier", nullable: false),
+                ApplicationId = table.Column<Guid>("uniqueidentifier", nullable: true),
+                ConcurrencyToken = table.Column<string>(
+                    "nvarchar(50)",
+                    maxLength: 50,
+                    nullable: true
+                ),
+                CreationDate = table.Column<DateTime>("datetime2", nullable: true),
+                Properties = table.Column<string>("nvarchar(max)", nullable: true),
+                Scopes = table.Column<string>("nvarchar(max)", nullable: true),
+                Status = table.Column<string>("nvarchar(50)", maxLength: 50, nullable: true),
+                Subject = table.Column<string>("nvarchar(400)", maxLength: 400, nullable: true),
+                Type = table.Column<string>("nvarchar(50)", maxLength: 50, nullable: true)
+            },
             constraints: table =>
             {
                 table.PrimaryKey("PK_OpenIddictAuthorizations", x => x.Id);
@@ -299,31 +284,26 @@ public partial class Application_Initial : Migration
 
         migrationBuilder.CreateTable(
             "OpenIddictTokens",
-            table =>
-                new
-                {
-                    Id = table.Column<Guid>("uniqueidentifier", nullable: false),
-                    ApplicationId = table.Column<Guid>("uniqueidentifier", nullable: true),
-                    AuthorizationId = table.Column<Guid>("uniqueidentifier", nullable: true),
-                    ConcurrencyToken = table.Column<string>(
-                        "nvarchar(50)",
-                        maxLength: 50,
-                        nullable: true
-                    ),
-                    CreationDate = table.Column<DateTime>("datetime2", nullable: true),
-                    ExpirationDate = table.Column<DateTime>("datetime2", nullable: true),
-                    Payload = table.Column<string>("nvarchar(max)", nullable: true),
-                    Properties = table.Column<string>("nvarchar(max)", nullable: true),
-                    RedemptionDate = table.Column<DateTime>("datetime2", nullable: true),
-                    ReferenceId = table.Column<string>(
-                        "nvarchar(100)",
-                        maxLength: 100,
-                        nullable: true
-                    ),
-                    Status = table.Column<string>("nvarchar(50)", maxLength: 50, nullable: true),
-                    Subject = table.Column<string>("nvarchar(400)", maxLength: 400, nullable: true),
-                    Type = table.Column<string>("nvarchar(50)", maxLength: 50, nullable: true)
-                },
+            table => new
+            {
+                Id = table.Column<Guid>("uniqueidentifier", nullable: false),
+                ApplicationId = table.Column<Guid>("uniqueidentifier", nullable: true),
+                AuthorizationId = table.Column<Guid>("uniqueidentifier", nullable: true),
+                ConcurrencyToken = table.Column<string>(
+                    "nvarchar(50)",
+                    maxLength: 50,
+                    nullable: true
+                ),
+                CreationDate = table.Column<DateTime>("datetime2", nullable: true),
+                ExpirationDate = table.Column<DateTime>("datetime2", nullable: true),
+                Payload = table.Column<string>("nvarchar(max)", nullable: true),
+                Properties = table.Column<string>("nvarchar(max)", nullable: true),
+                RedemptionDate = table.Column<DateTime>("datetime2", nullable: true),
+                ReferenceId = table.Column<string>("nvarchar(100)", maxLength: 100, nullable: true),
+                Status = table.Column<string>("nvarchar(50)", maxLength: 50, nullable: true),
+                Subject = table.Column<string>("nvarchar(400)", maxLength: 400, nullable: true),
+                Type = table.Column<string>("nvarchar(50)", maxLength: 50, nullable: true)
+            },
             constraints: table =>
             {
                 table.PrimaryKey("PK_OpenIddictTokens", x => x.Id);

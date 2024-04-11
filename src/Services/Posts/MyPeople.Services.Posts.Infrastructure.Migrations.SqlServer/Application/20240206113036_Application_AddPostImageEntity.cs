@@ -12,15 +12,14 @@ public partial class Application_AddPostImageEntity : Migration
     {
         migrationBuilder.CreateTable(
             "PostImages",
-            table =>
-                new
-                {
-                    Id = table.Column<Guid>("uniqueidentifier", nullable: false),
-                    PostId = table.Column<Guid>("uniqueidentifier", nullable: true),
-                    ImageId = table.Column<Guid>("uniqueidentifier", nullable: true),
-                    CreatedAt = table.Column<DateTime>("datetime2", nullable: true),
-                    UpdatedAt = table.Column<DateTime>("datetime2", nullable: true)
-                },
+            table => new
+            {
+                Id = table.Column<Guid>("uniqueidentifier", nullable: false),
+                PostId = table.Column<Guid>("uniqueidentifier", nullable: true),
+                ImageId = table.Column<Guid>("uniqueidentifier", nullable: true),
+                CreatedAt = table.Column<DateTime>("datetime2", nullable: true),
+                UpdatedAt = table.Column<DateTime>("datetime2", nullable: true)
+            },
             constraints: table =>
             {
                 table.PrimaryKey("PK_PostImages", x => x.Id);

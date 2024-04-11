@@ -14,8 +14,8 @@ public static class ServiceCollectionExtensions
         IConfiguration configuration
     )
     {
-        services.AddOidcAuthentication(
-            options => configuration.Bind("Oidc", options.ProviderOptions)
+        services.AddOidcAuthentication(options =>
+            configuration.Bind("Oidc", options.ProviderOptions)
         );
 
         return services;
@@ -34,10 +34,9 @@ public static class ServiceCollectionExtensions
 
         services
             .AddHttpClient("services.posts", cl => cl.BaseAddress = new Uri(gatewayWebUrl))
-            .AddHttpMessageHandler(
-                sp =>
-                    sp.GetRequiredService<AuthorizationMessageHandler>()
-                        .ConfigureHandler([gatewayWebUrl], servicesPostsScopes)
+            .AddHttpMessageHandler(sp =>
+                sp.GetRequiredService<AuthorizationMessageHandler>()
+                    .ConfigureHandler([gatewayWebUrl], servicesPostsScopes)
             );
 
         return services;
@@ -45,12 +44,9 @@ public static class ServiceCollectionExtensions
 
     public static IServiceCollection ConfigureScoped(this IServiceCollection services)
     {
-        services.AddScoped<IPostService>(
-            sp =>
-                new PostService(
-                    sp.GetRequiredService<IHttpClientFactory>().CreateClient("services.posts")
-                )
-        );
+        services.AddScoped<IPostService>(sp => new PostService(
+            sp.GetRequiredService<IHttpClientFactory>().CreateClient("services.posts")
+        ));
 
         return services;
     }

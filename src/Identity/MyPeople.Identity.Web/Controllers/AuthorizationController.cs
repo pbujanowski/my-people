@@ -56,7 +56,7 @@ public class AuthorizationController(
                 request.MaxAge is not null
                 && result.Properties?.IssuedUtc is not null
                 && DateTimeOffset.UtcNow - result.Properties.IssuedUtc
-                > TimeSpan.FromSeconds(request.MaxAge.Value)
+                    > TimeSpan.FromSeconds(request.MaxAge.Value)
             )
         )
         {
@@ -99,14 +99,14 @@ public class AuthorizationController(
         var user =
             await _userManager.GetUserAsync(
                 result.Principal
-                ?? throw new InvalidOperationException("The principal cannot be retrieved.")
+                    ?? throw new InvalidOperationException("The principal cannot be retrieved.")
             ) ?? throw new InvalidOperationException("The user details cannot be retrieved.");
 
         // Retrieve the application details from the database.
         var application =
             await _applicationManager.FindByClientIdAsync(
                 request.ClientId
-                ?? throw new InvalidOperationException("The client ID cannot be retrieved.")
+                    ?? throw new InvalidOperationException("The client ID cannot be retrieved.")
             )
             ?? throw new InvalidOperationException(
                 "Details concerning the calling client application cannot be found."
@@ -117,9 +117,9 @@ public class AuthorizationController(
             .FindAsync(
                 await _userManager.GetUserIdAsync(user),
                 await _applicationManager.GetIdAsync(application)
-                ?? throw new InvalidOperationException(
-                    "The client application cannot be retrieved."
-                ),
+                    ?? throw new InvalidOperationException(
+                        "The client application cannot be retrieved."
+                    ),
                 Statuses.Valid,
                 AuthorizationTypes.Permanent,
                 request.GetScopes()
@@ -179,9 +179,9 @@ public class AuthorizationController(
                     identity,
                     await _userManager.GetUserIdAsync(user),
                     await _applicationManager.GetIdAsync(application)
-                    ?? throw new InvalidOperationException(
-                        "The client application cannot be retrieved."
-                    ),
+                        ?? throw new InvalidOperationException(
+                            "The client application cannot be retrieved."
+                        ),
                     AuthorizationTypes.Permanent,
                     identity.GetScopes()
                 );
@@ -246,7 +246,7 @@ public class AuthorizationController(
         var application =
             await _applicationManager.FindByClientIdAsync(
                 request.ClientId
-                ?? throw new InvalidOperationException("The client ID cannot be retrieved.")
+                    ?? throw new InvalidOperationException("The client ID cannot be retrieved.")
             )
             ?? throw new InvalidOperationException(
                 "Details concerning the calling client application cannot be found."
@@ -257,9 +257,9 @@ public class AuthorizationController(
             .FindAsync(
                 await _userManager.GetUserIdAsync(user),
                 await _applicationManager.GetIdAsync(application)
-                ?? throw new InvalidOperationException(
-                    "The client application cannot be retrieved."
-                ),
+                    ?? throw new InvalidOperationException(
+                        "The client application cannot be retrieved."
+                    ),
                 Statuses.Valid,
                 AuthorizationTypes.Permanent,
                 request.GetScopes()
@@ -315,9 +315,9 @@ public class AuthorizationController(
             identity,
             await _userManager.GetUserIdAsync(user),
             await _applicationManager.GetIdAsync(application)
-            ?? throw new InvalidOperationException(
-                "The client application cannot be retrieved."
-            ),
+                ?? throw new InvalidOperationException(
+                    "The client application cannot be retrieved."
+                ),
             AuthorizationTypes.Permanent,
             identity.GetScopes()
         );
@@ -387,7 +387,7 @@ public class AuthorizationController(
             // Retrieve the user profile corresponding to the authorization code/refresh token.
             var user = await _userManager.FindByIdAsync(
                 result.Principal?.GetClaim(Claims.Subject)
-                ?? throw new InvalidOperationException("The user ID cannot be retrieved.")
+                    ?? throw new InvalidOperationException("The user ID cannot be retrieved.")
             );
             if (user is null)
                 return Forbid(

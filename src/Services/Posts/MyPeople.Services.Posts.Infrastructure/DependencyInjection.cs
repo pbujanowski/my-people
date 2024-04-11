@@ -52,28 +52,27 @@ public static class DependencyInjection
             configuration.GetConnectionString("Application")
             ?? throw new ConfigurationException("ConnectionStrings:Application");
 
-        services.AddDbContext<ApplicationDbContext>(
-            options =>
-                _ = databaseProvider switch
-                {
-                    "Sqlite"
-                        => options.UseSqlite(
-                            connectionString,
-                            x =>
-                                x.MigrationsAssembly(
-                                    "MyPeople.Services.Posts.Infrastructure.Migrations.Sqlite"
-                                )
-                        ),
-                    "SqlServer"
-                        => options.UseSqlServer(
-                            connectionString,
-                            x =>
-                                x.MigrationsAssembly(
-                                    "MyPeople.Services.Posts.Infrastructure.Migrations.SqlServer"
-                                )
-                        ),
-                    _ => throw new Exception($"Unsupported provider: {databaseProvider}.")
-                }
+        services.AddDbContext<ApplicationDbContext>(options =>
+            _ = databaseProvider switch
+            {
+                "Sqlite"
+                    => options.UseSqlite(
+                        connectionString,
+                        x =>
+                            x.MigrationsAssembly(
+                                "MyPeople.Services.Posts.Infrastructure.Migrations.Sqlite"
+                            )
+                    ),
+                "SqlServer"
+                    => options.UseSqlServer(
+                        connectionString,
+                        x =>
+                            x.MigrationsAssembly(
+                                "MyPeople.Services.Posts.Infrastructure.Migrations.SqlServer"
+                            )
+                    ),
+                _ => throw new Exception($"Unsupported provider: {databaseProvider}.")
+            }
         );
 
         return services;
@@ -99,23 +98,17 @@ public static class DependencyInjection
             ?? throw new ConfigurationException("Oidc:Issuer");
 
         services.AddHttpClient("identity", cl => cl.BaseAddress = new Uri(oidcIssuerUrl));
-        services.AddScoped<IUserService>(
-            sp =>
-                new UserService(
-                    sp.GetRequiredService<IHttpClientFactory>().CreateClient("identity")
-                )
-        );
+        services.AddScoped<IUserService>(sp => new UserService(
+            sp.GetRequiredService<IHttpClientFactory>().CreateClient("identity")
+        ));
         var gatewayWebUrl =
             configuration.GetValue<string>("Gateways:Web:Url")
             ?? throw new ConfigurationException("Gateways:Web:Url");
 
         services.AddHttpClient("services.images", cl => cl.BaseAddress = new Uri(gatewayWebUrl));
-        services.AddScoped<IImageService>(
-            sp =>
-                new ImageService(
-                    sp.GetRequiredService<IHttpClientFactory>().CreateClient("services.images")
-                )
-        );
+        services.AddScoped<IImageService>(sp => new ImageService(
+            sp.GetRequiredService<IHttpClientFactory>().CreateClient("services.images")
+        ));
 
         return services;
     }
