@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
         <TargetFramework>net8.0</TargetFramework>
@@ -7,21 +7,21 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\..\..\Common\MyPeople.Common.Configuration\MyPeople.Common.Configuration.csproj"/>
-        <ProjectReference Include="..\MyPeople.Services.Images.Domain\MyPeople.Services.Images.Domain.csproj"/>
-        <ProjectReference Include="..\MyPeople.Services.Images.Application\MyPeople.Services.Images.Application.csproj"/>
+        <ProjectReference Include="..\..\..\Common\MyPeople.Common.Configuration\MyPeople.Common.Configuration.csproj" />
+        <ProjectReference Include="..\MyPeople.Services.Images.Domain\MyPeople.Services.Images.Domain.csproj" />
+        <ProjectReference Include="..\MyPeople.Services.Images.Application\MyPeople.Services.Images.Application.csproj" />
     </ItemGroup>
 
     <ItemGroup>
-        <FrameworkReference Include="Microsoft.AspNetCore.App"/>
-        <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="8.0.3" />
-        <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="8.0.3" />
-        <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="8.0.3" />
-        <PackageReference Include="Microsoft.Extensions.Http" Version="8.0.0"/>
+        <FrameworkReference Include="Microsoft.AspNetCore.App" />
+        <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="8.0.4" />
+        <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="8.0.4" />
+        <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="8.0.4" />
+        <PackageReference Include="Microsoft.Extensions.Http" Version="8.0.0" />
     </ItemGroup>
 
     <ItemGroup>
-        <Folder Include="Data\Migrations\"/>
+        <Folder Include="Data\Migrations\" />
     </ItemGroup>
 
 </Project>
