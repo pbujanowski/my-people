@@ -63,8 +63,10 @@ public class ImagesController(ILogger<ImagesController> logger, IMediator mediat
         {
             var result = await _mediator.Send(new GetImagesByIdsQuery(ids));
             var images = result.Images;
-            if (images is null || !images.Any())
+            if (images?.Any() != true)
+            {
                 return NotFound();
+            }
 
             return Ok(images);
         }

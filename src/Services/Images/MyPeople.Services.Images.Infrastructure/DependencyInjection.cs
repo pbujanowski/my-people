@@ -34,7 +34,8 @@ public static class DependencyInjection
     )
     {
         using var scope = app.ApplicationServices.CreateScope();
-        using var dbContext = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+        await using var dbContext =
+            scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
         await dbContext.Database.MigrateAsync();
 
         return app;
@@ -95,14 +96,6 @@ public static class DependencyInjection
     private static IServiceCollection ConfigureWrappers(this IServiceCollection services)
     {
         services.AddScoped<IRepositoryWrapper, RepositoryWrapper>();
-
-        return services;
-    }
-
-    private static IServiceCollection ConfigureAutoMapper(this IServiceCollection services)
-    {
-        var assembly = Assembly.GetExecutingAssembly();
-        services.AddAutoMapper(assembly);
 
         return services;
     }

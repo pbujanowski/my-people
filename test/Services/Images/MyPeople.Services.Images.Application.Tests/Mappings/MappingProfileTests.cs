@@ -6,14 +6,10 @@ using MyPeople.Services.Images.Domain.Entities;
 
 namespace MyPeople.Services.Images.Application.Tests.Mappings;
 
-public class MappingProfileTests : IClassFixture<MappingProfileFixture>
+public class MappingProfileTests(MappingProfileFixture fixture)
+    : IClassFixture<MappingProfileFixture>
 {
-    private readonly MappingProfileFixture _fixture;
-
-    public MappingProfileTests(MappingProfileFixture fixture)
-    {
-        _fixture = fixture;
-    }
+    private readonly MappingProfileFixture _fixture = fixture;
 
     [Fact]
     public void ShouldHaveValidConfiguration()

@@ -132,7 +132,7 @@ public class ImagesControllerTests(ImagesControllerFixture fixture)
         return createdImagesDtosList;
     }
 
-    private CreateImageDto MapImageToCreateImageDto(Image image)
+    private static CreateImageDto MapImageToCreateImageDto(Image image)
     {
         return new CreateImageDto
         {
@@ -142,7 +142,7 @@ public class ImagesControllerTests(ImagesControllerFixture fixture)
         };
     }
 
-    private IEnumerable<CreateImageDto> MapImagesToCreateImageDtos(IEnumerable<Image> images)
+    private static IEnumerable<CreateImageDto> MapImagesToCreateImageDtos(IEnumerable<Image> images)
     {
         return images.Select(image => new CreateImageDto
         {
@@ -152,12 +152,12 @@ public class ImagesControllerTests(ImagesControllerFixture fixture)
         });
     }
 
-    private IEnumerable<DeleteImageDto> MapImagesToDeleteImageDtos(IEnumerable<Image> images)
+    private static IEnumerable<DeleteImageDto> MapImagesToDeleteImageDtos(IEnumerable<Image> images)
     {
         return images.Select(image => new DeleteImageDto { Id = image.Id });
     }
 
-    private IEnumerable<DeleteImageDto> MapImageDtosToDeleteImageDtos(
+    private static IEnumerable<DeleteImageDto> MapImageDtosToDeleteImageDtos(
         IEnumerable<ImageDto> imageDtos
     )
     {

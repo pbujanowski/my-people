@@ -63,6 +63,7 @@ public class AuthorizationController(
             // If the client application requested promptless authentication,
             // return an error indicating that the user is not logged in.
             if (request.HasPrompt(Prompts.None))
+            {
                 return Forbid(
                     new AuthenticationProperties(
                         new Dictionary<string, string?>
@@ -75,6 +76,7 @@ public class AuthorizationController(
                     ),
                     OpenIddictServerAspNetCoreDefaults.AuthenticationScheme
                 );
+            }
 
             // To avoid endless login -> authorization redirects, the prompt=login flag
             // is removed from the authorization request payload before redirecting the user.
@@ -273,6 +275,7 @@ public class AuthorizationController(
             authorizations.Count == 0
             && await _applicationManager.HasConsentTypeAsync(application, ConsentTypes.External)
         )
+        {
             return Forbid(
                 new AuthenticationProperties(
                     new Dictionary<string, string?>
@@ -285,6 +288,7 @@ public class AuthorizationController(
                 ),
                 OpenIddictServerAspNetCoreDefaults.AuthenticationScheme
             );
+        }
 
         // Create the claims-based identity that will be used by OpenIddict to generate tokens.
         var identity = new ClaimsIdentity(
@@ -390,6 +394,7 @@ public class AuthorizationController(
                     ?? throw new InvalidOperationException("The user ID cannot be retrieved.")
             );
             if (user is null)
+            {
                 return Forbid(
                     new AuthenticationProperties(
                         new Dictionary<string, string?>
@@ -402,9 +407,11 @@ public class AuthorizationController(
                     ),
                     OpenIddictServerAspNetCoreDefaults.AuthenticationScheme
                 );
+            }
 
             // Ensure the user is still allowed to sign in.
             if (!await _signInManager.CanSignInAsync(user))
+            {
                 return Forbid(
                     new AuthenticationProperties(
                         new Dictionary<string, string?>
@@ -417,6 +424,7 @@ public class AuthorizationController(
                     ),
                     OpenIddictServerAspNetCoreDefaults.AuthenticationScheme
                 );
+            }
 
             var identity = new ClaimsIdentity(
                 result.Principal.Claims,

@@ -5,15 +5,10 @@ using MyPeople.Services.Images.Infrastructure.Data;
 
 namespace MyPeople.Services.Images.Infrastructure.Repositories;
 
-public abstract class RepositoryBase<TEntity> : IRepository<TEntity>
+public abstract class RepositoryBase<TEntity>(ApplicationDbContext dbContext) : IRepository<TEntity>
     where TEntity : class
 {
-    protected readonly ApplicationDbContext _dbContext;
-
-    protected RepositoryBase(ApplicationDbContext dbContext)
-    {
-        _dbContext = dbContext;
-    }
+    protected readonly ApplicationDbContext _dbContext = dbContext;
 
     public TEntity Create(TEntity entity)
     {
