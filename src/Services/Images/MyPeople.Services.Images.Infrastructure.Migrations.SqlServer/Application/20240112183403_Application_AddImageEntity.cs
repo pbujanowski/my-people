@@ -21,10 +21,7 @@ public partial class Application_AddImageEntity : Migration
                 CreatedAt = table.Column<DateTime>("datetime2", nullable: false),
                 UpdatedAt = table.Column<DateTime>("datetime2", nullable: false)
             },
-            constraints: table =>
-            {
-                table.PrimaryKey("PK_Images", x => x.Id);
-            }
+            constraints: table => table.PrimaryKey("PK_Images", x => x.Id)
         );
     }
 

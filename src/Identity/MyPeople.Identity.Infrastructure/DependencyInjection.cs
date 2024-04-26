@@ -35,7 +35,8 @@ public static class DependencyInjection
     )
     {
         using var scope = app.ApplicationServices.CreateScope();
-        using var dbContext = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+        await using var dbContext =
+            scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
         await dbContext.Database.MigrateAsync();
 
         return app;

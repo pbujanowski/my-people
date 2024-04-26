@@ -1,3 +1,3 @@
 ﻿namespace MyPeople.Common.Models.Dtos;
 
-public class UpdatePostDto : PostDto { }
+public class UpdatePostDto : PostDto;

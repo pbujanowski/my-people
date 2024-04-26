@@ -7,6 +7,8 @@ namespace MyPeople.Identity.Infrastructure.Migrations.Sqlite.Application;
 /// <inheritdoc />
 public partial class Application_Initial : Migration
 {
+    private static readonly string[] _indexColumns = ["ApplicationId", "Status", "Subject", "Type"];
+
     /// <inheritdoc />
     protected override void Up(MigrationBuilder migrationBuilder)
     {
@@ -19,10 +21,7 @@ public partial class Application_Initial : Migration
                 NormalizedName = table.Column<string>("TEXT", maxLength: 256, nullable: true),
                 ConcurrencyStamp = table.Column<string>("TEXT", nullable: true)
             },
-            constraints: table =>
-            {
-                table.PrimaryKey("PK_AspNetRoles", x => x.Id);
-            }
+            constraints: table => table.PrimaryKey("PK_AspNetRoles", x => x.Id)
         );
 
         migrationBuilder.CreateTable(
@@ -45,10 +44,7 @@ public partial class Application_Initial : Migration
                 LockoutEnabled = table.Column<bool>("INTEGER", nullable: false),
                 AccessFailedCount = table.Column<int>("INTEGER", nullable: false)
             },
-            constraints: table =>
-            {
-                table.PrimaryKey("PK_AspNetUsers", x => x.Id);
-            }
+            constraints: table => table.PrimaryKey("PK_AspNetUsers", x => x.Id)
         );
 
         migrationBuilder.CreateTable(
@@ -72,10 +68,7 @@ public partial class Application_Initial : Migration
                 Requirements = table.Column<string>("TEXT", nullable: true),
                 Settings = table.Column<string>("TEXT", nullable: true)
             },
-            constraints: table =>
-            {
-                table.PrimaryKey("PK_OpenIddictApplications", x => x.Id);
-            }
+            constraints: table => table.PrimaryKey("PK_OpenIddictApplications", x => x.Id)
         );
 
         migrationBuilder.CreateTable(
@@ -92,10 +85,7 @@ public partial class Application_Initial : Migration
                 Properties = table.Column<string>("TEXT", nullable: true),
                 Resources = table.Column<string>("TEXT", nullable: true)
             },
-            constraints: table =>
-            {
-                table.PrimaryKey("PK_OpenIddictScopes", x => x.Id);
-            }
+            constraints: table => table.PrimaryKey("PK_OpenIddictScopes", x => x.Id)
         );
 
         migrationBuilder.CreateTable(
@@ -324,7 +314,7 @@ public partial class Application_Initial : Migration
         migrationBuilder.CreateIndex(
             "IX_OpenIddictAuthorizations_ApplicationId_Status_Subject_Type",
             "OpenIddictAuthorizations",
-            new[] { "ApplicationId", "Status", "Subject", "Type" }
+            _indexColumns
         );
 
         migrationBuilder.CreateIndex(
@@ -337,7 +327,7 @@ public partial class Application_Initial : Migration
         migrationBuilder.CreateIndex(
             "IX_OpenIddictTokens_ApplicationId_Status_Subject_Type",
             "OpenIddictTokens",
-            new[] { "ApplicationId", "Status", "Subject", "Type" }
+            _indexColumns
         );
 
         migrationBuilder.CreateIndex(

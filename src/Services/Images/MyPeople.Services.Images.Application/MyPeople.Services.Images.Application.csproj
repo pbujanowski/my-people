@@ -1,20 +1,20 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
-    <PropertyGroup>
-        <TargetFramework>net8.0</TargetFramework>
-        <ImplicitUsings>enable</ImplicitUsings>
-        <Nullable>enable</Nullable>
-    </PropertyGroup>
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
 
-    <ItemGroup>
-        <ProjectReference Include="..\MyPeople.Services.Images.Domain\MyPeople.Services.Images.Domain.csproj"/>
-        <ProjectReference Include="..\..\..\Common\MyPeople.Common.Abstractions\MyPeople.Common.Abstractions.csproj"/>
-        <ProjectReference Include="..\..\..\Common\MyPeople.Common.Models\MyPeople.Common.Models.csproj"/>
-    </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\MyPeople.Services.Images.Domain\MyPeople.Services.Images.Domain.csproj"/>
+    <ProjectReference Include="..\..\..\Common\MyPeople.Common.Abstractions\MyPeople.Common.Abstractions.csproj"/>
+    <ProjectReference Include="..\..\..\Common\MyPeople.Common.Models\MyPeople.Common.Models.csproj"/>
+  </ItemGroup>
 
-    <ItemGroup>
-      <PackageReference Include="AutoMapper" Version="13.0.1" />
-      <PackageReference Include="MediatR" Version="12.2.0" />
-    </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="13.0.1" />
+    <PackageReference Include="MediatR" Version="12.2.0" />
+  </ItemGroup>
 
 </Project>

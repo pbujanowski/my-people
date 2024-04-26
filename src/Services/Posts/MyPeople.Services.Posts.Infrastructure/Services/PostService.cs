@@ -28,10 +28,14 @@ public class PostService(
         {
             var images = await _imageService.CreateImagesAsync(postDto.Images);
             if (images is not null)
+            {
                 foreach (var image in images)
+                {
                     _repositories.PostImages.Create(
                         new PostImage { PostId = createdEntity.Id, ImageId = image.Id }
                     );
+                }
+            }
         }
 
         await _repositories.SaveChangesAsync();
@@ -67,13 +71,14 @@ public class PostService(
         var dtos = _mapper.Map<ICollection<PostDto>>(entities);
         foreach (var dto in dtos)
         {
-            var entity = entities.FirstOrDefault(x => x.Id == dto.Id)!;
+            var entity = entities.Find(x => x.Id == dto.Id)!;
             var anyImages = entity.Images?.Count > 0;
             if (anyImages)
             {
                 var gatewayWebUrl = _configuration.GetSection("Gateways:Web:Url").Get<string>();
                 dto.Images = [];
                 foreach (var image in entity.Images!)
+                {
                     dto.Images.Add(
                         new PostImageDto
                         {
@@ -81,6 +86,7 @@ public class PostService(
                             Url = $"{gatewayWebUrl}/images/browse/{image.ImageId}"
                         }
                     );
+                }
             }
         }
 

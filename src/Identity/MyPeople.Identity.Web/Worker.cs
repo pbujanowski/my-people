@@ -25,6 +25,7 @@ public class Worker(IServiceProvider serviceProvider, IConfiguration configurati
         var userManager = scope.ServiceProvider.GetRequiredService<UserManager<ApplicationUser>>();
 
         if (await applicationManager.FindByClientIdAsync("postman", cancellationToken) is null)
+        {
             await applicationManager.CreateAsync(
                 new OpenIddictApplicationDescriptor
                 {
@@ -51,6 +52,7 @@ public class Worker(IServiceProvider serviceProvider, IConfiguration configurati
                 },
                 cancellationToken
             );
+        }
 
         if (
             await applicationManager.FindByClientIdAsync(
@@ -59,6 +61,7 @@ public class Worker(IServiceProvider serviceProvider, IConfiguration configurati
             )
             is null
         )
+        {
             await applicationManager.CreateAsync(
                 new OpenIddictApplicationDescriptor
                 {
@@ -68,6 +71,7 @@ public class Worker(IServiceProvider serviceProvider, IConfiguration configurati
                 },
                 cancellationToken
             );
+        }
 
         if (
             await applicationManager.FindByClientIdAsync(
@@ -76,6 +80,7 @@ public class Worker(IServiceProvider serviceProvider, IConfiguration configurati
             )
             is null
         )
+        {
             await applicationManager.CreateAsync(
                 new OpenIddictApplicationDescriptor
                 {
@@ -85,11 +90,13 @@ public class Worker(IServiceProvider serviceProvider, IConfiguration configurati
                 },
                 cancellationToken
             );
+        }
 
         if (
             await applicationManager.FindByClientIdAsync("my-people-client", cancellationToken)
             is null
         )
+        {
             await applicationManager.CreateAsync(
                 new OpenIddictApplicationDescriptor
                 {
@@ -122,10 +129,12 @@ public class Worker(IServiceProvider serviceProvider, IConfiguration configurati
                 },
                 cancellationToken
             );
+        }
 
         var scopeManager = scope.ServiceProvider.GetRequiredService<IOpenIddictScopeManager>();
 
         if (await scopeManager.FindByNameAsync(AppScopes.Services.Posts, cancellationToken) is null)
+        {
             await scopeManager.CreateAsync(
                 new OpenIddictScopeDescriptor
                 {
@@ -134,6 +143,7 @@ public class Worker(IServiceProvider serviceProvider, IConfiguration configurati
                 },
                 cancellationToken
             );
+        }
 
         if (!await roleManager.RoleExistsAsync(AppRoles.Administrator))
             await roleManager.CreateAsync(new ApplicationRole(AppRoles.Administrator));

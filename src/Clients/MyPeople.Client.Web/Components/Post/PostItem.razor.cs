@@ -51,6 +51,7 @@ public partial class PostItem
     private void DisableEditMode(bool restoreOldPost)
     {
         if (restoreOldPost)
+        {
             Post = new PostDto
             {
                 Id = _oldPost?.Id,
@@ -60,6 +61,7 @@ public partial class PostItem
                 UserDisplayName = _oldPost?.UserDisplayName,
                 Content = _oldPost?.Content
             };
+        }
         IsEditMode = false;
     }
 
