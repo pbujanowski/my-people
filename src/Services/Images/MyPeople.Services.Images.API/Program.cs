@@ -1,46 +1,52 @@
 using FluentValidation.AspNetCore;
 using Microsoft.IdentityModel.Logging;
+using MyPeople.Common.Logging;
+using MyPeople.Common.Logging.Extensions;
 using MyPeople.Common.Models;
 using MyPeople.Services.Common.Extensions;
 using MyPeople.Services.Images.Application;
 using MyPeople.Services.Images.Infrastructure;
 
-var builder = WebApplication.CreateBuilder(args);
-
-builder.Services.ConfigureCommonModels();
-builder.Services.ConfigureApplication();
-builder.Services.ConfigureInfrastructure(builder.Configuration);
-builder.Services.ConfigureCors(builder.Configuration);
-builder.Services.ConfigureOpenIddict(builder.Configuration);
-builder.Services.ConfigureAuthentication();
-
-if (builder.Environment.IsStaging())
-    builder.Services.ConfigureConsul(builder.Configuration);
-
-builder.Services.AddAuthorization();
-builder.Services.AddControllers();
-builder.Services.AddFluentValidationAutoValidation();
-builder.Services.AddHealthChecks();
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
-
-var app = builder.Build();
-
-if (app.Environment.IsDevelopment() || app.Environment.IsStaging())
+LoggingInitializer.Initialize(async () =>
 {
-    app.UseSwagger();
-    app.UseSwaggerUI();
-    IdentityModelEventSource.ShowPII = true;
-}
+    var builder = WebApplication.CreateBuilder(args);
 
-await app.UseInfrastructureAsync();
+    builder.Services.ConfigureLogging();
+    builder.Services.ConfigureCommonModels();
+    builder.Services.ConfigureApplication();
+    builder.Services.ConfigureInfrastructure(builder.Configuration);
+    builder.Services.ConfigureCors(builder.Configuration);
+    builder.Services.ConfigureOpenIddict(builder.Configuration);
+    builder.Services.ConfigureAuthentication();
 
-app.UseCors();
+    if (builder.Environment.IsStaging())
+        builder.Services.ConfigureConsul(builder.Configuration);
 
-app.UseAuthentication();
-app.UseAuthorization();
+    builder.Services.AddAuthorization();
+    builder.Services.AddControllers();
+    builder.Services.AddFluentValidationAutoValidation();
+    builder.Services.AddHealthChecks();
+    builder.Services.AddEndpointsApiExplorer();
+    builder.Services.AddSwaggerGen();
 
-app.MapControllers();
-app.MapHealthChecks("/healthcheck");
+    var app = builder.Build();
 
-app.Run();
+    if (app.Environment.IsDevelopment() || app.Environment.IsStaging())
+    {
+        app.UseSwagger();
+        app.UseSwaggerUI();
+        IdentityModelEventSource.ShowPII = true;
+    }
+
+    await app.UseInfrastructureAsync();
+
+    app.UseCors();
+
+    app.UseAuthentication();
+    app.UseAuthorization();
+
+    app.MapControllers();
+    app.MapHealthChecks("/healthcheck");
+
+    app.Run();
+});

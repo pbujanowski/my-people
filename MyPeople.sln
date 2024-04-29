@@ -85,6 +85,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyPeople.Services.Images.In
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyPeople.Services.Images.API.Tests", "test\Services\Images\MyPeople.Services.Images.API.Tests\MyPeople.Services.Images.API.Tests.csproj", "{F7AA432D-BD89-45D3-908E-364271379AFC}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyPeople.Common.Logging", "src\Common\MyPeople.Common.Logging\MyPeople.Common.Logging.csproj", "{925467DE-89DC-42BE-9D2F-5EC755971397}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -207,6 +209,10 @@ Global
 		{F7AA432D-BD89-45D3-908E-364271379AFC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F7AA432D-BD89-45D3-908E-364271379AFC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F7AA432D-BD89-45D3-908E-364271379AFC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{925467DE-89DC-42BE-9D2F-5EC755971397}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{925467DE-89DC-42BE-9D2F-5EC755971397}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{925467DE-89DC-42BE-9D2F-5EC755971397}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{925467DE-89DC-42BE-9D2F-5EC755971397}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -250,6 +256,7 @@ Global
 		{2C8A0134-AE72-4E2F-B8C7-0FB136FD9497} = {B67D421C-7B8D-497D-AEE0-9AAF457344BB}
 		{F060BAA7-16E3-43F3-AC04-3348C448123B} = {B67D421C-7B8D-497D-AEE0-9AAF457344BB}
 		{F7AA432D-BD89-45D3-908E-364271379AFC} = {B67D421C-7B8D-497D-AEE0-9AAF457344BB}
+		{925467DE-89DC-42BE-9D2F-5EC755971397} = {6B494F51-47DE-485A-A8E7-E15DD7E54308}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {BE68B62E-A3E9-419B-84BC-B6A7AA17BFA5}
