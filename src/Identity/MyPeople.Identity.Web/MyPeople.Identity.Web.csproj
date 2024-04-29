@@ -22,6 +22,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\Common\MyPeople.Common.Configuration\MyPeople.Common.Configuration.csproj" />
+    <ProjectReference Include="..\..\Common\MyPeople.Common.Logging\MyPeople.Common.Logging.csproj" />
     <ProjectReference Include="..\MyPeople.Identity.Application\MyPeople.Identity.Application.csproj" />
     <ProjectReference Include="..\MyPeople.Identity.Infrastructure\MyPeople.Identity.Infrastructure.csproj" />
     <ProjectReference Include="..\MyPeople.Identity.Infrastructure.Migrations.Sqlite\MyPeople.Identity.Infrastructure.Migrations.Sqlite.csproj" />

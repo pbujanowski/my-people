@@ -21,6 +21,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\..\Common\MyPeople.Common.Logging\MyPeople.Common.Logging.csproj" />
     <ProjectReference Include="..\..\Common\MyPeople.Services.Common\MyPeople.Services.Common.csproj" />
     <ProjectReference Include="..\MyPeople.Services.Posts.Application\MyPeople.Services.Posts.Application.csproj" />
     <ProjectReference Include="..\MyPeople.Services.Posts.Infrastructure.Migrations.Sqlite\MyPeople.Services.Posts.Infrastructure.Migrations.Sqlite.csproj" />
