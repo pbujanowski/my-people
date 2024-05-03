@@ -46,4 +46,9 @@ public abstract class RepositoryBase<TEntity>(ApplicationDbContext dbContext) : 
     {
         return _dbContext.Set<TEntity>().Update(entity).Entity;
     }
+
+    public async Task SaveChangesAsync()
+    {
+        await _dbContext.SaveChangesAsync();
+    }
 }

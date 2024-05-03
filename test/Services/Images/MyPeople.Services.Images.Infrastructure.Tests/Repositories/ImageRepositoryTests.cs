@@ -47,7 +47,7 @@ public class ImageRepositoryTests(ImageRepositoryFixture fixture)
         await _fixture.ImageRepository.SaveChangesAsync();
 
         var deletedImage = await GetImageEntityByIdAsync(existingImage.Id);
-        deletedImage.Should().BeNull();
+        deletedImage?.Should().BeNull();
     }
 
     private async Task<Image> CreateImageEntityAsync(Image image)
