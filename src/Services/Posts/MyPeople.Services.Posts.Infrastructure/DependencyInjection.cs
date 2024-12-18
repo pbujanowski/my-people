@@ -56,23 +56,21 @@ public static class DependencyInjection
         services.AddDbContext<ApplicationDbContext>(options =>
             _ = databaseProvider switch
             {
-                "Sqlite"
-                    => options.UseSqlite(
-                        connectionString,
-                        x =>
-                            x.MigrationsAssembly(
-                                "MyPeople.Services.Posts.Infrastructure.Migrations.Sqlite"
-                            )
-                    ),
-                "SqlServer"
-                    => options.UseSqlServer(
-                        connectionString,
-                        x =>
-                            x.MigrationsAssembly(
-                                "MyPeople.Services.Posts.Infrastructure.Migrations.SqlServer"
-                            )
-                    ),
-                _ => throw new Exception($"Unsupported provider: {databaseProvider}.")
+                "Sqlite" => options.UseSqlite(
+                    connectionString,
+                    x =>
+                        x.MigrationsAssembly(
+                            "MyPeople.Services.Posts.Infrastructure.Migrations.Sqlite"
+                        )
+                ),
+                "SqlServer" => options.UseSqlServer(
+                    connectionString,
+                    x =>
+                        x.MigrationsAssembly(
+                            "MyPeople.Services.Posts.Infrastructure.Migrations.SqlServer"
+                        )
+                ),
+                _ => throw new Exception($"Unsupported provider: {databaseProvider}."),
             }
         );
 

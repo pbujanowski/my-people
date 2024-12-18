@@ -138,7 +138,7 @@ public class ImagesControllerTests(ImagesControllerFixture fixture)
         {
             Name = image.Name,
             Content = image.Content,
-            ContentType = image.ContentType
+            ContentType = image.ContentType,
         };
     }
 
@@ -148,7 +148,7 @@ public class ImagesControllerTests(ImagesControllerFixture fixture)
         {
             Name = image.Name,
             Content = image.Content,
-            ContentType = image.ContentType
+            ContentType = image.ContentType,
         });
     }
 

@@ -18,7 +18,7 @@ public partial class Application_AddPostImageEntity : Migration
                 PostId = table.Column<Guid>("TEXT", nullable: true),
                 ImageId = table.Column<Guid>("TEXT", nullable: true),
                 CreatedAt = table.Column<DateTime>("TEXT", nullable: true),
-                UpdatedAt = table.Column<DateTime>("TEXT", nullable: true)
+                UpdatedAt = table.Column<DateTime>("TEXT", nullable: true),
             },
             constraints: table =>
             {

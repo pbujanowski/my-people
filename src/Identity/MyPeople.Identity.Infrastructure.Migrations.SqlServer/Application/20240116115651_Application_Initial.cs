@@ -23,7 +23,7 @@ public partial class Application_Initial : Migration
                     maxLength: 256,
                     nullable: true
                 ),
-                ConcurrencyStamp = table.Column<string>("nvarchar(max)", nullable: true)
+                ConcurrencyStamp = table.Column<string>("nvarchar(max)", nullable: true),
             },
             constraints: table => table.PrimaryKey("PK_AspNetRoles", x => x.Id)
         );
@@ -54,7 +54,7 @@ public partial class Application_Initial : Migration
                 TwoFactorEnabled = table.Column<bool>("bit", nullable: false),
                 LockoutEnd = table.Column<DateTimeOffset>("datetimeoffset", nullable: true),
                 LockoutEnabled = table.Column<bool>("bit", nullable: false),
-                AccessFailedCount = table.Column<int>("int", nullable: false)
+                AccessFailedCount = table.Column<int>("int", nullable: false),
             },
             constraints: table => table.PrimaryKey("PK_AspNetUsers", x => x.Id)
         );
@@ -86,7 +86,7 @@ public partial class Application_Initial : Migration
                 Properties = table.Column<string>("nvarchar(max)", nullable: true),
                 RedirectUris = table.Column<string>("nvarchar(max)", nullable: true),
                 Requirements = table.Column<string>("nvarchar(max)", nullable: true),
-                Settings = table.Column<string>("nvarchar(max)", nullable: true)
+                Settings = table.Column<string>("nvarchar(max)", nullable: true),
             },
             constraints: table => table.PrimaryKey("PK_OpenIddictApplications", x => x.Id)
         );
@@ -107,7 +107,7 @@ public partial class Application_Initial : Migration
                 DisplayNames = table.Column<string>("nvarchar(max)", nullable: true),
                 Name = table.Column<string>("nvarchar(200)", maxLength: 200, nullable: true),
                 Properties = table.Column<string>("nvarchar(max)", nullable: true),
-                Resources = table.Column<string>("nvarchar(max)", nullable: true)
+                Resources = table.Column<string>("nvarchar(max)", nullable: true),
             },
             constraints: table => table.PrimaryKey("PK_OpenIddictScopes", x => x.Id)
         );
@@ -121,7 +121,7 @@ public partial class Application_Initial : Migration
                     .Annotation("SqlServer:Identity", "1, 1"),
                 RoleId = table.Column<Guid>("uniqueidentifier", nullable: false),
                 ClaimType = table.Column<string>("nvarchar(max)", nullable: true),
-                ClaimValue = table.Column<string>("nvarchar(max)", nullable: true)
+                ClaimValue = table.Column<string>("nvarchar(max)", nullable: true),
             },
             constraints: table =>
             {
@@ -145,7 +145,7 @@ public partial class Application_Initial : Migration
                     .Annotation("SqlServer:Identity", "1, 1"),
                 UserId = table.Column<Guid>("uniqueidentifier", nullable: false),
                 ClaimType = table.Column<string>("nvarchar(max)", nullable: true),
-                ClaimValue = table.Column<string>("nvarchar(max)", nullable: true)
+                ClaimValue = table.Column<string>("nvarchar(max)", nullable: true),
             },
             constraints: table =>
             {
@@ -167,7 +167,7 @@ public partial class Application_Initial : Migration
                 LoginProvider = table.Column<string>("nvarchar(450)", nullable: false),
                 ProviderKey = table.Column<string>("nvarchar(450)", nullable: false),
                 ProviderDisplayName = table.Column<string>("nvarchar(max)", nullable: true),
-                UserId = table.Column<Guid>("uniqueidentifier", nullable: false)
+                UserId = table.Column<Guid>("uniqueidentifier", nullable: false),
             },
             constraints: table =>
             {
@@ -190,7 +190,7 @@ public partial class Application_Initial : Migration
             table => new
             {
                 UserId = table.Column<Guid>("uniqueidentifier", nullable: false),
-                RoleId = table.Column<Guid>("uniqueidentifier", nullable: false)
+                RoleId = table.Column<Guid>("uniqueidentifier", nullable: false),
             },
             constraints: table =>
             {
@@ -219,7 +219,7 @@ public partial class Application_Initial : Migration
                 UserId = table.Column<Guid>("uniqueidentifier", nullable: false),
                 LoginProvider = table.Column<string>("nvarchar(450)", nullable: false),
                 Name = table.Column<string>("nvarchar(450)", nullable: false),
-                Value = table.Column<string>("nvarchar(max)", nullable: true)
+                Value = table.Column<string>("nvarchar(max)", nullable: true),
             },
             constraints: table =>
             {
@@ -229,7 +229,7 @@ public partial class Application_Initial : Migration
                     {
                         x.UserId,
                         x.LoginProvider,
-                        x.Name
+                        x.Name,
                     }
                 );
                 table.ForeignKey(
@@ -258,7 +258,7 @@ public partial class Application_Initial : Migration
                 Scopes = table.Column<string>("nvarchar(max)", nullable: true),
                 Status = table.Column<string>("nvarchar(50)", maxLength: 50, nullable: true),
                 Subject = table.Column<string>("nvarchar(400)", maxLength: 400, nullable: true),
-                Type = table.Column<string>("nvarchar(50)", maxLength: 50, nullable: true)
+                Type = table.Column<string>("nvarchar(50)", maxLength: 50, nullable: true),
             },
             constraints: table =>
             {
@@ -292,7 +292,7 @@ public partial class Application_Initial : Migration
                 ReferenceId = table.Column<string>("nvarchar(100)", maxLength: 100, nullable: true),
                 Status = table.Column<string>("nvarchar(50)", maxLength: 50, nullable: true),
                 Subject = table.Column<string>("nvarchar(400)", maxLength: 400, nullable: true),
-                Type = table.Column<string>("nvarchar(50)", maxLength: 50, nullable: true)
+                Type = table.Column<string>("nvarchar(50)", maxLength: 50, nullable: true),
             },
             constraints: table =>
             {

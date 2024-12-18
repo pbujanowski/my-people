@@ -18,7 +18,7 @@ public class ApplicationUserService(ApplicationDbContext dbContext) : IApplicati
         {
             Id = user.Id,
             Email = user.Email,
-            UserName = user.UserName
+            UserName = user.UserName,
         };
     }
 }

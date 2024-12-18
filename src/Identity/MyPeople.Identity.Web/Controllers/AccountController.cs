@@ -86,7 +86,7 @@ public class AccountController(
             {
                 Id = Guid.NewGuid(),
                 UserName = model.Input.Email,
-                Email = model.Input.Email
+                Email = model.Input.Email,
             };
 
             var userCreatedResult = await _userManager.CreateAsync(user, model.Input.Password);

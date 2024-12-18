@@ -71,7 +71,7 @@ public class AuthorizationController(
                             [OpenIddictServerAspNetCoreConstants.Properties.Error] =
                                 Errors.LoginRequired,
                             [OpenIddictServerAspNetCoreConstants.Properties.ErrorDescription] =
-                                "The user is not logged in."
+                                "The user is not logged in.",
                         }
                     ),
                     OpenIddictServerAspNetCoreDefaults.AuthenticationScheme
@@ -91,7 +91,7 @@ public class AuthorizationController(
             return Challenge(
                 new AuthenticationProperties
                 {
-                    RedirectUri = Request.PathBase + Request.Path + QueryString.Create(parameters)
+                    RedirectUri = Request.PathBase + Request.Path + QueryString.Create(parameters),
                 },
                 IdentityConstants.ApplicationScheme
             );
@@ -140,7 +140,7 @@ public class AuthorizationController(
                             [OpenIddictServerAspNetCoreConstants.Properties.Error] =
                                 Errors.ConsentRequired,
                             [OpenIddictServerAspNetCoreConstants.Properties.ErrorDescription] =
-                                "The logged in user is not allowed to access this client application."
+                                "The logged in user is not allowed to access this client application.",
                         }
                     ),
                     OpenIddictServerAspNetCoreDefaults.AuthenticationScheme
@@ -207,7 +207,7 @@ public class AuthorizationController(
                             [OpenIddictServerAspNetCoreConstants.Properties.Error] =
                                 Errors.ConsentRequired,
                             [OpenIddictServerAspNetCoreConstants.Properties.ErrorDescription] =
-                                "Interactive user consent is required."
+                                "Interactive user consent is required.",
                         }
                     ),
                     OpenIddictServerAspNetCoreDefaults.AuthenticationScheme
@@ -221,7 +221,7 @@ public class AuthorizationController(
                         ApplicationName = await _applicationManager.GetLocalizedDisplayNameAsync(
                             application
                         ),
-                        Scope = request.Scope
+                        Scope = request.Scope,
                     }
                 );
         }
@@ -283,7 +283,7 @@ public class AuthorizationController(
                         [OpenIddictServerAspNetCoreConstants.Properties.Error] =
                             Errors.ConsentRequired,
                         [OpenIddictServerAspNetCoreConstants.Properties.ErrorDescription] =
-                            "The logged in user is not allowed to access this client application."
+                            "The logged in user is not allowed to access this client application.",
                     }
                 ),
                 OpenIddictServerAspNetCoreDefaults.AuthenticationScheme
@@ -402,7 +402,7 @@ public class AuthorizationController(
                             [OpenIddictServerAspNetCoreConstants.Properties.Error] =
                                 Errors.InvalidGrant,
                             [OpenIddictServerAspNetCoreConstants.Properties.ErrorDescription] =
-                                "The token is no longer valid."
+                                "The token is no longer valid.",
                         }
                     ),
                     OpenIddictServerAspNetCoreDefaults.AuthenticationScheme
@@ -419,7 +419,7 @@ public class AuthorizationController(
                             [OpenIddictServerAspNetCoreConstants.Properties.Error] =
                                 Errors.InvalidGrant,
                             [OpenIddictServerAspNetCoreConstants.Properties.ErrorDescription] =
-                                "The user is no longer allowed to sign in."
+                                "The user is no longer allowed to sign in.",
                         }
                     ),
                     OpenIddictServerAspNetCoreDefaults.AuthenticationScheme
@@ -469,7 +469,7 @@ public class AuthorizationController(
                 Subject = claimsPrincipal?.GetClaim(Claims.Subject),
                 Email = claimsPrincipal?.GetClaim(Claims.Email),
                 Name = claimsPrincipal?.GetClaim(Claims.Name),
-                Role = claimsPrincipal?.GetClaims(Claims.Role)
+                Role = claimsPrincipal?.GetClaims(Claims.Role),
             }
         );
     }

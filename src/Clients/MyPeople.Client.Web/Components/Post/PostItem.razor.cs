@@ -43,7 +43,7 @@ public partial class PostItem
             CreatedAt = Post.CreatedAt,
             UpdatedAt = Post.UpdatedAt,
             UserDisplayName = Post.UserDisplayName,
-            Content = Post.Content
+            Content = Post.Content,
         };
         IsEditMode = true;
     }
@@ -59,7 +59,7 @@ public partial class PostItem
                 CreatedAt = _oldPost?.CreatedAt,
                 UpdatedAt = _oldPost?.UpdatedAt,
                 UserDisplayName = _oldPost?.UserDisplayName,
-                Content = _oldPost?.Content
+                Content = _oldPost?.Content,
             };
         }
         IsEditMode = false;

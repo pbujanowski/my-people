@@ -18,7 +18,7 @@ public class ImageServiceTests(ImageServiceFixture fixture) : IClassFixture<Imag
         {
             Name = image.Name,
             Content = image.Content,
-            ContentType = image.ContentType
+            ContentType = image.ContentType,
         };
         var createdImageDto = await _fixture.ImageService.CreateImageAsync(createImageDto);
         createdImageDto?.Id.Should().NotBeNull();
@@ -41,7 +41,7 @@ public class ImageServiceTests(ImageServiceFixture fixture) : IClassFixture<Imag
             {
                 Name = image.Name,
                 Content = image.Content,
-                ContentType = image.ContentType
+                ContentType = image.ContentType,
             })
             .ToList();
 
@@ -77,7 +77,7 @@ public class ImageServiceTests(ImageServiceFixture fixture) : IClassFixture<Imag
         {
             Name = image.Name,
             Content = image.Content,
-            ContentType = image.ContentType
+            ContentType = image.ContentType,
         });
 
         var createdImageDtos = await _fixture.ImageService.CreateImagesAsync(createImageDtos);
@@ -93,7 +93,7 @@ public class ImageServiceTests(ImageServiceFixture fixture) : IClassFixture<Imag
 
         var deleteImageDtos = existingImageDtosList!.Select(image => new DeleteImageDto
         {
-            Id = image.Id
+            Id = image.Id,
         });
 
         var deletedImageDtos = await _fixture.ImageService.DeleteImagesAsync(deleteImageDtos);

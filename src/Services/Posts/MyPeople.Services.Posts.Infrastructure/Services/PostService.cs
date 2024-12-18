@@ -83,7 +83,7 @@ public class PostService(
                         new PostImageDto
                         {
                             ImageId = image.ImageId,
-                            Url = $"{gatewayWebUrl}/images/browse/{image.ImageId}"
+                            Url = $"{gatewayWebUrl}/images/browse/{image.ImageId}",
                         }
                     );
                 }

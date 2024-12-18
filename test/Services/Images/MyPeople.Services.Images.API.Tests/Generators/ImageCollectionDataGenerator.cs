@@ -14,7 +14,7 @@ public class ImageCollectionDataGenerator : TheoryData<IEnumerable<Image>>
                     Name = $"{Guid.NewGuid()}.png",
                     Content =
                         "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNk+A8AAQUBAScY42YAAAAASUVORK5CYII=",
-                    ContentType = "image/png"
+                    ContentType = "image/png",
                 },
                 new Image
                 {
@@ -22,8 +22,8 @@ public class ImageCollectionDataGenerator : TheoryData<IEnumerable<Image>>
                     Name = $"{Guid.NewGuid()}.jpg",
                     Content =
                         "/9j/4AAQSkZJRgABAQEASABIAAD/2wBDAAMCAgMCAgMDAwMEAwMEBQgFBQQEBQoHBwYIDAoMDAsKCwsNDhIQDQ4RDgsLEBYQERMUFRUVDA8XGBYUGBIUFRT/wAALCAABAAEBAREA/8QAFAABAAAAAAAAAAAAAAAAAAAACf/EABQQAQAAAAAAAAAAAAAAAAAAAAD/2gAIAQEAAD8AKp//2Q==",
-                    ContentType = "image/jpeg"
-                }
+                    ContentType = "image/jpeg",
+                },
             ]
         );
     }
