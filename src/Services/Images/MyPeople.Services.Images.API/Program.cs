@@ -19,9 +19,6 @@ LoggingInitializer.Initialize(async () =>
     builder.Services.ConfigureOpenIddict(builder.Configuration);
     builder.Services.ConfigureAuthentication();
 
-    if (builder.Environment.IsStaging())
-        builder.Services.ConfigureConsul(builder.Configuration);
-
     builder.Services.AddAuthorization();
     builder.Services.AddControllers();
     builder.Services.AddFluentValidationAutoValidation();

@@ -3,7 +3,7 @@ using MyPeople.Common.Logging.Extensions;
 using MyPeople.Gateways.Web.Extensions;
 using Ocelot.DependencyInjection;
 using Ocelot.Middleware;
-using Ocelot.Provider.Consul;
+using Ocelot.Provider.Polly;
 
 LoggingInitializer.Initialize(async () =>
 {
@@ -15,7 +15,7 @@ LoggingInitializer.Initialize(async () =>
     var ocelotBuilder = builder.Services.AddOcelot();
 
     if (builder.Environment.IsStaging())
-        ocelotBuilder.AddConsul();
+        ocelotBuilder.AddPolly();
 
     builder.Services.AddEndpointsApiExplorer();
     builder.Services.AddSwaggerGen();

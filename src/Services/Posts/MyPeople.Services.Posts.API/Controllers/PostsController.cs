@@ -8,7 +8,7 @@ using MyPeople.Services.Posts.Application.Services;
 namespace MyPeople.Services.Posts.API.Controllers;
 
 [ApiController]
-[Route("[controller]")]
+[Route("api/[controller]")]
 public class PostsController(
     IPostService postService,
     IUserService userService,

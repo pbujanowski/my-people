@@ -1,19 +1,4 @@
-version: '3.9'
-
 services:
-  # Service Discovery
-  my-people-consul:
-    ports:
-      - "8500:8500"
-
-  # Databases
-  my-people-database:
-    environment:
-      - MSSQL_SA_PASSWORD=!PasswordToChange1!
-      - ACCEPT_EULA=Y
-    ports:
-      - "1433:1433"
-
   # Services
   my-people-client-web:
     environment:

@@ -9,7 +9,7 @@ using MyPeople.Services.Images.Application.Queries.GetImagesByIds;
 namespace MyPeople.Services.Images.API.Controllers;
 
 [ApiController]
-[Route("[controller]")]
+[Route("api/[controller]")]
 public class ImagesController(ILogger<ImagesController> logger, IMediator mediator) : ControllerBase
 {
     private readonly ILogger<ImagesController> _logger = logger;
