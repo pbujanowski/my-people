@@ -4,51 +4,54 @@ using MyPeople.Identity.Infrastructure;
 using MyPeople.Identity.Web;
 using MyPeople.Identity.Web.Extensions;
 
-LoggingInitializer.Initialize(async () =>
-{
-    var builder = WebApplication.CreateBuilder(args);
+var builder = WebApplication.CreateBuilder(args);
 
-    builder.Services.ConfigureLogging();
-    builder.Services.ConfigureInfrastructure(builder.Configuration);
-    builder.Services.ConfigureCookiePolicy();
-    builder.Services.ConfigureCors(builder.Configuration);
-    builder.Services.ConfigureApplicationCookie();
-
-    builder.Services.AddControllersWithViews();
-    builder.Services.AddEndpointsApiExplorer();
-    builder.Services.AddSwaggerGen();
-
-    if (builder.Environment.IsDevelopment() || builder.Environment.IsStaging())
+LoggingInitializer.Initialize(
+    async () =>
     {
-        builder.Services.AddHostedService<Worker>();
-    }
+        builder.Services.ConfigureLogging();
+        builder.Services.ConfigureInfrastructure(builder.Configuration);
+        builder.Services.ConfigureCookiePolicy();
+        builder.Services.ConfigureCors(builder.Configuration);
+        builder.Services.ConfigureApplicationCookie();
 
-    var app = builder.Build();
+        builder.Services.AddControllersWithViews();
+        builder.Services.AddEndpointsApiExplorer();
+        builder.Services.AddSwaggerGen();
 
-    if (!app.Environment.IsDevelopment() && !app.Environment.IsStaging())
-    {
-        app.UseExceptionHandler("/Home/Error");
-        app.UseHsts();
-    }
-    else
-    {
-        app.UseSwagger();
-        app.UseSwaggerUI();
-    }
+        if (builder.Environment.IsDevelopment() || builder.Environment.IsStaging())
+        {
+            builder.Services.AddHostedService<Worker>();
+        }
 
-    await app.UseInfrastructureAsync();
+        var app = builder.Build();
 
-    app.UseStaticFiles();
-    app.UseCookiePolicy();
+        if (!app.Environment.IsDevelopment() && !app.Environment.IsStaging())
+        {
+            app.UseExceptionHandler("/Home/Error");
+            app.UseHsts();
+        }
+        else
+        {
+            app.UseSwagger();
+            app.UseSwaggerUI();
+        }
 
-    app.UseCors();
+        await app.UseInfrastructureAsync();
 
-    app.UseRouting();
+        app.UseStaticFiles();
+        app.UseCookiePolicy();
 
-    app.UseAuthentication();
-    app.UseAuthorization();
+        app.UseCors();
 
-    app.MapControllerRoute("default", "{controller=Home}/{action=Index}/{id?}");
+        app.UseRouting();
 
-    app.Run();
-});
+        app.UseAuthentication();
+        app.UseAuthorization();
+
+        app.MapControllerRoute("default", "{controller=Home}/{action=Index}/{id?}");
+
+        app.Run();
+    },
+    builder.Configuration
+);
