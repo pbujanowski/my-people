@@ -2,7 +2,7 @@ services:
   # Infrastructure
   my-people-localstack:
     environment:
-      - SERVICES=cloudwatch,logs
+      - SERVICES=cloudwatch,iam,logs,sts
       - DEBUG=${DEBUG:-0}
     ports:
       - "4566:4566"
