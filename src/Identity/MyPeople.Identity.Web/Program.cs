@@ -19,7 +19,9 @@ LoggingInitializer.Initialize(async () =>
     builder.Services.AddSwaggerGen();
 
     if (builder.Environment.IsDevelopment() || builder.Environment.IsStaging())
+    {
         builder.Services.AddHostedService<Worker>();
+    }
 
     var app = builder.Build();
 

@@ -146,10 +146,14 @@ public class Worker(IServiceProvider serviceProvider, IConfiguration configurati
         }
 
         if (!await roleManager.RoleExistsAsync(AppRoles.Administrator))
+        {
             await roleManager.CreateAsync(new ApplicationRole(AppRoles.Administrator));
+        }
 
         if (!await roleManager.RoleExistsAsync(AppRoles.User))
+        {
             await roleManager.CreateAsync(new ApplicationRole(AppRoles.User));
+        }
 
         var administratorEmail =
             _configuration.GetSection("Administrator:Email").Get<string>()

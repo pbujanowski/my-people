@@ -15,7 +15,9 @@ LoggingInitializer.Initialize(async () =>
     var ocelotBuilder = builder.Services.AddOcelot();
 
     if (builder.Environment.IsStaging())
+    {
         ocelotBuilder.AddPolly();
+    }
 
     builder.Services.AddEndpointsApiExplorer();
     builder.Services.AddSwaggerGen();

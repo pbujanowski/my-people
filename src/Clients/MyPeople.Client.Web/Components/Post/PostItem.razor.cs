@@ -80,6 +80,8 @@ public partial class PostItem
             "Cancel"
         );
         if (result == true)
+        {
             await RemovePost.InvokeAsync(Post);
+        }
     }
 }

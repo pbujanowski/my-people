@@ -123,7 +123,9 @@ public class AccountController(
             }
 
             foreach (var error in userCreatedResult.Errors)
+            {
                 ModelState.AddModelError(string.Empty, error.Description);
+            }
         }
 
         return View(model);

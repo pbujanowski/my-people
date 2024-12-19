@@ -20,7 +20,10 @@ public class UsersController(
         {
             var user = await _applicationUserService.GetUserByIdAsync(userId);
             if (user is null)
+            {
                 return NotFound();
+            }
+
             return Ok(displayName ? user.Email : user);
         }
         catch (Exception ex)

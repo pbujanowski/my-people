@@ -24,7 +24,9 @@ public class ImagesController(ILogger<ImagesController> logger, IMediator mediat
             var result = await _mediator.Send(new GetImageByIdQuery(id));
             var image = result.Image;
             if (image is null)
+            {
                 return NotFound();
+            }
 
             return Ok(image);
         }
@@ -44,7 +46,9 @@ public class ImagesController(ILogger<ImagesController> logger, IMediator mediat
             var result = await _mediator.Send(new GetImageByIdQuery(id));
             var image = result.Image;
             if (image?.Content is null || image.ContentType is null)
+            {
                 return NotFound();
+            }
 
             return File(Convert.FromBase64String(image.Content), image.ContentType);
         }

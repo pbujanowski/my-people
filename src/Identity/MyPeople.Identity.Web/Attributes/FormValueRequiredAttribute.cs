@@ -36,7 +36,9 @@ public sealed class FormValueRequiredAttribute(string name) : ActionMethodSelect
         }
 
         if (string.IsNullOrEmpty(context.HttpContext.Request.ContentType))
+        {
             return false;
+        }
 
         if (
             !context.HttpContext.Request.ContentType.StartsWith(
