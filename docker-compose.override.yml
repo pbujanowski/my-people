@@ -2,11 +2,13 @@ services:
   # Infrastructure
   my-people-localstack:
     environment:
-      - SERVICES=cloudwatch,iam,logs,sts
+      - SERVICES=cloudwatch,iam,lambda,logs,s3,sts
       - DEBUG=${DEBUG:-0}
     ports:
       - "4566:4566"
       - "4510-4559:4510-4559"
+    volumes:
+      - "/var/run/docker.sock:/var/run/docker.sock"
 
   # Services
   my-people-client-web:
