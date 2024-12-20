@@ -15,4 +15,6 @@ public interface IRepository<TEntity>
     TEntity Delete(TEntity entity);
 
     IEnumerable<TEntity> Delete(IEnumerable<TEntity> entities);
+
+    Task SaveChangesAsync();
 }
