@@ -5,34 +5,37 @@ using Ocelot.DependencyInjection;
 using Ocelot.Middleware;
 using Ocelot.Provider.Polly;
 
-LoggingInitializer.Initialize(async () =>
-{
-    var builder = WebApplication.CreateBuilder(args);
+var builder = WebApplication.CreateBuilder(args);
 
-    builder.Services.ConfigureLogging();
-    builder.Services.ConfigureCors(builder.Configuration);
-
-    var ocelotBuilder = builder.Services.AddOcelot();
-
-    if (builder.Environment.IsStaging())
+LoggingInitializer.Initialize(
+    async () =>
     {
-        ocelotBuilder.AddPolly();
-    }
+        builder.Services.ConfigureLogging();
+        builder.Services.ConfigureCors(builder.Configuration);
 
-    builder.Services.AddEndpointsApiExplorer();
-    builder.Services.AddSwaggerGen();
+        var ocelotBuilder = builder.Services.AddOcelot();
 
-    var app = builder.Build();
+        if (builder.Environment.IsStaging())
+        {
+            ocelotBuilder.AddPolly();
+        }
 
-    if (app.Environment.IsDevelopment() || app.Environment.IsStaging())
-    {
-        app.UseSwagger();
-        app.UseSwaggerUI();
-    }
+        builder.Services.AddEndpointsApiExplorer();
+        builder.Services.AddSwaggerGen();
 
-    app.UseCors();
+        var app = builder.Build();
 
-    await app.UseOcelot();
+        if (app.Environment.IsDevelopment() || app.Environment.IsStaging())
+        {
+            app.UseSwagger();
+            app.UseSwaggerUI();
+        }
 
-    app.Run();
-});
+        app.UseCors();
+
+        await app.UseOcelot();
+
+        app.Run();
+    },
+    builder.Configuration
+);

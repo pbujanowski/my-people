@@ -1,0 +1,3 @@
+awscli==1.36.25
+awscli_local==0.22.0
+terraform_local==0.20.0

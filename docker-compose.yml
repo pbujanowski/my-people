@@ -1,4 +1,11 @@
 services:
+  # Infrastructure
+  my-people-localstack:
+    container_name: my-people-localstack
+    image: localstack/localstack:4.0.3
+    networks:
+      - my-people-network
+
   # Services
   my-people-client-web:
     container_name: my-people-client-web
@@ -6,6 +13,8 @@ services:
     build:
       context: .
       dockerfile: src/Clients/MyPeople.Client.Web/Dockerfile
+    depends_on:
+      - my-people-localstack
     networks:
       - my-people-network
 
@@ -16,6 +25,7 @@ services:
       context: .
       dockerfile: src/Gateways/MyPeople.Gateways.Web/Dockerfile
     depends_on:
+      - my-people-localstack
       - my-people-identity-web
       - my-people-services-images-api
       - my-people-services-posts-api
@@ -28,6 +38,8 @@ services:
     build:
       context: .
       dockerfile: src/Identity/MyPeople.Identity.Web/Dockerfile
+    depends_on:
+      - my-people-localstack
     networks:
       - my-people-network
 
@@ -37,6 +49,8 @@ services:
     build:
       context: .
       dockerfile: src/Services/Images/MyPeople.Services.Images.API/Dockerfile
+    depends_on:
+      - my-people-localstack
     networks:
       - my-people-network
 
@@ -46,6 +60,8 @@ services:
     build:
       context: .
       dockerfile: src/Services/Posts/MyPeople.Services.Posts.API/Dockerfile
+    depends_on:
+      - my-people-localstack
     networks:
       - my-people-network
 

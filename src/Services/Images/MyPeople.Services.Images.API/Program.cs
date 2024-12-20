@@ -7,43 +7,46 @@ using MyPeople.Services.Common.Extensions;
 using MyPeople.Services.Images.Application;
 using MyPeople.Services.Images.Infrastructure;
 
-LoggingInitializer.Initialize(async () =>
-{
-    var builder = WebApplication.CreateBuilder(args);
+var builder = WebApplication.CreateBuilder(args);
 
-    builder.Services.ConfigureLogging();
-    builder.Services.ConfigureCommonModels();
-    builder.Services.ConfigureApplication();
-    builder.Services.ConfigureInfrastructure(builder.Configuration);
-    builder.Services.ConfigureCors(builder.Configuration);
-    builder.Services.ConfigureOpenIddict(builder.Configuration);
-    builder.Services.ConfigureAuthentication();
-
-    builder.Services.AddAuthorization();
-    builder.Services.AddControllers();
-    builder.Services.AddFluentValidationAutoValidation();
-    builder.Services.AddHealthChecks();
-    builder.Services.AddEndpointsApiExplorer();
-    builder.Services.AddSwaggerGen();
-
-    var app = builder.Build();
-
-    if (app.Environment.IsDevelopment() || app.Environment.IsStaging())
+LoggingInitializer.Initialize(
+    async () =>
     {
-        app.UseSwagger();
-        app.UseSwaggerUI();
-        IdentityModelEventSource.ShowPII = true;
-    }
+        builder.Services.ConfigureLogging();
+        builder.Services.ConfigureCommonModels();
+        builder.Services.ConfigureApplication();
+        builder.Services.ConfigureInfrastructure(builder.Configuration);
+        builder.Services.ConfigureCors(builder.Configuration);
+        builder.Services.ConfigureOpenIddict(builder.Configuration);
+        builder.Services.ConfigureAuthentication();
 
-    await app.UseInfrastructureAsync();
+        builder.Services.AddAuthorization();
+        builder.Services.AddControllers();
+        builder.Services.AddFluentValidationAutoValidation();
+        builder.Services.AddHealthChecks();
+        builder.Services.AddEndpointsApiExplorer();
+        builder.Services.AddSwaggerGen();
 
-    app.UseCors();
+        var app = builder.Build();
 
-    app.UseAuthentication();
-    app.UseAuthorization();
+        if (app.Environment.IsDevelopment() || app.Environment.IsStaging())
+        {
+            app.UseSwagger();
+            app.UseSwaggerUI();
+            IdentityModelEventSource.ShowPII = true;
+        }
 
-    app.MapControllers();
-    app.MapHealthChecks("/healthcheck");
+        await app.UseInfrastructureAsync();
 
-    app.Run();
-});
+        app.UseCors();
+
+        app.UseAuthentication();
+        app.UseAuthorization();
+
+        app.MapControllers();
+        app.MapHealthChecks("/healthcheck");
+
+        app.Run();
+    },
+    builder.Configuration
+);
