@@ -86,7 +86,7 @@ public class AccountController(
             {
                 Id = Guid.NewGuid(),
                 UserName = model.Input.Email,
-                Email = model.Input.Email
+                Email = model.Input.Email,
             };
 
             var userCreatedResult = await _userManager.CreateAsync(user, model.Input.Password);
@@ -123,7 +123,9 @@ public class AccountController(
             }
 
             foreach (var error in userCreatedResult.Errors)
+            {
                 ModelState.AddModelError(string.Empty, error.Description);
+            }
         }
 
         return View(model);

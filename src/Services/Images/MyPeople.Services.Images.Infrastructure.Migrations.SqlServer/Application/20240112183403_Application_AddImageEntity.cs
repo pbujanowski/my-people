@@ -19,7 +19,7 @@ public partial class Application_AddImageEntity : Migration
                 ContentType = table.Column<string>("nvarchar(max)", nullable: false),
                 Content = table.Column<string>("nvarchar(max)", nullable: false),
                 CreatedAt = table.Column<DateTime>("datetime2", nullable: false),
-                UpdatedAt = table.Column<DateTime>("datetime2", nullable: false)
+                UpdatedAt = table.Column<DateTime>("datetime2", nullable: false),
             },
             constraints: table => table.PrimaryKey("PK_Images", x => x.Id)
         );

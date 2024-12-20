@@ -1,21 +1,4 @@
-version: '3.9'
-
 services:
-  # Service Discovery
-  my-people-consul:
-    container_name: my-people-consul
-    image: consul:1.15.4
-    command: consul agent -dev -log-level=warn -ui -client=0.0.0.0
-    networks:
-      - my-people-network
-
-  # Databases
-  my-people-database:
-    container_name: my-people-database
-    image: mcr.microsoft.com/mssql/server:2022-latest
-    networks:
-      - my-people-network
-
   # Services
   my-people-client-web:
     container_name: my-people-client-web
@@ -33,7 +16,9 @@ services:
       context: .
       dockerfile: src/Gateways/MyPeople.Gateways.Web/Dockerfile
     depends_on:
-      - my-people-consul
+      - my-people-identity-web
+      - my-people-services-images-api
+      - my-people-services-posts-api
     networks:
       - my-people-network
 
@@ -43,8 +28,6 @@ services:
     build:
       context: .
       dockerfile: src/Identity/MyPeople.Identity.Web/Dockerfile
-    depends_on:
-      - my-people-database
     networks:
       - my-people-network
 
@@ -54,8 +37,6 @@ services:
     build:
       context: .
       dockerfile: src/Services/Images/MyPeople.Services.Images.API/Dockerfile
-    depends_on:
-      - my-people-database
     networks:
       - my-people-network
 
@@ -65,8 +46,6 @@ services:
     build:
       context: .
       dockerfile: src/Services/Posts/MyPeople.Services.Posts.API/Dockerfile
-    depends_on:
-      - my-people-database
     networks:
       - my-people-network
 

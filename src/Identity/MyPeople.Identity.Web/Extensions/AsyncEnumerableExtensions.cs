@@ -13,7 +13,9 @@ public static class AsyncEnumerableExtensions
             var list = new List<T>();
 
             await foreach (var element in source)
+            {
                 list.Add(element);
+            }
 
             return list;
         }

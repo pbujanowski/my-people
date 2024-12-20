@@ -12,13 +12,15 @@ public class ApplicationUserService(ApplicationDbContext dbContext) : IApplicati
     {
         var user = await _dbContext.Users.FindAsync(id);
         if (user is null)
+        {
             return null;
+        }
 
         return new ApplicationUserDto
         {
             Id = user.Id,
             Email = user.Email,
-            UserName = user.UserName
+            UserName = user.UserName,
         };
     }
 }

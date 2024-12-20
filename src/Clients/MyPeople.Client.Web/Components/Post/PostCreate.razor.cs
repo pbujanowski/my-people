@@ -25,7 +25,7 @@ public partial class PostCreate
             {
                 Name = browserFile.Name,
                 Content = Convert.ToBase64String(imageContent),
-                ContentType = browserFile.ContentType
+                ContentType = browserFile.ContentType,
             };
 
             Post.Images ??= [];

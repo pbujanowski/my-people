@@ -19,7 +19,7 @@ public partial class Application_Initial : Migration
                 Id = table.Column<Guid>("TEXT", nullable: false),
                 Name = table.Column<string>("TEXT", maxLength: 256, nullable: true),
                 NormalizedName = table.Column<string>("TEXT", maxLength: 256, nullable: true),
-                ConcurrencyStamp = table.Column<string>("TEXT", nullable: true)
+                ConcurrencyStamp = table.Column<string>("TEXT", nullable: true),
             },
             constraints: table => table.PrimaryKey("PK_AspNetRoles", x => x.Id)
         );
@@ -42,7 +42,7 @@ public partial class Application_Initial : Migration
                 TwoFactorEnabled = table.Column<bool>("INTEGER", nullable: false),
                 LockoutEnd = table.Column<DateTimeOffset>("TEXT", nullable: true),
                 LockoutEnabled = table.Column<bool>("INTEGER", nullable: false),
-                AccessFailedCount = table.Column<int>("INTEGER", nullable: false)
+                AccessFailedCount = table.Column<int>("INTEGER", nullable: false),
             },
             constraints: table => table.PrimaryKey("PK_AspNetUsers", x => x.Id)
         );
@@ -66,7 +66,7 @@ public partial class Application_Initial : Migration
                 Properties = table.Column<string>("TEXT", nullable: true),
                 RedirectUris = table.Column<string>("TEXT", nullable: true),
                 Requirements = table.Column<string>("TEXT", nullable: true),
-                Settings = table.Column<string>("TEXT", nullable: true)
+                Settings = table.Column<string>("TEXT", nullable: true),
             },
             constraints: table => table.PrimaryKey("PK_OpenIddictApplications", x => x.Id)
         );
@@ -83,7 +83,7 @@ public partial class Application_Initial : Migration
                 DisplayNames = table.Column<string>("TEXT", nullable: true),
                 Name = table.Column<string>("TEXT", maxLength: 200, nullable: true),
                 Properties = table.Column<string>("TEXT", nullable: true),
-                Resources = table.Column<string>("TEXT", nullable: true)
+                Resources = table.Column<string>("TEXT", nullable: true),
             },
             constraints: table => table.PrimaryKey("PK_OpenIddictScopes", x => x.Id)
         );
@@ -97,7 +97,7 @@ public partial class Application_Initial : Migration
                     .Annotation("Sqlite:Autoincrement", true),
                 RoleId = table.Column<Guid>("TEXT", nullable: false),
                 ClaimType = table.Column<string>("TEXT", nullable: true),
-                ClaimValue = table.Column<string>("TEXT", nullable: true)
+                ClaimValue = table.Column<string>("TEXT", nullable: true),
             },
             constraints: table =>
             {
@@ -121,7 +121,7 @@ public partial class Application_Initial : Migration
                     .Annotation("Sqlite:Autoincrement", true),
                 UserId = table.Column<Guid>("TEXT", nullable: false),
                 ClaimType = table.Column<string>("TEXT", nullable: true),
-                ClaimValue = table.Column<string>("TEXT", nullable: true)
+                ClaimValue = table.Column<string>("TEXT", nullable: true),
             },
             constraints: table =>
             {
@@ -143,7 +143,7 @@ public partial class Application_Initial : Migration
                 LoginProvider = table.Column<string>("TEXT", nullable: false),
                 ProviderKey = table.Column<string>("TEXT", nullable: false),
                 ProviderDisplayName = table.Column<string>("TEXT", nullable: true),
-                UserId = table.Column<Guid>("TEXT", nullable: false)
+                UserId = table.Column<Guid>("TEXT", nullable: false),
             },
             constraints: table =>
             {
@@ -166,7 +166,7 @@ public partial class Application_Initial : Migration
             table => new
             {
                 UserId = table.Column<Guid>("TEXT", nullable: false),
-                RoleId = table.Column<Guid>("TEXT", nullable: false)
+                RoleId = table.Column<Guid>("TEXT", nullable: false),
             },
             constraints: table =>
             {
@@ -195,7 +195,7 @@ public partial class Application_Initial : Migration
                 UserId = table.Column<Guid>("TEXT", nullable: false),
                 LoginProvider = table.Column<string>("TEXT", nullable: false),
                 Name = table.Column<string>("TEXT", nullable: false),
-                Value = table.Column<string>("TEXT", nullable: true)
+                Value = table.Column<string>("TEXT", nullable: true),
             },
             constraints: table =>
             {
@@ -205,7 +205,7 @@ public partial class Application_Initial : Migration
                     {
                         x.UserId,
                         x.LoginProvider,
-                        x.Name
+                        x.Name,
                     }
                 );
                 table.ForeignKey(
@@ -230,7 +230,7 @@ public partial class Application_Initial : Migration
                 Scopes = table.Column<string>("TEXT", nullable: true),
                 Status = table.Column<string>("TEXT", maxLength: 50, nullable: true),
                 Subject = table.Column<string>("TEXT", maxLength: 400, nullable: true),
-                Type = table.Column<string>("TEXT", maxLength: 50, nullable: true)
+                Type = table.Column<string>("TEXT", maxLength: 50, nullable: true),
             },
             constraints: table =>
             {
@@ -260,7 +260,7 @@ public partial class Application_Initial : Migration
                 ReferenceId = table.Column<string>("TEXT", maxLength: 100, nullable: true),
                 Status = table.Column<string>("TEXT", maxLength: 50, nullable: true),
                 Subject = table.Column<string>("TEXT", maxLength: 400, nullable: true),
-                Type = table.Column<string>("TEXT", maxLength: 50, nullable: true)
+                Type = table.Column<string>("TEXT", maxLength: 50, nullable: true),
             },
             constraints: table =>
             {

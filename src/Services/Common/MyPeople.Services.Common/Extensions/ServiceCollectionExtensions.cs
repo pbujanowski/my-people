@@ -1,9 +1,7 @@
-﻿using Consul;
-using Microsoft.Extensions.Configuration;
+﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using MyPeople.Common.Configuration.Configurations;
 using MyPeople.Common.Configuration.Exceptions;
-using MyPeople.Services.Common.Services;
 using OpenIddict.Validation.AspNetCore;
 
 namespace MyPeople.Services.Common.Extensions;
@@ -81,29 +79,6 @@ public static class ServiceCollectionExtensions
     public static IServiceCollection ConfigureAuthentication(this IServiceCollection services)
     {
         services.AddAuthentication(OpenIddictValidationAspNetCoreDefaults.AuthenticationScheme);
-
-        return services;
-    }
-
-    public static IServiceCollection ConfigureConsul(
-        this IServiceCollection services,
-        IConfiguration configuration
-    )
-    {
-        var serviceDiscoveryConfiguration =
-            configuration.GetSection("ServiceDiscovery").Get<ServiceDiscoveryConfiguration>()
-            ?? throw new ConfigurationException("ServiceDiscovery");
-
-        var consulClient = new ConsulClient(config =>
-        {
-            config.Address = new Uri(
-                serviceDiscoveryConfiguration?.DiscoveryAddress
-                    ?? throw new ConfigurationException("ServiceDiscovery:DiscoveryAddress")
-            );
-        });
-
-        services.AddSingleton<IConsulClient, ConsulClient>(_ => consulClient);
-        services.AddHostedService<ServiceDiscoveryHostedService>();
 
         return services;
     }

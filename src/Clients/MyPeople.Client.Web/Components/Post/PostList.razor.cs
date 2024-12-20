@@ -47,7 +47,7 @@ public partial class PostList
             UpdatedAt = post.UpdatedAt,
             UserId = post.UserId,
             UserDisplayName = post.UserDisplayName,
-            Content = post.Content
+            Content = post.Content,
         };
 
         await PostService.UpdatePostAsync(updatePostDto);

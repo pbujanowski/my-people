@@ -46,9 +46,9 @@ public class Worker(IServiceProvider serviceProvider, IConfiguration configurati
                         Permissions.Scopes.Email,
                         Permissions.Scopes.Profile,
                         Permissions.Scopes.Roles,
-                        Permissions.Prefixes.Scope + AppScopes.Services.Posts
+                        Permissions.Prefixes.Scope + AppScopes.Services.Posts,
                     },
-                    Requirements = { Requirements.Features.ProofKeyForCodeExchange }
+                    Requirements = { Requirements.Features.ProofKeyForCodeExchange },
                 },
                 cancellationToken
             );
@@ -67,7 +67,7 @@ public class Worker(IServiceProvider serviceProvider, IConfiguration configurati
                 {
                     ClientId = "my-people-services-posts",
                     ClientSecret = "SjqTkBjo3CoVUQcunJZO",
-                    Permissions = { Permissions.Endpoints.Introspection }
+                    Permissions = { Permissions.Endpoints.Introspection },
                 },
                 cancellationToken
             );
@@ -86,7 +86,7 @@ public class Worker(IServiceProvider serviceProvider, IConfiguration configurati
                 {
                     ClientId = "my-people-services-images",
                     ClientSecret = "8Z9Owkb4RZuhI7icUzGV",
-                    Permissions = { Permissions.Endpoints.Introspection }
+                    Permissions = { Permissions.Endpoints.Introspection },
                 },
                 cancellationToken
             );
@@ -106,11 +106,11 @@ public class Worker(IServiceProvider serviceProvider, IConfiguration configurati
                     ClientType = ClientTypes.Public,
                     PostLogoutRedirectUris =
                     {
-                        new Uri("http://localhost:3000/authentication/logout-callback")
+                        new Uri("http://localhost:3000/authentication/logout-callback"),
                     },
                     RedirectUris =
                     {
-                        new Uri("http://localhost:3000/authentication/login-callback")
+                        new Uri("http://localhost:3000/authentication/login-callback"),
                     },
                     Permissions =
                     {
@@ -123,9 +123,9 @@ public class Worker(IServiceProvider serviceProvider, IConfiguration configurati
                         Permissions.Scopes.Email,
                         Permissions.Scopes.Profile,
                         Permissions.Scopes.Roles,
-                        Permissions.Prefixes.Scope + AppScopes.Services.Posts
+                        Permissions.Prefixes.Scope + AppScopes.Services.Posts,
                     },
-                    Requirements = { Requirements.Features.ProofKeyForCodeExchange }
+                    Requirements = { Requirements.Features.ProofKeyForCodeExchange },
                 },
                 cancellationToken
             );
@@ -139,17 +139,21 @@ public class Worker(IServiceProvider serviceProvider, IConfiguration configurati
                 new OpenIddictScopeDescriptor
                 {
                     Name = AppScopes.Services.Posts,
-                    Resources = { "my-people-services-posts" }
+                    Resources = { "my-people-services-posts" },
                 },
                 cancellationToken
             );
         }
 
         if (!await roleManager.RoleExistsAsync(AppRoles.Administrator))
+        {
             await roleManager.CreateAsync(new ApplicationRole(AppRoles.Administrator));
+        }
 
         if (!await roleManager.RoleExistsAsync(AppRoles.User))
+        {
             await roleManager.CreateAsync(new ApplicationRole(AppRoles.User));
+        }
 
         var administratorEmail =
             _configuration.GetSection("Administrator:Email").Get<string>()
