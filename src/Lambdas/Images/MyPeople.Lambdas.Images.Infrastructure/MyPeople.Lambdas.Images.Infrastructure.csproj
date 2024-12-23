@@ -1,0 +1,14 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="../../../Common/MyPeople.Common.Models/MyPeople.Common.Models.csproj" />
+    <ProjectReference Include="../MyPeople.Lambdas.Images.Application/MyPeople.Lambdas.Images.Application.csproj" />
+  </ItemGroup>
+
+</Project>
