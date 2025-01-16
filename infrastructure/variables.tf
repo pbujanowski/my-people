@@ -37,7 +37,7 @@ variable "services_images_upload_lambda_name" {
 variable "services_images_upload_lambda_filename" {
   type = string
   description = "Name for 'MyPeople.Lambdas.Images.Upload' lambda file."
-  default = "../../src/Lambdas/Images/Upload/MyPeople.Lambdas.Images.Upload.Function/bin/Release/net8.0/MyPeople.Lambdas.Images.Upload.Function.zip"
+  default = "../src/Lambdas/Images/Upload/MyPeople.Lambdas.Images.Upload.Function/bin/Release/net8.0/MyPeople.Lambdas.Images.Upload.Function.zip"
 }
 
 variable "services_images_upload_lambda_timeout" {
