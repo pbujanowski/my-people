@@ -6,11 +6,11 @@
     "All the command line options for the Lambda command can be specified in this file."
   ],
   "profile": "",
-  "region": "",
+  "region": "eu-central-1",
   "configuration": "Release",
   "function-architecture": "x86_64",
   "function-runtime": "dotnet8",
   "function-memory-size": 512,
   "function-timeout": 30,
-  "function-handler": "MyPeople.Lambdas.Images.Function::MyPeople.Lambdas.Images.Function.Function::FunctionHandler"
+  "function-handler": "MyPeople.Lambdas.Images.Upload.Function::MyPeople.Lambdas.Images.Upload.Function.Function::FunctionHandler"
 }

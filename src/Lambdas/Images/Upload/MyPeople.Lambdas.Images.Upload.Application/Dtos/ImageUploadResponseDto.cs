@@ -1,4 +1,4 @@
-namespace MyPeople.Lambdas.Images.Application.Dtos;
+namespace MyPeople.Lambdas.Images.Upload.Application.Dtos;
 
 public class ImageUploadResponseDto
 {

@@ -2,8 +2,11 @@ services:
   # Infrastructure
   my-people-localstack:
     environment:
-      - SERVICES=cloudwatch,iam,lambda,logs,s3,sts
+      - SERVICES=cloudwatch,ec2,iam,lambda,logs,s3,sqs,sts
+      - AWS_ACCESS_KEY_ID=test
+      - AWS_SECRET_ACCESS_KEY=test
       - DEBUG=${DEBUG:-0}
+      - LAMBDA_DOCKER_FLAGS='-p 19891:19891'
     ports:
       - "4566:4566"
       - "4510-4559:4510-4559"

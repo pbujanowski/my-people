@@ -1,18 +1,20 @@
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Serilog;
+using Microsoft.Extensions.Logging;
 
-namespace MyPeople.Common.Logging.Extensions;
+namespace MyPeople.Lambdas.Common.Extensions;
 
 public static class ServiceCollectionExtensions
 {
-    public static IServiceCollection ConfigureLogging(
+    public static IServiceCollection ConfigureLambdaLogging(
         this IServiceCollection services,
         IConfiguration configuration
     )
     {
-        LoggingInitializer.Initialize(configuration);
-        services.AddSerilog(dispose: true);
+        services.AddLogging(options =>
+        {
+            options.AddLambdaLogger();
+        });
 
         return services;
     }

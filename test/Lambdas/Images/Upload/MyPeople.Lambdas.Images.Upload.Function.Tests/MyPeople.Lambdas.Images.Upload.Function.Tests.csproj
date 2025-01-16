@@ -1,4 +1,5 @@
 <Project Sdk="Microsoft.NET.Sdk">
+
   <PropertyGroup>
     <TargetFramework>net8.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
@@ -24,6 +25,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="../../../../src/Lambdas/Images/MyPeople.Lambdas.Images.Function/MyPeople.Lambdas.Images.Function.csproj" />
+    <ProjectReference Include="../../../../../src/Lambdas/Images/Upload/MyPeople.Lambdas.Images.Upload.Function/MyPeople.Lambdas.Images.Upload.Function.csproj" />
   </ItemGroup>
+
 </Project>
