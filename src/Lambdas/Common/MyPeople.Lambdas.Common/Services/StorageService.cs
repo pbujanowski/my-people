@@ -19,17 +19,17 @@ public class StorageService(ILogger<StorageService> logger, AwsConfiguration aws
         {
             logger.LogInformation("File uploading started.");
 
+            if (awsConfiguration.S3 is null)
+            {
+                throw new ConfigurationException("AWS:S3");
+            }
+
             var uploadRequest = new TransferUtilityUploadRequest
             {
                 Key = s3ObjectDto.Name,
                 InputStream = s3ObjectDto.InputStream,
                 BucketName = s3ObjectDto.BucketName,
             };
-
-            if (awsConfiguration.S3 is null)
-            {
-                throw new ConfigurationException("AWS:S3");
-            }
 
             var config = new AmazonS3Config
             {

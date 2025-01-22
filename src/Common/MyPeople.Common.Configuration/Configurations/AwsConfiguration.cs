@@ -11,4 +11,6 @@ public class AwsConfiguration
     public AwsCloudWatchConfiguration? CloudWatch { get; set; }
 
     public AwsS3Configuration? S3 { get; set; }
+
+    public AwsSQSConfiguration? SQS { get; set; }
 }

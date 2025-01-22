@@ -1,12 +1,15 @@
-using System.Reflection;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using MyPeople.Common.Abstractions.Services;
+using MyPeople.Common.Configuration.Configurations;
 using MyPeople.Common.Configuration.Exceptions;
+using MyPeople.Services.Common.Services;
 using MyPeople.Services.Images.Application.Repositories;
+using MyPeople.Services.Images.Application.Services;
 using MyPeople.Services.Images.Application.Wrappers;
+using MyPeople.Services.Images.Infrastructure.Configurations;
 using MyPeople.Services.Images.Infrastructure.Data;
 using MyPeople.Services.Images.Infrastructure.Repositories;
 using MyPeople.Services.Images.Infrastructure.Services;
@@ -22,6 +25,7 @@ public static class DependencyInjection
     )
     {
         services.ConfigureDbContext(configuration);
+        services.ConfigureConfigurations(configuration);
         services.ConfigureRepositories();
         services.ConfigureServices();
         services.ConfigureWrappers();
@@ -77,6 +81,21 @@ public static class DependencyInjection
         return services;
     }
 
+    private static IServiceCollection ConfigureConfigurations(
+        this IServiceCollection services,
+        IConfiguration configuration
+    )
+    {
+        var imagesAwsConfiguration =
+            configuration.GetSection("AWS").Get<ImagesAwsConfiguration>()
+            ?? throw new ConfigurationException("AWS");
+
+        services.AddScoped<AwsConfiguration>(_ => imagesAwsConfiguration);
+        services.AddScoped(_ => imagesAwsConfiguration);
+
+        return services;
+    }
+
     private static IServiceCollection ConfigureRepositories(this IServiceCollection services)
     {
         services.AddScoped<IImageRepository, ImageRepository>();
@@ -86,6 +105,8 @@ public static class DependencyInjection
 
     private static IServiceCollection ConfigureServices(this IServiceCollection services)
     {
+        services.AddScoped<IQueueService, QueueService>();
+        services.AddScoped<IImageQueueService, ImageQueueService>();
         services.AddScoped<IImageService, ImageService>();
 
         return services;

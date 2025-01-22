@@ -22,14 +22,9 @@ public class ImageStorageService(
         {
             logger.LogInformation("Image uploading started.");
 
-            if (imageDto is null)
-            {
-                throw new InvalidOperationException("Deserialized image is null.");
-            }
-
             using var imageStream = new MemoryStream(
                 Convert.FromBase64String(
-                    imageDto?.Content
+                    imageDto.Content
                         ?? throw new InvalidOperationException("Image content is null.")
                 )
             );

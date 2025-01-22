@@ -5,7 +5,7 @@ using System.Text.Json;
 using MyPeople.Common.Abstractions.Services;
 using MyPeople.Common.Models.Dtos;
 
-namespace MyPeople.Services.Posts.Infrastructure;
+namespace MyPeople.Services.Posts.Infrastructure.Services;
 
 public class ImageService(HttpClient httpClient) : IImageService
 {
