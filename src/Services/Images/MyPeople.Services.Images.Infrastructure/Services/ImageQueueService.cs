@@ -22,18 +22,21 @@ public class ImageQueueService(
         try
         {
             logger.LogInformation("Images queuing started.");
+            logger.LogDebug("QueueImagesAsync request: {@Request}.", imageDtos);
+
+            var sqsMessage = new { ImagesIds = imageDtos.Select(image => image.Id) };
 
             var sqsRequestDto = new SQSRequestDto
             {
-                Messages = imageDtos.Select(image => JsonSerializer.Serialize(image)),
+                Message = JsonSerializer.Serialize(sqsMessage),
                 QueueUrl =
                     imagesAwsConfiguration?.ImageQueue?.QueueUrl
                     ?? throw new InvalidOperationException("Queue URL is null."),
             };
 
-            var sqsResponse = await queueService.QueueObjectsAsync(sqsRequestDto);
+            var sqsResponse = await queueService.QueueObjectAsync(sqsRequestDto);
 
-            logger.LogInformation("Images queuing response: {Response}.", sqsResponse);
+            logger.LogInformation("Images queuing response: {@Response}.", sqsResponse);
 
             response.StatusCode = sqsResponse.StatusCode;
             response.Message = sqsResponse.Message;

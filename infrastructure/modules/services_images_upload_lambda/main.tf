@@ -35,6 +35,7 @@ resource "aws_lambda_function" "lambda" {
   handler = "MyPeople.Lambdas.Images.Upload.Function::MyPeople.Lambdas.Images.Upload.Function.Function::FunctionHandler"
   runtime = "dotnet8"
   filename = var.lambda_filename
+  source_code_hash = filebase64sha256(var.lambda_filename)
   timeout = var.lambda_timeout
 }
 

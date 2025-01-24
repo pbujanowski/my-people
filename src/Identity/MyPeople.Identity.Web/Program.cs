@@ -1,9 +1,12 @@
+using MyPeople.Common.Configuration.Extensions;
 using MyPeople.Common.Logging.Extensions;
 using MyPeople.Identity.Infrastructure;
 using MyPeople.Identity.Web;
 using MyPeople.Identity.Web.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Configuration.ConfigureConfigurationProviders();
 
 builder.Services.ConfigureLogging(builder.Configuration);
 builder.Services.ConfigureInfrastructure(builder.Configuration);

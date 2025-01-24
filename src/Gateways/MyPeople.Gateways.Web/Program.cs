@@ -1,3 +1,4 @@
+using MyPeople.Common.Configuration.Extensions;
 using MyPeople.Common.Logging.Extensions;
 using MyPeople.Gateways.Web.Extensions;
 using Ocelot.DependencyInjection;
@@ -6,15 +7,14 @@ using Ocelot.Provider.Polly;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Configuration.ConfigureConfigurationProviders();
+
 builder.Services.ConfigureLogging(builder.Configuration);
 builder.Services.ConfigureCors(builder.Configuration);
 
 var ocelotBuilder = builder.Services.AddOcelot();
 
-if (builder.Environment.IsStaging())
-{
-    ocelotBuilder.AddPolly();
-}
+ocelotBuilder.AddPolly();
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();

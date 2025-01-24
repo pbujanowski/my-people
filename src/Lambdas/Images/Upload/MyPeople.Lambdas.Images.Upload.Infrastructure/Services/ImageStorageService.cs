@@ -40,7 +40,7 @@ public class ImageStorageService(
 
             var s3Response = await storageService.UploadFileAsync(s3Object);
 
-            logger.LogInformation("Image uploading response: {Response}.", s3Response);
+            logger.LogInformation("Image uploading response: {@Response}.", s3Response);
 
             response.StatusCode = s3Response.StatusCode;
             response.Message = s3Response.Message;

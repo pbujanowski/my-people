@@ -1,10 +1,13 @@
 using Microsoft.IdentityModel.Logging;
+using MyPeople.Common.Configuration.Extensions;
 using MyPeople.Common.Logging.Extensions;
 using MyPeople.Services.Common.Extensions;
 using MyPeople.Services.Posts.Application;
 using MyPeople.Services.Posts.Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Configuration.ConfigureConfigurationProviders();
 
 builder.Services.ConfigureLogging(builder.Configuration);
 builder.Services.ConfigureApplication();

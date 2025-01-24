@@ -1,5 +1,6 @@
 using FluentValidation.AspNetCore;
 using Microsoft.IdentityModel.Logging;
+using MyPeople.Common.Configuration.Extensions;
 using MyPeople.Common.Logging.Extensions;
 using MyPeople.Common.Models;
 using MyPeople.Services.Common.Extensions;
@@ -7,6 +8,8 @@ using MyPeople.Services.Images.Application;
 using MyPeople.Services.Images.Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Configuration.ConfigureConfigurationProviders();
 
 builder.Services.ConfigureLogging(builder.Configuration);
 builder.Services.ConfigureCommonModels();

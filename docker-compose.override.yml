@@ -17,6 +17,8 @@ services:
   my-people-client-web:
     environment:
       - ASPNETCORE_ENVIRONMENT=Staging
+      - Logging__LogLevel__Default=Debug
+      - Logging__LogLevel__Microsoft.AspNetCore=Debug
     ports:
       - "3000:80"
 
@@ -24,6 +26,8 @@ services:
     environment:
       - ASPNETCORE_ENVIRONMENT=Staging
       - ASPNETCORE_HTTP_PORTS=5000
+      - Logging__LogLevel__Default=Debug
+      - Logging__LogLevel__Microsoft.AspNetCore=Debug
     ports:
       - "5000:5000"
 
@@ -31,6 +35,8 @@ services:
     environment:
       - ASPNETCORE_ENVIRONMENT=Staging
       - ASPNETCORE_HTTP_PORTS=4000
+      - Logging__LogLevel__Default=Debug
+      - Logging__LogLevel__Microsoft.AspNetCore=Debug
     ports:
       - "4000:4000"
 
@@ -38,6 +44,8 @@ services:
     environment:
       - ASPNETCORE_ENVIRONMENT=Staging
       - ASPNETCORE_HTTP_PORTS=5010
+      - Logging__LogLevel__Default=Debug
+      - Logging__LogLevel__Microsoft.AspNetCore=Debug
     ports:
       - "5010:5010"
 
@@ -45,5 +53,7 @@ services:
     environment:
       - ASPNETCORE_ENVIRONMENT=Staging
       - ASPNETCORE_HTTP_PORTS=5020
+      - Logging__LogLevel__Default=Debug
+      - Logging__LogLevel__Microsoft.AspNetCore=Debug
     ports:
       - "5020:5020"

@@ -35,6 +35,10 @@ public class Function
             _configuration.GetSection("AWS").Get<ImagesAwsConfiguration>()
             ?? throw new ConfigurationException("AWS");
 
+        var gatewaysWebUrl =
+            _configuration.GetValue<string>("Gateways:Web:Url")
+            ?? throw new ConfigurationException("Gateways:Web:Url");
+
         var services = new ServiceCollection();
 
         services.ConfigureLambdaLogging(_configuration);
@@ -45,6 +49,12 @@ public class Function
         services.AddScoped<IStorageService, StorageService>();
         services.AddScoped<IImageStorageService, ImageStorageService>();
 
+        services.AddHttpClient("services.images", cl => cl.BaseAddress = new Uri(gatewaysWebUrl));
+        services.AddScoped<IImageFetchService>(sp => new ImageFetchService(
+            sp.GetRequiredService<ILogger<IImageFetchService>>(),
+            sp.GetRequiredService<IHttpClientFactory>().CreateClient("services.images")
+        ));
+
         _serviceProvider = services.BuildServiceProvider();
     }
 
@@ -52,7 +62,8 @@ public class Function
         IConfiguration configuration,
         ImagesAwsConfiguration awsConfiguration,
         IStorageService storageService,
-        IImageStorageService imageStorageService
+        IImageStorageService imageStorageService,
+        IImageFetchService imageFetchService
     )
     {
         _configuration = configuration;
@@ -66,6 +77,7 @@ public class Function
         services.AddScoped(_ => imageStorageService);
         services.AddScoped(_ => storageService);
         services.AddScoped(_ => imageStorageService);
+        services.AddScoped(_ => imageFetchService);
 
         _serviceProvider = services.BuildServiceProvider();
     }
@@ -81,25 +93,34 @@ public class Function
 
         try
         {
+            var imageStorageService =
+                scope.ServiceProvider.GetRequiredService<IImageStorageService>();
+
+            var imageFetchService = scope.ServiceProvider.GetRequiredService<IImageFetchService>();
+
             foreach (var record in sqsEvent.Records)
             {
                 var request =
                     JsonSerializer.Deserialize<FunctionRequestDto>(record.Body)
                     ?? throw new InvalidOperationException("Function request is null.");
 
-                logger.LogInformation("Function request: {Request}.", request);
+                logger.LogInformation("Function request: {@Request}.", request);
 
-                var imageStorageService =
-                    scope.ServiceProvider.GetRequiredService<IImageStorageService>();
+                var imageFetchResponse = await imageFetchService.FetchImagesByIds(
+                    request.ImagesIds
+                );
 
-                var imageUploadResponse =
-                    await imageStorageService.UploadImageAsync(
-                        request.Image
-                            ?? throw new InvalidOperationException("Image in request is null.")
-                    ) ?? throw new InvalidOperationException("Image upload response is null.");
+                if (imageFetchResponse is null)
+                {
+                    logger.LogError("Image fetch response is null.");
+                    continue;
+                }
 
-                response.StatusCode = imageUploadResponse.StatusCode;
-                response.Message = imageUploadResponse.Message;
+                foreach (var image in imageFetchResponse)
+                {
+                    var imageUploadResponse = await imageStorageService.UploadImageAsync(image);
+                    response.ImageUploadResponse.Add(imageUploadResponse);
+                }
             }
         }
         catch (Exception exception)
@@ -109,7 +130,7 @@ public class Function
             response.Message = exception.Message;
         }
 
-        logger.LogInformation("Function response: {Response}", response);
+        logger.LogInformation("Function response: {@Response}", response);
 
         return response;
     }

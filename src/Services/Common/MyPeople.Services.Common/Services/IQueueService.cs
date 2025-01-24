@@ -4,5 +4,5 @@ namespace MyPeople.Services.Common.Services;
 
 public interface IQueueService
 {
-    Task<SQSResponseDto> QueueObjectsAsync(SQSRequestDto sqsRequestDto);
+    Task<SQSResponseDto> QueueObjectAsync(SQSRequestDto sqsRequestDto);
 }

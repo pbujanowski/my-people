@@ -26,6 +26,11 @@ public class PostService(
         var createdEntity = _repositories.Posts.Create(entity);
         if (postDto.Images?.Count > 0)
         {
+            foreach (var image in postDto.Images)
+            {
+                image.PostId = createdEntity.Id;
+            }
+
             var images = await _imageService.CreateImagesAsync(postDto.Images);
             if (images is not null)
             {
@@ -75,7 +80,10 @@ public class PostService(
             var anyImages = entity.Images?.Count > 0;
             if (anyImages)
             {
-                var gatewayWebUrl = _configuration.GetSection("Gateways:Web:Url").Get<string>();
+                var imagesServiceBaseUrl =
+                    _configuration.GetSection("Services:Images:Url").Get<string>()
+                    ?? _configuration.GetSection("Gateways:Web:Url").Get<string>();
+
                 dto.Images = [];
                 foreach (var image in entity.Images!)
                 {
@@ -83,7 +91,7 @@ public class PostService(
                         new PostImageDto
                         {
                             ImageId = image.ImageId,
-                            Url = $"{gatewayWebUrl}/images/browse/{image.ImageId}",
+                            Url = $"{imagesServiceBaseUrl}/images/browse/{image.ImageId}",
                         }
                     );
                 }

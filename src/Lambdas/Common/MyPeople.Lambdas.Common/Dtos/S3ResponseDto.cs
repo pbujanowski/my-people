@@ -1,5 +1,3 @@
-using System.Text.Json;
-
 namespace MyPeople.Lambdas.Common.Dtos;
 
 public class S3ResponseDto
@@ -7,6 +5,4 @@ public class S3ResponseDto
     public int StatusCode { get; set; }
 
     public string? Message { get; set; }
-
-    public override string ToString() => JsonSerializer.Serialize(this);
 }

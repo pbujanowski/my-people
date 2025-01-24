@@ -1,4 +1,3 @@
-using System.Text;
 using System.Text.Json;
 using Amazon.Lambda.SQSEvents;
 using Amazon.Lambda.TestUtilities;
@@ -6,9 +5,9 @@ using FluentAssertions;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using MyPeople.Common.Models.Dtos;
-using MyPeople.Lambdas.Common.Dtos;
 using MyPeople.Lambdas.Common.Services;
 using MyPeople.Lambdas.Images.Upload.Application.Dtos;
+using MyPeople.Lambdas.Images.Upload.Application.Services;
 using MyPeople.Lambdas.Images.Upload.Infrastructure.Configurations;
 using MyPeople.Lambdas.Images.Upload.Infrastructure.Services;
 using NSubstitute;
@@ -21,15 +20,33 @@ public class FunctionTest
     [Fact]
     public async Task TestFunction()
     {
-        var imageMock = new ImageDto
+        var imagesMock = new List<ImageDto>
         {
-            Name = "test-image",
-            Content =
-                "/9j/4AAQSkZJRgABAQEASABIAAD/2wBDAP////////////////////////////"
-                + "//////////////////////////////////////////////////////////wg"
-                + "ALCAABAAEBAREA/8QAFBABAAAAAAAAAAAAAAAAAAAAAP/aAAgBAQABPxA=",
-            ContentType = "image/jpeg",
+            new()
+            {
+                Id = Guid.Parse("11ac50d8-cc93-4d78-acf2-339d3736abc6"),
+                Name = "test-image-1",
+                Content =
+                    "/9j/4AAQSkZJRgABAQEASABIAAD/2wBDAP////////////////////////////"
+                    + "//////////////////////////////////////////////////////////wg"
+                    + "ALCAABAAEBAREA/8QAFBABAAAAAAAAAAAAAAAAAAAAAP/aAAgBAQABPxA=",
+                ContentType = "image/jpeg",
+                CreatedAt = DateTime.Parse("2025-01-24"),
+            },
+            new()
+            {
+                Id = Guid.Parse("e72cea3c-f3c4-43b5-b49e-132fd75d4cbc"),
+                Name = "test-image-2",
+                Content =
+                    "/9j/4AAQSkZJRgABAQEASABIAAD/2wBDAP////////////////////////////"
+                    + "//////////////////////////////////////////////////////////wg"
+                    + "ALCAABAAEBAREA/8QAFBABAAAAAAAAAAAAAAAAAAAAAP/aAAgBAQABPxA=",
+                ContentType = "image/jpeg",
+                CreatedAt = DateTime.Parse("2025-01-24"),
+            },
         };
+
+        var imagesIds = imagesMock.Select(image => (Guid)image.Id!);
 
         var configuration = Substitute.For<IConfiguration>();
         var imagesAwsConfiguration = new ImagesAwsConfiguration
@@ -47,46 +64,29 @@ public class FunctionTest
             imagesAwsConfiguration
         );
 
-        using var imageStream = new MemoryStream(Encoding.UTF8.GetBytes(imageMock.Content));
-
-        var s3Object = new S3ObjectDto
-        {
-            Name = imageMock.Name,
-            BucketName = imagesAwsConfiguration.ImageStorage.BucketName,
-            InputStream = imageStream,
-        };
-
-        var s3Response = new S3ResponseDto
-        {
-            StatusCode = 201,
-            Message = $"{s3Object.Name} has been uploaded successfully.",
-        };
-
-        var imageUploadResponse = new ImageUploadResponseDto
-        {
-            StatusCode = s3Response.StatusCode,
-            Message = s3Response.Message,
-        };
-
-        storageService.UploadFileAsync(s3Object).ReturnsForAnyArgs(Task.FromResult(s3Response));
+        var imageFetchService = Substitute.For<IImageFetchService>();
+        imageFetchService
+            .FetchImagesByIds(Arg.Any<IEnumerable<Guid>>())
+            .ReturnsForAnyArgs(imagesMock);
 
         var function = new Function(
             configuration,
             imagesAwsConfiguration,
             storageService,
-            imageStorageService
+            imageStorageService,
+            imageFetchService
         );
 
         var context = new TestLambdaContext();
 
-        var functionRequest = new FunctionRequestDto { Image = imageMock };
+        var functionRequest = new FunctionRequestDto { ImagesIds = imagesIds };
         var functionRequestJson = JsonSerializer.Serialize(functionRequest);
 
         var sqsEvent = new SQSEvent() { Records = [new() { Body = functionRequestJson }] };
 
         var functionResponse = await function.FunctionHandler(sqsEvent, context);
 
-        functionResponse.StatusCode.Should().Be(201);
-        functionResponse.Message.Should().Be($"{imageMock.Name} has been uploaded successfully.");
+        functionResponse.StatusCode.Should().BeNull();
+        functionResponse.Message.Should().BeNull();
     }
 }

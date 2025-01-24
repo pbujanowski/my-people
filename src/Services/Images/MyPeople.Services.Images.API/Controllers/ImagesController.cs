@@ -9,7 +9,7 @@ using MyPeople.Services.Images.Application.Queries.GetImagesByIds;
 namespace MyPeople.Services.Images.API.Controllers;
 
 [ApiController]
-[Route("api/[controller]")]
+[Route("[controller]")]
 public class ImagesController(ILogger<ImagesController> logger, IMediator mediator) : ControllerBase
 {
     private readonly ILogger<ImagesController> _logger = logger;
@@ -19,6 +19,8 @@ public class ImagesController(ILogger<ImagesController> logger, IMediator mediat
     [HttpGet("{id:guid}")]
     public async Task<IActionResult> GetImageById(Guid id)
     {
+        _logger.LogInformation("Getting image by ID invoked. Image ID: {Id}.", id);
+
         try
         {
             var result = await _mediator.Send(new GetImageByIdQuery(id));
@@ -32,7 +34,7 @@ public class ImagesController(ILogger<ImagesController> logger, IMediator mediat
         }
         catch (Exception ex)
         {
-            _logger.LogError(ex, "Error during getting image by ID. Image ID: '{ImageId}'.", id);
+            _logger.LogError(ex, "Error during getting image by ID. Image ID: '{Id}'.", id);
             return StatusCode(500);
         }
     }
@@ -41,6 +43,8 @@ public class ImagesController(ILogger<ImagesController> logger, IMediator mediat
     [HttpGet("browse/{id:guid}")]
     public async Task<IActionResult> BrowseImageById(Guid id)
     {
+        _logger.LogInformation("Browsing image by ID invoked. Image ID: {Id}.", id);
+
         try
         {
             var result = await _mediator.Send(new GetImageByIdQuery(id));
@@ -54,7 +58,7 @@ public class ImagesController(ILogger<ImagesController> logger, IMediator mediat
         }
         catch (Exception ex)
         {
-            _logger.LogError(ex, "Error during browsing image by ID. Image ID: '{ImageId}.", id);
+            _logger.LogError(ex, "Error during browsing image by ID. Image ID: '{Id}.", id);
             return StatusCode(500);
         }
     }
@@ -63,6 +67,8 @@ public class ImagesController(ILogger<ImagesController> logger, IMediator mediat
     [HttpPost("many")]
     public async Task<IActionResult> GetImagesByIds(IEnumerable<Guid> ids)
     {
+        _logger.LogInformation("Getting images by images IDs invoked. Images IDs: {Ids}.", ids);
+
         try
         {
             var result = await _mediator.Send(new GetImagesByIdsQuery(ids));
@@ -78,7 +84,7 @@ public class ImagesController(ILogger<ImagesController> logger, IMediator mediat
         {
             _logger.LogError(
                 ex,
-                "Error during getting images by images IDs. Images IDs: '{ImagesIds}'.",
+                "Error during getting images by images IDs. Images IDs: '{Ids}'.",
                 ids
             );
             return StatusCode(500);
@@ -89,6 +95,8 @@ public class ImagesController(ILogger<ImagesController> logger, IMediator mediat
     [HttpPost]
     public async Task<IActionResult> CreateImages(IEnumerable<CreateImageDto> imageDtos)
     {
+        _logger.LogInformation("Creating images invoked. Images: {@Images}.", imageDtos);
+
         try
         {
             var result = await _mediator.Send(new CreateImagesCommand(imageDtos));
@@ -96,7 +104,7 @@ public class ImagesController(ILogger<ImagesController> logger, IMediator mediat
         }
         catch (Exception ex)
         {
-            _logger.LogError(ex, "Error during creating images. Images: '{Images}'.", imageDtos);
+            _logger.LogError(ex, "Error during creating images. Images: '{@Images}'.", imageDtos);
             return StatusCode(500);
         }
     }
@@ -105,6 +113,8 @@ public class ImagesController(ILogger<ImagesController> logger, IMediator mediat
     [HttpPost("delete")]
     public async Task<IActionResult> DeleteImages(IEnumerable<DeleteImageDto> imageDtos)
     {
+        _logger.LogInformation("Deleting images invoked. Images: {@Images}.", imageDtos);
+
         try
         {
             var result = await _mediator.Send(new DeleteImagesCommand(imageDtos));
@@ -112,7 +122,7 @@ public class ImagesController(ILogger<ImagesController> logger, IMediator mediat
         }
         catch (Exception ex)
         {
-            _logger.LogError(ex, "Error during deleting images. Images: '{Images}'.", imageDtos);
+            _logger.LogError(ex, "Error during deleting images. Images: '{@Images}'.", imageDtos);
             return StatusCode(500);
         }
     }

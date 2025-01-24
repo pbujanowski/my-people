@@ -17,7 +17,8 @@ public class CreateImagesCommandHandler(
         var createImagesResult = await imageService.CreateImagesAsync(request.Images);
         if (createImagesResult is not null)
         {
-            await imageQueueService.QueueImagesAsync(createImagesResult);
+            // TODO: it has to be changed to something more reliable, like Hangfire.
+            _ = Task.Run(() => imageQueueService.QueueImagesAsync(createImagesResult));
         }
 
         var response = new CreateImagesCommandResponse(createImagesResult);

@@ -8,7 +8,7 @@ using MyPeople.Services.Posts.Application.Services;
 namespace MyPeople.Services.Posts.API.Controllers;
 
 [ApiController]
-[Route("api/[controller]")]
+[Route("[controller]")]
 public class PostsController(
     IPostService postService,
     IUserService userService,
@@ -23,6 +23,8 @@ public class PostsController(
     [HttpGet]
     public async Task<IActionResult> GetPosts()
     {
+        _logger.LogInformation("Getting posts invoked.");
+
         try
         {
             var posts = await _postService.GetAllPostsAsync();
@@ -44,6 +46,8 @@ public class PostsController(
     [HttpGet("{id}")]
     public async Task<IActionResult> GetPostById(Guid id)
     {
+        _logger.LogInformation("Getting post by ID invoked. Post ID: {Id}", id);
+
         try
         {
             var post = await _postService.GetPostByIdAsync(id);
@@ -58,7 +62,7 @@ public class PostsController(
         }
         catch (Exception ex)
         {
-            _logger.LogError(ex, "Error during getting post by ID. Post ID: '{PostId}'.", id);
+            _logger.LogError(ex, "Error during getting post by ID. Post ID: {Id}.", id);
             return StatusCode(500);
         }
     }
@@ -67,6 +71,8 @@ public class PostsController(
     [HttpPost]
     public async Task<IActionResult> CreatePost(CreatePostDto postDto)
     {
+        _logger.LogInformation("Creating post invoked. Post: {@Post}.", postDto);
+
         try
         {
             var post = await _postService.CreatePostAsync(postDto);
@@ -74,7 +80,7 @@ public class PostsController(
         }
         catch (Exception ex)
         {
-            _logger.LogError(ex, "Error during creating post. Post: '{Post}'.", postDto);
+            _logger.LogError(ex, "Error during creating post. Post: {@Post}.", postDto);
             return StatusCode(500);
         }
     }
@@ -83,6 +89,8 @@ public class PostsController(
     [HttpPut("{id}")]
     public async Task<IActionResult> UpdatePost(Guid id, UpdatePostDto postDto)
     {
+        _logger.LogInformation("Updating post invoked. Post ID: {Id}, Post: {@Post}.", id, postDto);
+
         try
         {
             if (id != postDto.Id)
@@ -108,7 +116,7 @@ public class PostsController(
         }
         catch (Exception ex)
         {
-            _logger.LogError(ex, "Error during updating post. Post: '{Post}'.", postDto);
+            _logger.LogError(ex, "Error during updating post. Post: {@Post}.", postDto);
             return StatusCode(500);
         }
     }
@@ -117,6 +125,8 @@ public class PostsController(
     [HttpDelete("{id}")]
     public async Task<IActionResult> DeletePost(Guid id)
     {
+        _logger.LogInformation("Deleting post invoked. Post ID: {Id}.", id);
+
         try
         {
             var found = await _postService.GetPostByIdAsync(id);
