@@ -1,20 +1,27 @@
 using MediatR;
 using MyPeople.Common.Abstractions.Services;
+using MyPeople.Services.Images.Application.Services;
 
 namespace MyPeople.Services.Images.Application.Commands.CreateImages;
 
-public class CreateImagesCommandHandler(IImageService imageService)
-    : IRequestHandler<CreateImagesCommand, CreateImagesCommandResponse>
+public class CreateImagesCommandHandler(
+    IImageService imageService,
+    IImageQueueService imageQueueService
+) : IRequestHandler<CreateImagesCommand, CreateImagesCommandResponse>
 {
-    private readonly IImageService _imageService = imageService;
-
     public async Task<CreateImagesCommandResponse> Handle(
         CreateImagesCommand request,
         CancellationToken cancellationToken
     )
     {
-        var result = await _imageService.CreateImagesAsync(request.Images);
-        var response = new CreateImagesCommandResponse(result);
+        var createImagesResult = await imageService.CreateImagesAsync(request.Images);
+        if (createImagesResult is not null)
+        {
+            // TODO: it has to be changed to something more reliable, like Hangfire.
+            _ = Task.Run(() => imageQueueService.QueueImagesAsync(createImagesResult));
+        }
+
+        var response = new CreateImagesCommandResponse(createImagesResult);
         return response;
     }
 }

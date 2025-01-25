@@ -12,7 +12,7 @@ public class PostDataGenerator : TheoryData<Post>
                 Id = Guid.NewGuid(),
                 UserId = Guid.NewGuid(),
                 Content = "content1",
-                Images = null
+                Images = null,
             }
         );
 
@@ -22,7 +22,7 @@ public class PostDataGenerator : TheoryData<Post>
                 Id = Guid.NewGuid(),
                 UserId = Guid.NewGuid(),
                 Content = "content2",
-                Images = null
+                Images = null,
             }
         );
     }

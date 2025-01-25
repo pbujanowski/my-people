@@ -1,4 +1,4 @@
-using MyPeople.Common.Logging;
+using MyPeople.Common.Configuration.Extensions;
 using MyPeople.Common.Logging.Extensions;
 using MyPeople.Identity.Infrastructure;
 using MyPeople.Identity.Web;
@@ -6,52 +6,48 @@ using MyPeople.Identity.Web.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
-LoggingInitializer.Initialize(
-    async () =>
-    {
-        builder.Services.ConfigureLogging();
-        builder.Services.ConfigureInfrastructure(builder.Configuration);
-        builder.Services.ConfigureCookiePolicy();
-        builder.Services.ConfigureCors(builder.Configuration);
-        builder.Services.ConfigureApplicationCookie();
+builder.Configuration.ConfigureConfigurationProviders();
 
-        builder.Services.AddControllersWithViews();
-        builder.Services.AddEndpointsApiExplorer();
-        builder.Services.AddSwaggerGen();
+builder.Services.ConfigureLogging(builder.Configuration);
+builder.Services.ConfigureInfrastructure(builder.Configuration);
+builder.Services.ConfigureCookiePolicy();
+builder.Services.ConfigureCors(builder.Configuration);
+builder.Services.ConfigureApplicationCookie();
 
-        if (builder.Environment.IsDevelopment() || builder.Environment.IsStaging())
-        {
-            builder.Services.AddHostedService<Worker>();
-        }
+builder.Services.AddControllersWithViews();
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
 
-        var app = builder.Build();
+if (builder.Environment.IsDevelopment() || builder.Environment.IsStaging())
+{
+    builder.Services.AddHostedService<Worker>();
+}
 
-        if (!app.Environment.IsDevelopment() && !app.Environment.IsStaging())
-        {
-            app.UseExceptionHandler("/Home/Error");
-            app.UseHsts();
-        }
-        else
-        {
-            app.UseSwagger();
-            app.UseSwaggerUI();
-        }
+var app = builder.Build();
 
-        await app.UseInfrastructureAsync();
+if (!app.Environment.IsDevelopment() && !app.Environment.IsStaging())
+{
+    app.UseExceptionHandler("/Home/Error");
+    app.UseHsts();
+}
+else
+{
+    app.UseSwagger();
+    app.UseSwaggerUI();
+}
 
-        app.UseStaticFiles();
-        app.UseCookiePolicy();
+await app.UseInfrastructureAsync();
 
-        app.UseCors();
+app.UseStaticFiles();
+app.UseCookiePolicy();
 
-        app.UseRouting();
+app.UseCors();
 
-        app.UseAuthentication();
-        app.UseAuthorization();
+app.UseRouting();
 
-        app.MapControllerRoute("default", "{controller=Home}/{action=Index}/{id?}");
+app.UseAuthentication();
+app.UseAuthorization();
 
-        app.Run();
-    },
-    builder.Configuration
-);
+app.MapControllerRoute("default", "{controller=Home}/{action=Index}/{id?}");
+
+app.Run();

@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 using MyPeople.Common.Abstractions.Services;
 using MyPeople.Common.Configuration.Exceptions;
 using MyPeople.Services.Posts.Application.Repositories;
@@ -106,6 +107,7 @@ public static class DependencyInjection
 
         services.AddHttpClient("services.images", cl => cl.BaseAddress = new Uri(gatewayWebUrl));
         services.AddScoped<IImageService>(sp => new ImageService(
+            sp.GetRequiredService<ILogger<IImageService>>(),
             sp.GetRequiredService<IHttpClientFactory>().CreateClient("services.images")
         ));
 

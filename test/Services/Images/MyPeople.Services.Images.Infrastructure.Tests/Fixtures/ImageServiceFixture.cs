@@ -1,9 +1,11 @@
 using AutoMapper;
+using Microsoft.Extensions.Logging;
 using MyPeople.Common.Abstractions.Services;
 using MyPeople.Common.Models.Dtos;
 using MyPeople.Services.Images.Application.Mappings;
 using MyPeople.Services.Images.Infrastructure.Services;
 using MyPeople.Services.Images.Infrastructure.Wrappers;
+using NSubstitute;
 
 namespace MyPeople.Services.Images.Infrastructure.Tests.Fixtures;
 
@@ -20,8 +22,9 @@ public class ImageServiceFixture : ImageRepositoryFixture
             config.AddProfile(typeof(MappingProfile))
         );
 
+        var imageServiceLoggerMock = Substitute.For<ILogger<IImageService>>();
         var mapper = configurationProvider.CreateMapper();
-        ImageService = new ImageService(repositoryWrapper, mapper);
+        ImageService = new ImageService(imageServiceLoggerMock, repositoryWrapper, mapper);
         ImageDtoComparer = new ObjectsComparer.Comparer<ImageDto>();
     }
 }

@@ -1,4 +1,4 @@
-using MyPeople.Common.Logging;
+using MyPeople.Common.Configuration.Extensions;
 using MyPeople.Common.Logging.Extensions;
 using MyPeople.Gateways.Web.Extensions;
 using Ocelot.DependencyInjection;
@@ -7,35 +7,28 @@ using Ocelot.Provider.Polly;
 
 var builder = WebApplication.CreateBuilder(args);
 
-LoggingInitializer.Initialize(
-    async () =>
-    {
-        builder.Services.ConfigureLogging();
-        builder.Services.ConfigureCors(builder.Configuration);
+builder.Configuration.ConfigureConfigurationProviders();
 
-        var ocelotBuilder = builder.Services.AddOcelot();
+builder.Services.ConfigureLogging(builder.Configuration);
+builder.Services.ConfigureCors(builder.Configuration);
 
-        if (builder.Environment.IsStaging())
-        {
-            ocelotBuilder.AddPolly();
-        }
+var ocelotBuilder = builder.Services.AddOcelot();
 
-        builder.Services.AddEndpointsApiExplorer();
-        builder.Services.AddSwaggerGen();
+ocelotBuilder.AddPolly();
 
-        var app = builder.Build();
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
 
-        if (app.Environment.IsDevelopment() || app.Environment.IsStaging())
-        {
-            app.UseSwagger();
-            app.UseSwaggerUI();
-        }
+var app = builder.Build();
 
-        app.UseCors();
+if (app.Environment.IsDevelopment() || app.Environment.IsStaging())
+{
+    app.UseSwagger();
+    app.UseSwaggerUI();
+}
 
-        await app.UseOcelot();
+app.UseCors();
 
-        app.Run();
-    },
-    builder.Configuration
-);
+await app.UseOcelot();
+
+app.Run();

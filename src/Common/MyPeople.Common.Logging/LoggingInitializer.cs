@@ -7,9 +7,9 @@ using Serilog.Sinks.AwsCloudWatch;
 
 namespace MyPeople.Common.Logging;
 
-public static class LoggingInitializer
+internal static class LoggingInitializer
 {
-    public static void Initialize(Action applicationStartup, IConfiguration configuration)
+    public static void Initialize(IConfiguration configuration)
     {
         var awsConfiguration = configuration.GetSection("AWS").Get<AwsConfiguration>();
 
@@ -39,18 +39,5 @@ public static class LoggingInitializer
         loggerConfiguration.WriteTo.Console();
 
         Log.Logger = loggerConfiguration.CreateLogger();
-
-        try
-        {
-            applicationStartup.Invoke();
-        }
-        catch (Exception exception)
-        {
-            Log.Fatal(exception, "Error during application startup.");
-        }
-        finally
-        {
-            Log.CloseAndFlush();
-        }
     }
 }

@@ -2,13 +2,15 @@
 using System.Net.Mime;
 using System.Text;
 using System.Text.Json;
+using Microsoft.Extensions.Logging;
 using MyPeople.Common.Abstractions.Services;
 using MyPeople.Common.Models.Dtos;
 
-namespace MyPeople.Services.Posts.Infrastructure;
+namespace MyPeople.Services.Posts.Infrastructure.Services;
 
-public class ImageService(HttpClient httpClient) : IImageService
+public class ImageService(ILogger<IImageService> logger, HttpClient httpClient) : IImageService
 {
+    private readonly ILogger<IImageService> _logger = logger;
     private readonly HttpClient _httpClient = httpClient;
 
     public async Task<ImageDto?> CreateImageAsync(CreateImageDto imageDto)
@@ -27,11 +29,16 @@ public class ImageService(HttpClient httpClient) : IImageService
         IEnumerable<CreateImageDto> imagesDtos
     )
     {
+        _logger.LogDebug("CreateImagesAsync request: {@Request}.", imagesDtos);
+
         var content = JsonSerializer.Serialize(imagesDtos);
         using var response = await _httpClient.PostAsync(
             "/images",
             new StringContent(content, Encoding.UTF8, MediaTypeNames.Application.Json)
         );
+
+        _logger.LogDebug("CreateImagesAsync response from Images service: {@Response}", response);
+
         return response.IsSuccessStatusCode
             ? await response.Content.ReadFromJsonAsync<IEnumerable<ImageDto>>()
             : null;
